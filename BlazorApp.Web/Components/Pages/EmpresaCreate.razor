@@ -1,0 +1,63 @@
+@page "/empresa"
+
+@inject EmpresaService empresaService
+@using BlazorApp.Api.Models
+
+<h3>empresas</h3>
+
+<!-- <button @onclick="">Criar empresa</button> -->
+
+
+
+
+
+@if (empresas != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var empresa in empresas)
+            {
+                <tr>
+                    <td>@empresa.Id</td>
+                    <td>@empresa.RazaoSocial</td>
+                    <td>@empresa.CNPJ</td>
+                    <td>@empresa.Email</td>
+                    <td>@empresa.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Carregando empresas...</p>
+}
+@code {
+/*
+
+    public Empresa empresa = new Empresa();
+*/
+    public string razao_social { get; set; }
+
+    private List<Empresa> empresas;
+    protected override async Task OnInitializedAsync()
+    {
+        empresas = await empresaService.GetEmpresasAsync();
+    }
+
+    public async Task OnSave()
+    {
+        await empresaService.CriarEmpresaAsync(null);
+        empresas = await empresaService.GetEmpresasAsync();
+    //    telefone = await telefoneService.GetTelefoneAsync();
+    }
+}
