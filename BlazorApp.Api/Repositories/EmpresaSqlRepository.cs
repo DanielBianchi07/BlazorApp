@@ -22,26 +22,40 @@ public class EmpresaSqlRepository : DatabaseConnection, IEmpresaRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM EMPRESAS";
+        cmd.CommandText = "SELECT EMP.ID_EMPRESA, EMP.CNPJ, EMP.RAZAO_SOCIAL, TEMP.NRO_TELEFONE, EMP.STATUS FROM EMPRESAS AS EMP LEFT JOIN TELEFONES_EMPRESAS AS TEMP ON EMP.ID_EMPRESA = TEMP.EMPRESA_ID GROUP BY EMP.ID_EMPRESA, EMP.CNPJ, EMP.RAZAO_SOCIAL, TEMP.NRO_TELEFONE, EMP.STATUS";
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Empresa> empresas = new List<Empresa>();
+        Dictionary<Guid, Empresa> empresasDict = new Dictionary<Guid, Empresa>();
 
-        while(reader.Read())
+    while (reader.Read())
+    {
+        Guid idEmpresa = reader.GetGuid(0);
+
+        // Verifica se a empresa já existe no dicionário
+        if (!empresasDict.ContainsKey(idEmpresa))
         {
             Empresa empresa = new Empresa();
             empresa.Id = reader.GetGuid(0);
             empresa.CNPJ = reader.GetString(1);
             empresa.RazaoSocial = reader.GetString(2);
-            empresa.Email = reader.GetString(3);
-            empresa.Status = reader.GetInt32(4);
+            empresa.Telefones = new List<string>(); // Inicializa a lista de telefones
+            empresa.Status = reader.GetInt32(5);
 
-            empresas.Add(empresa);
+            empresasDict.Add(idEmpresa, empresa);
         }
 
-        return empresas;
+        // Adiciona o número de telefone à empresa correspondente no dicionário
+        string numeroTelefone = reader.IsDBNull(4) ? null : reader.GetString(4);
+        if (!string.IsNullOrEmpty(numeroTelefone))
+        {
+            empresasDict[idEmpresa].Telefones.Add(numeroTelefone);
+        }
     }
+
+    // Agora, converta o dicionário para uma coleção de empresas e retorne
+    return empresasDict.Values;
+}
 
     public void Update(Empresa empresa, Guid id)
     {

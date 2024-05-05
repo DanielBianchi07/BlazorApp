@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,7 +26,7 @@ public class AlternativaController : ControllerBase
     public ActionResult AlternativaCreate(Alternativa alternativaModel)
     {
         _alternativaRepository.Create(alternativaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -34,7 +34,7 @@ public class AlternativaController : ControllerBase
     public ActionResult AlternativaUpdate(Alternativa alternativaModel, Guid id) 
     {
         _alternativaRepository.Update(alternativaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -42,6 +42,6 @@ public class AlternativaController : ControllerBase
     public ActionResult<Alternativa> AlternativaDelete(Guid id)
     {
         _alternativaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

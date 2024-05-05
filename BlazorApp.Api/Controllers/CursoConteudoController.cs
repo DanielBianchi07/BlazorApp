@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,7 +26,7 @@ public class CursoConteudoController : ControllerBase
     public ActionResult CursoConteudoCreate(CursoConteudo cursoConteudoModel)
     {
         _cursoConteudoRepository.Create(cursoConteudoModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -34,7 +34,7 @@ public class CursoConteudoController : ControllerBase
     public ActionResult CursoConteudoUpdate(CursoConteudo cursoConteudoModel, Guid id) 
     {
         _cursoConteudoRepository.Update(cursoConteudoModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -42,6 +42,6 @@ public class CursoConteudoController : ControllerBase
     public ActionResult<CursoConteudo> CursoConteudoDelete(Guid id)
     {
         _cursoConteudoRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

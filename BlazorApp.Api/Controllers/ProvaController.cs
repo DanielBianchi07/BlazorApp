@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,7 +26,7 @@ public class ProvaController : ControllerBase
     public ActionResult ProvaCreate(Prova provaModel)
     {
         _provaRepository.Create(provaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -34,7 +34,7 @@ public class ProvaController : ControllerBase
     public ActionResult ProvaUpdate(Prova provaModel, Guid id) 
     {
         _provaRepository.Update(provaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -42,6 +42,6 @@ public class ProvaController : ControllerBase
     public ActionResult<Prova> ProvaDelete(Guid id)
     {
         _provaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

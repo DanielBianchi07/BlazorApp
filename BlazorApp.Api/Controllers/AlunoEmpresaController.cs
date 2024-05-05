@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,7 +26,7 @@ public class AlunoEmpresaController : ControllerBase
     public ActionResult AlunoEmpresaCreate(AlunoEmpresa alunoEmpresaModel)
     {
         _alunoEmpresaRepository.Create(alunoEmpresaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -34,7 +34,7 @@ public class AlunoEmpresaController : ControllerBase
     public ActionResult AlunoEmpresaUpdate(AlunoEmpresa alunoEmpresaModel, Guid id) 
     {
         _alunoEmpresaRepository.Update(alunoEmpresaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -42,6 +42,6 @@ public class AlunoEmpresaController : ControllerBase
     public ActionResult<AlunoEmpresa> AlunoEmpresaDelete(Guid id)
     {
         _alunoEmpresaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

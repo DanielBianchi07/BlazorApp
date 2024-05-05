@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -26,7 +26,7 @@ public class CertificadoController : ControllerBase
     public ActionResult CertificadoCreate(Certificado certificadoModel)
     {
         _certificadoRepository.Create(certificadoModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -34,7 +34,7 @@ public class CertificadoController : ControllerBase
     public ActionResult CertificadoUpdate(Certificado certificadoModel, Guid id) 
     {
         _certificadoRepository.Update(certificadoModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -42,6 +42,6 @@ public class CertificadoController : ControllerBase
     public ActionResult<Certificado> CertificadoDelete(Guid id)
     {
         _certificadoRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }
