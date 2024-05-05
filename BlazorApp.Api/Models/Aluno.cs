@@ -1,6 +1,6 @@
 namespace BlazorApp.Api.Models;
 
-public class Funcionario
+public class Aluno
 {
     public Guid PessoaId { get; set; }
     public string CPF { get; set; } = string.Empty;

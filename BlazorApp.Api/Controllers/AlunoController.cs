@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using BlazorSystem.Api.Models;
+using BlazorApp.Api.Models;
 
 namespace BlazorSystem.Api.Controllers;
 

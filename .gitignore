@@ -202,3 +202,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+I_SqlRepository.cs
+SqlRepository.cs
