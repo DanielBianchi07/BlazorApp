@@ -22,6 +22,13 @@ public class TelefoneEmpresaController : ControllerBase
         return Ok(telefoneEmpresas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaReadId(Guid id)
+    {
+        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read(id);
+        return Ok(telefoneEmpresas);
+    }
+
     [HttpPost]
     public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel)
     {

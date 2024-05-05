@@ -22,6 +22,13 @@ public class InstrutorController : ControllerBase
         return Ok(instrutores);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Instrutor>> InstrutorReadId(Guid id)
+    {
+        IEnumerable<Instrutor> instrutores = _instrutorRepository.Read(id);
+        return Ok(instrutores);
+    }
+
     [HttpPost]
     public ActionResult InstrutorCreate(Instrutor instrutorModel)
     {

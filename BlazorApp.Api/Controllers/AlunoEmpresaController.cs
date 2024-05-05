@@ -22,6 +22,13 @@ public class AlunoEmpresaController : ControllerBase
         return Ok(alunoEmpresas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<AlunoEmpresa>> AlunoEmpresaReadId(Guid id)
+    {
+        IEnumerable<AlunoEmpresa> alunoEmpresas = _alunoEmpresaRepository.Read(id);
+        return Ok(alunoEmpresas);
+    }
+
     [HttpPost]
     public ActionResult AlunoEmpresaCreate(AlunoEmpresa alunoEmpresaModel)
     {

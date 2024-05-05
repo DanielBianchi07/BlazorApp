@@ -22,6 +22,13 @@ public class CidadeController : ControllerBase
         return Ok(cidades);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Cidade>> CidadeReadId(Guid id)
+    {
+        IEnumerable<Cidade> cidades = _cidadeRepository.Read(id);
+        return Ok(cidades);
+    }
+
     [HttpPost]
     public ActionResult CidadeCreate(Cidade cidadeModel)
     {

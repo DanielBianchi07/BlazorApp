@@ -22,6 +22,13 @@ public class ListaPresencaController : ControllerBase
         return Ok(listaPresencas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<ListaPresenca>> ListaPresencaReadId(Guid id)
+    {
+        IEnumerable<ListaPresenca> listaPresencas = _listaPresencaRepository.Read(id);
+        return Ok(listaPresencas);
+    }
+
     [HttpPost]
     public ActionResult ListaPresencaCreate(ListaPresenca listaPresencaModel)
     {

@@ -22,6 +22,13 @@ public class EstadoController : ControllerBase
         return Ok(estados);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Estado>> EstadoReadId(Guid id)
+    {
+        IEnumerable<Estado> estados = _estadoRepository.Read(id);
+        return Ok(estados);
+    }
+
     [HttpPost]
     public ActionResult EstadoCreate(Estado estadoModel)
     {
