@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = EnderecoEmpresa
-// variavel model = enderecoEmpresa
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IEnderecoEmpresaRepository
 {

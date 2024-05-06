@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Questao
-// variavel model = questao
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IQuestaoRepository
 {

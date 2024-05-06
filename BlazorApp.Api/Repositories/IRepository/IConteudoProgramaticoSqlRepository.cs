@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = ConteudoProgramatico
-// variavel model = conteudoProgramatico
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IConteudoProgramaticoRepository
 {

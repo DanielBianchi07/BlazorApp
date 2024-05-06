@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -13,7 +13,6 @@ public class TelefoneEmpresaController : ControllerBase
     {
         _telefoneEmpresaRepository = telefoneEmpresaRepository;
     }
-
 
     [HttpGet]
     public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead()
@@ -30,10 +29,10 @@ public class TelefoneEmpresaController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel)
+    public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel, Guid id)
     {
-        _telefoneEmpresaRepository.Create(telefoneEmpresaModel);
-        return RedirectToAction("Read");
+        _telefoneEmpresaRepository.Create(telefoneEmpresaModel, id);
+        return Created();
     }
 
 
@@ -41,7 +40,7 @@ public class TelefoneEmpresaController : ControllerBase
     public ActionResult TelefoneEmpresaUpdate(TelefoneEmpresa telefoneEmpresaModel, Guid id) 
     {
         _telefoneEmpresaRepository.Update(telefoneEmpresaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +48,6 @@ public class TelefoneEmpresaController : ControllerBase
     public ActionResult<TelefoneEmpresa> TelefoneEmpresaDelete(Guid id)
     {
         _telefoneEmpresaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

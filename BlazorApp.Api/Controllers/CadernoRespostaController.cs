@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class CadernoRespostaController : ControllerBase
     public ActionResult CadernoRespostaCreate(CadernoResposta cadernoRespostaModel)
     {
         _cadernoRespostaRepository.Create(cadernoRespostaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class CadernoRespostaController : ControllerBase
     public ActionResult CadernoRespostaUpdate(CadernoResposta cadernoRespostaModel, Guid id) 
     {
         _cadernoRespostaRepository.Update(cadernoRespostaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class CadernoRespostaController : ControllerBase
     public ActionResult<CadernoResposta> CadernoRespostaDelete(Guid id)
     {
         _cadernoRespostaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

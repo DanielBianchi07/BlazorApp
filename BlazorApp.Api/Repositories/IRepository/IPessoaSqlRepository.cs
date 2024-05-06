@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Pessoa
-// variavel model = pessoa
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IPessoaRepository
 {

@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Alternativa
-// variavel model = alternativa
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IAlternativaRepository
 {

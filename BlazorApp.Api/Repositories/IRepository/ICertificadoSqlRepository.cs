@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Certificado
-// variavel model = certificado
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface ICertificadoRepository
 {

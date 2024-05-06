@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = ListaPresenca
-// variavel model = listaPresenca
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IListaPresencaRepository
 {

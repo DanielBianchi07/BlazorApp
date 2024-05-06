@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Aluno
-// variavel model = aluno
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IAlunoRepository
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class ConteudoProgramaticoController : ControllerBase
     public ActionResult ConteudoProgramaticoCreate(ConteudoProgramatico conteudoProgramaticoModel)
     {
         _conteudoProgramaticoRepository.Create(conteudoProgramaticoModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class ConteudoProgramaticoController : ControllerBase
     public ActionResult ConteudoProgramaticoUpdate(ConteudoProgramatico conteudoProgramaticoModel, Guid id) 
     {
         _conteudoProgramaticoRepository.Update(conteudoProgramaticoModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class ConteudoProgramaticoController : ControllerBase
     public ActionResult<ConteudoProgramatico> ConteudoProgramaticoDelete(Guid id)
     {
         _conteudoProgramaticoRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

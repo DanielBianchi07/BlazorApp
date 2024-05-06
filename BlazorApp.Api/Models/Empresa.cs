@@ -7,4 +7,6 @@ public class Empresa
     public string RazaoSocial { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public int Status { get; set; }
+
+    public List<string> Telefones { get; set; }
 }

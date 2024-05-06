@@ -1,10 +1,17 @@
+using BlazorApp.Api.Repositories.Interface;
+using BlazorApp.Api.Repositories.SqlRepository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services
-    .AddTransient<IEmpresaRepository, EmpresaSqlRepository>();
+
+builder.Services.AddTransient<IEmpresaRepository, EmpresaSqlRepository>();
+builder.Services.AddTransient<IAlunoEmpresaRepository, AlunoEmpresaSqlRepository>();
+builder.Services.AddTransient<IAlunoRepository, AlunoSqlRepository>();
+builder.Services.AddTransient<IPessoaRepository, PessoaSqlRepository>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -22,7 +29,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

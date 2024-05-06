@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = CadernoResposta
-// variavel model = cadernoResposta
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface ICadernoRespostaRepository
 {

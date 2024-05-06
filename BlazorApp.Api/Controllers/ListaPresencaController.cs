@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class ListaPresencaController : ControllerBase
     public ActionResult ListaPresencaCreate(ListaPresenca listaPresencaModel)
     {
         _listaPresencaRepository.Create(listaPresencaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class ListaPresencaController : ControllerBase
     public ActionResult ListaPresencaUpdate(ListaPresenca listaPresencaModel, Guid id) 
     {
         _listaPresencaRepository.Update(listaPresencaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class ListaPresencaController : ControllerBase
     public ActionResult<ListaPresenca> ListaPresencaDelete(Guid id)
     {
         _listaPresencaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

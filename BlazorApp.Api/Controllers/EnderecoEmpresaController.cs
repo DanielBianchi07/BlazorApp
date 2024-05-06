@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class EnderecoEmpresaController : ControllerBase
     public ActionResult EnderecoEmpresaCreate(EnderecoEmpresa enderecoEmpresaModel)
     {
         _enderecoEmpresaRepository.Create(enderecoEmpresaModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class EnderecoEmpresaController : ControllerBase
     public ActionResult EnderecoEmpresaUpdate(EnderecoEmpresa enderecoEmpresaModel, Guid id) 
     {
         _enderecoEmpresaRepository.Update(enderecoEmpresaModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class EnderecoEmpresaController : ControllerBase
     public ActionResult<EnderecoEmpresa> EnderecoEmpresaDelete(Guid id)
     {
         _enderecoEmpresaRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

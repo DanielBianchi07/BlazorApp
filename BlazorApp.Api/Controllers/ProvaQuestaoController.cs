@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class ProvaQuestaoController : ControllerBase
     public ActionResult ProvaQuestaoCreate(ProvaQuestao provaQuestaoModel)
     {
         _provaQuestaoRepository.Create(provaQuestaoModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class ProvaQuestaoController : ControllerBase
     public ActionResult ProvaQuestaoUpdate(ProvaQuestao provaQuestaoModel, Guid id) 
     {
         _provaQuestaoRepository.Update(provaQuestaoModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class ProvaQuestaoController : ControllerBase
     public ActionResult<ProvaQuestao> ProvaQuestaoDelete(Guid id)
     {
         _provaQuestaoRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

@@ -1,5 +1,8 @@
 using Microsoft.Data.SqlClient;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
+
+namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class EmpresaSqlRepository : DatabaseConnection, IEmpresaRepository
 {
@@ -35,7 +38,7 @@ public class EmpresaSqlRepository : DatabaseConnection, IEmpresaRepository
             empresa.CNPJ = reader.GetString(1);
             empresa.RazaoSocial = reader.GetString(2);
             empresa.Email = reader.GetString(3);
-            empresa.Status = reader.GetInt32(4);
+            empresa.Status = reader.GetInt16(4);
 
             empresas.Add(empresa);
         }

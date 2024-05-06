@@ -1,6 +1,6 @@
 using BlazorApp.Api.Models;
-// model = Prova
-// variavel model = prova
+
+namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IProvaRepository
 {

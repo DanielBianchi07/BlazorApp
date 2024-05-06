@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,7 +33,7 @@ public class TreinamentoController : ControllerBase
     public ActionResult TreinamentoCreate(Treinamento treinamentoModel)
     {
         _treinamentoRepository.Create(treinamentoModel);
-        return RedirectToAction("Read");
+        return Created();
     }
 
 
@@ -41,7 +41,7 @@ public class TreinamentoController : ControllerBase
     public ActionResult TreinamentoUpdate(Treinamento treinamentoModel, Guid id) 
     {
         _treinamentoRepository.Update(treinamentoModel, id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 
 
@@ -49,6 +49,6 @@ public class TreinamentoController : ControllerBase
     public ActionResult<Treinamento> TreinamentoDelete(Guid id)
     {
         _treinamentoRepository.Delete(id);
-        return RedirectToAction("Read");
+        return Ok();
     }
 }

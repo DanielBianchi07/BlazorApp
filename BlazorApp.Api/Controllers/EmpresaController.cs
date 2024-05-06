@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BlazorSystem.Api.Controllers;
+namespace BlazorApp.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

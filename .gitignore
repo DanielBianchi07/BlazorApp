@@ -203,5 +203,5 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-I_SqlRepository.cs
-SqlRepository.cs
+# NOVOS ARQUIVOS
+Templates/

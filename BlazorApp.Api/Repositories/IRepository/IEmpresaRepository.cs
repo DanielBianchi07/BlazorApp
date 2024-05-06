@@ -1,5 +1,7 @@
 using BlazorApp.Api.Models;
 
+namespace BlazorApp.Api.Repositories.Interface;
+
 public interface IEmpresaRepository
 {
     void Create(Empresa empresa);

@@ -1,10 +1,8 @@
 using Microsoft.Data.SqlClient;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
-// Model = Aluno
-// variavel do model = aluno
-// variavel no plural = alunos
-
+namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class AlunoSqlRepository : DatabaseConnection, IAlunoRepository
 {
@@ -15,10 +13,10 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoRepository
         cmd.CommandText = "INSERT INTO ALUNOS VALUES (@pessoa_id, @cpf, @rg, @assinatura, @usuario_id)";
 
         cmd.Parameters.AddWithValue("@pessoa_id", aluno.PessoaId);
-        cmd.Parameters.AddWithValue("@cnpj", aluno.CPF);
-        cmd.Parameters.AddWithValue("@razao_social", aluno.RG);
-        cmd.Parameters.AddWithValue("@email", aluno.Assinatura);
-        cmd.Parameters.AddWithValue("@status", aluno.UsuarioId);
+        cmd.Parameters.AddWithValue("@cpf", aluno.CPF);
+        cmd.Parameters.AddWithValue("@rg", aluno.RG);
+        cmd.Parameters.AddWithValue("@assinatura", aluno.Assinatura);
+        cmd.Parameters.AddWithValue("@usuario_id", aluno.UsuarioId);
 
         cmd.ExecuteNonQuery();
     }
@@ -67,7 +65,7 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM PESSOAS WHERE ID_PESSOA = @pessoa_id";
+        cmd.CommandText = "DELETE FROM ALUNOS WHERE ID_PESSOA = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();
