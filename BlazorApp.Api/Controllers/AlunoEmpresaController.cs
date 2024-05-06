@@ -30,18 +30,18 @@ public class AlunoEmpresaController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult AlunoEmpresaUpdate(AlunoEmpresa alunoEmpresaModel, Guid id) 
+    [HttpPut]
+    public ActionResult AlunoEmpresaUpdate(AlunoEmpresa alunoEmpresaModel, Guid aluno_id, Guid empresa_id) 
     {
-        _alunoEmpresaRepository.Update(alunoEmpresaModel, id);
+        _alunoEmpresaRepository.Update(alunoEmpresaModel, aluno_id, empresa_id);
         return Ok();
     }
 
 
-    [HttpDelete("{id}")]
-    public ActionResult<AlunoEmpresa> AlunoEmpresaDelete(Guid id)
+    [HttpDelete]
+    public ActionResult<AlunoEmpresa> AlunoEmpresaDelete(Guid aluno_id, Guid empresa_id)
     {
-        _alunoEmpresaRepository.Delete(id);
+        _alunoEmpresaRepository.Delete(aluno_id, empresa_id);
         return Ok();
     }
 }
