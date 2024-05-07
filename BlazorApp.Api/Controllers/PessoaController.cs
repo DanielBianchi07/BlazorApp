@@ -22,6 +22,13 @@ public class PessoaController : ControllerBase
         return Ok(pessoas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Pessoa>> PessoaReadId(Guid id)
+    {
+        IEnumerable<Pessoa> pessoas = _pessoaRepository.Read(id);
+        return Ok(pessoas);
+    }
+
     [HttpPost]
     public ActionResult PessoaCreate(Pessoa pessoaModel)
     {

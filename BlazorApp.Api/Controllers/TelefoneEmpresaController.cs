@@ -14,14 +14,20 @@ public class TelefoneEmpresaController : ControllerBase
         _telefoneEmpresaRepository = telefoneEmpresaRepository;
     }
 
-/*
     [HttpGet]
     public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead()
     {
         IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read();
         return Ok(telefoneEmpresas);
     }
-*/
+
+    [HttpGet]
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaReadId(Guid id)
+    {
+        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read(id);
+        return Ok(telefoneEmpresas);
+    }
+
     [HttpPost]
     public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel, Guid id)
     {

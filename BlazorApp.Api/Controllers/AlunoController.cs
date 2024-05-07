@@ -22,6 +22,13 @@ public class AlunoController : ControllerBase
         return Ok(alunos);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Aluno>> AlunoReadId(Guid id)
+    {
+        IEnumerable<Aluno> alunos = _alunoRepository.Read(id);
+        return Ok(alunos);
+    }
+
     [HttpPost]
     public ActionResult AlunoCreate(Aluno alunoModel)
     {

@@ -22,6 +22,13 @@ public class ConteudoProgramaticoController : ControllerBase
         return Ok(conteudoProgramaticos);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<ConteudoProgramatico>> ConteudoProgramaticoReadId(Guid id)
+    {
+        IEnumerable<ConteudoProgramatico> conteudoProgramaticos = _conteudoProgramaticoRepository.Read(id);
+        return Ok(conteudoProgramaticos);
+    }
+
     [HttpPost]
     public ActionResult ConteudoProgramaticoCreate(ConteudoProgramatico conteudoProgramaticoModel)
     {

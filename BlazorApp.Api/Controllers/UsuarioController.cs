@@ -22,6 +22,13 @@ public class UsuarioController : ControllerBase
         return Ok(usuarios);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Usuario>> UsuarioReadId(Guid id)
+    {
+        IEnumerable<Usuario> usuarios = _usuarioRepository.Read(id);
+        return Ok(usuarios);
+    }
+
     [HttpPost]
     public ActionResult UsuarioCreate(Usuario usuarioModel)
     {
