@@ -4,7 +4,7 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class CursoSqlRepository : DatabaseConnection, ICursoRepository
+public class CursoSqlRepository : DatabaseConnection, ICursoSqlRepository
 {
     public void Create(Curso curso)
     {
@@ -39,10 +39,10 @@ public class CursoSqlRepository : DatabaseConnection, ICursoRepository
             curso.Id = reader.GetGuid(0);
             curso.Nome = reader.GetString(1);
             curso.Logo = reader.GetString(2);
-            curso.CargaHorariaPeriodico = reader.GetInt16(3);
-            curso.CargaHorariaInicial = reader.GetInt16(4);
-            curso.Validade = reader.GetInt16(5);
-            curso.Status = reader.GetInt16(6);
+            curso.CargaHorariaPeriodico = reader.GetInt32(3);
+            curso.CargaHorariaInicial = reader.GetInt32(4);
+            curso.Validade = reader.GetInt32(5);
+            curso.Status = reader.GetInt32(6);
 
             cursos.Add(curso);
         }

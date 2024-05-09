@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class EnderecoEmpresaController : ControllerBase
 {
-    private readonly IEnderecoEmpresaRepository _enderecoEmpresaRepository;
+    private readonly IEnderecoEmpresaSqlRepository _enderecoEmpresaRepository;
 
-    public EnderecoEmpresaController(IEnderecoEmpresaRepository enderecoEmpresaRepository)
+    public EnderecoEmpresaController(IEnderecoEmpresaSqlRepository enderecoEmpresaRepository)
     {
         _enderecoEmpresaRepository = enderecoEmpresaRepository;
     }

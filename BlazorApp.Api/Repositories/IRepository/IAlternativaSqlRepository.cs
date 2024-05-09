@@ -2,10 +2,10 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IAlternativaRepository
+public interface IAlternativaSqlRepository
 {
     void Create(Alternativa alternativa);
     IEnumerable<Alternativa> Read();
-    void Update(Alternativa alternativa, Guid id);
+    void Update(Alternativa alternativa);
     void Delete(Guid id);
 }

@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface ITreinamentoRepository
+public interface ITreinamentoSqlRepository
 {
     void Create(Treinamento treinamento);
     IEnumerable<Treinamento> Read();

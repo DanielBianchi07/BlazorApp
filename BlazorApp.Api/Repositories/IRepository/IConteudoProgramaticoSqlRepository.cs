@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IConteudoProgramaticoRepository
+public interface IConteudoProgramaticoSqlRepository
 {
     void Create(ConteudoProgramatico conteudoProgramatico);
     IEnumerable<ConteudoProgramatico> Read();

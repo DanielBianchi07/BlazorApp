@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class CidadeController : ControllerBase
 {
-    private readonly ICidadeRepository _cidadeRepository;
+    private readonly ICidadeSqlRepository _cidadeRepository;
 
-    public CidadeController(ICidadeRepository cidadeRepository)
+    public CidadeController(ICidadeSqlRepository cidadeRepository)
     {
         _cidadeRepository = cidadeRepository;
     }

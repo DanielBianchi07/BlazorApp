@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface ICertificadoRepository
+public interface ICertificadoSqlRepository
 {
     void Create(Certificado certificado);
     IEnumerable<Certificado> Read();

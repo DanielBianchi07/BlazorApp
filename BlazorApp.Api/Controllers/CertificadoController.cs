@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class CertificadoController : ControllerBase
 {
-    private readonly ICertificadoRepository _certificadoRepository;
+    private readonly ICertificadoSqlRepository _certificadoRepository;
 
-    public CertificadoController(ICertificadoRepository certificadoRepository)
+    public CertificadoController(ICertificadoSqlRepository certificadoRepository)
     {
         _certificadoRepository = certificadoRepository;
     }

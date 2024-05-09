@@ -4,7 +4,7 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoRepository
+public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepository
 {
     public void Create(Treinamento treinamento)
     {
@@ -34,9 +34,9 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoReposito
         {
             Treinamento treinamento = new Treinamento();
             treinamento.Id = reader.GetGuid(0);
-            treinamento.Tipo = reader.GetInt16(1);
+            treinamento.Tipo = reader.GetInt32(1);
             treinamento.CursoId = reader.GetGuid(2);
-            treinamento.Status = reader.GetInt16(3);
+            treinamento.Status = reader.GetInt32(3);
 
             treinamentos.Add(treinamento);
         }

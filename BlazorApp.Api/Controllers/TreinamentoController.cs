@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class TreinamentoController : ControllerBase
 {
-    private readonly ITreinamentoRepository _treinamentoRepository;
+    private readonly ITreinamentoSqlRepository _treinamentoRepository;
 
-    public TreinamentoController(ITreinamentoRepository treinamentoRepository)
+    public TreinamentoController(ITreinamentoSqlRepository treinamentoRepository)
     {
         _treinamentoRepository = treinamentoRepository;
     }
