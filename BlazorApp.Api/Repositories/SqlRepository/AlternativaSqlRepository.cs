@@ -4,7 +4,7 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class AlternativaSqlRepository : DatabaseConnection, IAlternativaRepository
+public class AlternativaSqlRepository : DatabaseConnection, IAlternativaSqlRepository
 {
     public void Create(Alternativa alternativa)
     {
@@ -35,7 +35,7 @@ public class AlternativaSqlRepository : DatabaseConnection, IAlternativaReposito
             Alternativa alternativa = new Alternativa();
             alternativa.Id = reader.GetGuid(0);
             alternativa.Conteudo = reader.GetString(1);
-            alternativa.Status = reader.GetInt16(2);
+            alternativa.Status = reader.GetInt32(2);
             alternativa.QuestaoId = reader.GetGuid(3);
 
             alternativas.Add(alternativa);
@@ -44,13 +44,13 @@ public class AlternativaSqlRepository : DatabaseConnection, IAlternativaReposito
         return alternativas;
     }
 
-    public void Update(Alternativa alternativa, Guid id)
+    public void Update(Alternativa alternativa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "UPDATE ALTERNATIVAS SET CONTEUDO = @conteudo, STATUS = @status, QUESTAO_ID = @questao_id WHERE ID_ALTERNATIVA = @id";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@id", alternativa.Id);
         cmd.Parameters.AddWithValue("@conteudo", alternativa.Conteudo);
         cmd.Parameters.AddWithValue("@status", alternativa.Status);
         cmd.Parameters.AddWithValue("@questao_id", alternativa.QuestaoId);

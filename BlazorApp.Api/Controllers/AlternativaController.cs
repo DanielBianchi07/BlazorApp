@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using BlazorApp.Api.Repositories.Interface;
 using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Controllers;
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class AlternativaController : ControllerBase
 {
-    private readonly IAlternativaRepository _alternativaRepository;
+    private readonly IAlternativaSqlRepository _alternativaRepository;
 
-    public AlternativaController(IAlternativaRepository alternativaRepository)
+    public AlternativaController(IAlternativaSqlRepository alternativaRepository)
     {
         _alternativaRepository = alternativaRepository;
     }
@@ -30,10 +31,10 @@ public class AlternativaController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult AlternativaUpdate(Alternativa alternativaModel, Guid id) 
+    [HttpPut]
+    public ActionResult AlternativaUpdate(Alternativa alternativaModel) 
     {
-        _alternativaRepository.Update(alternativaModel, id);
+        _alternativaRepository.Update(alternativaModel);
         return Ok();
     }
 

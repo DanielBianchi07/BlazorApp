@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class ProvaController : ControllerBase
 {
-    private readonly IProvaRepository _provaRepository;
+    private readonly IProvaSqlRepository _provaRepository;
 
-    public ProvaController(IProvaRepository provaRepository)
+    public ProvaController(IProvaSqlRepository provaRepository)
     {
         _provaRepository = provaRepository;
     }

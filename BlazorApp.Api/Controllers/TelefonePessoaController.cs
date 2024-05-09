@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class TelefonePessoaController : ControllerBase
 {
-    private readonly ITelefonePessoaRepository _telefonePessoaRepository;
+    private readonly ITelefonePessoaSqlRepository _telefonePessoaRepository;
 
-    public TelefonePessoaController(ITelefonePessoaRepository telefonePessoaRepository)
+    public TelefonePessoaController(ITelefonePessoaSqlRepository telefonePessoaRepository)
     {
         _telefonePessoaRepository = telefonePessoaRepository;
     }
@@ -23,25 +24,25 @@ public class TelefonePessoaController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult TelefonePessoaCreate(TelefonePessoa telefonePessoaModel)
+    public ActionResult TelefonePessoaCreate(TelefonePessoa telefonePessoaModel, Guid idPessoa)
     {
-        _telefonePessoaRepository.Create(telefonePessoaModel);
+        _telefonePessoaRepository.Create(telefonePessoaModel, idPessoa);
         return Created();
     }
 
 
     [HttpPut("{id}")]
-    public ActionResult TelefonePessoaUpdate(TelefonePessoa telefonePessoaModel, Guid id) 
+    public ActionResult TelefonePessoaUpdate(TelefonePessoa telefonePessoaModel, Guid idPessoa, Guid idTelefone) 
     {
-        _telefonePessoaRepository.Update(telefonePessoaModel, id);
+        _telefonePessoaRepository.Update(telefonePessoaModel, idPessoa, idTelefone);
         return Ok();
     }
 
 
     [HttpDelete("{id}")]
-    public ActionResult<TelefonePessoa> TelefonePessoaDelete(Guid id)
+    public ActionResult<TelefonePessoa> TelefonePessoaDelete(Guid idPessoa, Guid idTelefone)
     {
-        _telefonePessoaRepository.Delete(id);
+        _telefonePessoaRepository.Delete(idPessoa, idTelefone);
         return Ok();
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class ListaPresencaController : ControllerBase
 {
-    private readonly IListaPresencaRepository _listaPresencaRepository;
+    private readonly IListaPresencaSqlRepository _listaPresencaRepository;
 
-    public ListaPresencaController(IListaPresencaRepository listaPresencaRepository)
+    public ListaPresencaController(IListaPresencaSqlRepository listaPresencaRepository)
     {
         _listaPresencaRepository = listaPresencaRepository;
     }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,21 +8,21 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class TelefoneEmpresaController : ControllerBase
 {
-    private readonly ITelefoneEmpresaRepository _telefoneEmpresaRepository;
+    private readonly ITelefoneEmpresaSqlRepository _telefoneEmpresaRepository;
 
-    public TelefoneEmpresaController(ITelefoneEmpresaRepository telefoneEmpresaRepository)
+    public TelefoneEmpresaController(ITelefoneEmpresaSqlRepository telefoneEmpresaRepository)
     {
         _telefoneEmpresaRepository = telefoneEmpresaRepository;
     }
 
-/*
+
     [HttpGet]
-    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead()
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead(Guid idEmpresa)
     {
-        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read();
+        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read(idEmpresa);
         return Ok(telefoneEmpresas);
     }
-*/
+
     [HttpPost]
     public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel, Guid id)
     {
@@ -31,17 +32,17 @@ public class TelefoneEmpresaController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public ActionResult TelefoneEmpresaUpdate(TelefoneEmpresa telefoneEmpresaModel, Guid id) 
+    public ActionResult TelefoneEmpresaUpdate(TelefoneEmpresa telefoneEmpresaModel, Guid idEmpresa, Guid idTelefone) 
     {
-        _telefoneEmpresaRepository.Update(telefoneEmpresaModel, id);
+        _telefoneEmpresaRepository.Update(telefoneEmpresaModel, idEmpresa, idTelefone);
         return Ok();
     }
 
 
     [HttpDelete("{id}")]
-    public ActionResult<TelefoneEmpresa> TelefoneEmpresaDelete(Guid id)
+    public ActionResult<TelefoneEmpresa> TelefoneEmpresaDelete(Guid idEmpresa, Guid idTelefone)
     {
-        _telefoneEmpresaRepository.Delete(id);
+        _telefoneEmpresaRepository.Delete(idEmpresa, idTelefone);
         return Ok();
     }
 }

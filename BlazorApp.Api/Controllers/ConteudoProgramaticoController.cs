@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class ConteudoProgramaticoController : ControllerBase
 {
-    private readonly IConteudoProgramaticoRepository _conteudoProgramaticoRepository;
+    private readonly IConteudoProgramaticoSqlRepository _conteudoProgramaticoRepository;
 
-    public ConteudoProgramaticoController(IConteudoProgramaticoRepository conteudoProgramaticoRepository)
+    public ConteudoProgramaticoController(IConteudoProgramaticoSqlRepository conteudoProgramaticoRepository)
     {
         _conteudoProgramaticoRepository = conteudoProgramaticoRepository;
     }

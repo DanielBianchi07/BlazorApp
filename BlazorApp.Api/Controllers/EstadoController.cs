@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class EstadoController : ControllerBase
 {
-    private readonly IEstadoRepository _estadoRepository;
+    private readonly IEstadoSqlRepository _estadoRepository;
 
-    public EstadoController(IEstadoRepository estadoRepository)
+    public EstadoController(IEstadoSqlRepository estadoRepository)
     {
         _estadoRepository = estadoRepository;
     }

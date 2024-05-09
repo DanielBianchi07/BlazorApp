@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface ICadernoRespostaRepository
+public interface ICadernoRespostaSqlRepository
 {
     void Create(CadernoResposta cadernoResposta);
     IEnumerable<CadernoResposta> Read();

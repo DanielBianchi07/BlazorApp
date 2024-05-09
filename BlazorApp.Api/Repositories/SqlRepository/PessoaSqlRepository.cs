@@ -4,7 +4,7 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class PessoaSqlRepository : DatabaseConnection, IPessoaRepository
+public class PessoaSqlRepository : DatabaseConnection, IPessoaSqlRepository
 {
     public void Create(Pessoa pessoa)
     {

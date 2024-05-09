@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class CadernoRespostaController : ControllerBase
 {
-    private readonly ICadernoRespostaRepository _cadernoRespostaRepository;
+    private readonly ICadernoRespostaSqlRepository _cadernoRespostaRepository;
 
-    public CadernoRespostaController(ICadernoRespostaRepository cadernoRespostaRepository)
+    public CadernoRespostaController(ICadernoRespostaSqlRepository cadernoRespostaRepository)
     {
         _cadernoRespostaRepository = cadernoRespostaRepository;
     }

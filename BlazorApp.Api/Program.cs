@@ -7,10 +7,31 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddTransient<IEmpresaRepository, EmpresaSqlRepository>();
-builder.Services.AddTransient<IAlunoEmpresaRepository, AlunoEmpresaSqlRepository>();
-builder.Services.AddTransient<IAlunoRepository, AlunoSqlRepository>();
-builder.Services.AddTransient<IPessoaRepository, PessoaSqlRepository>();
+builder.Services.AddTransient<IAlternativaSqlRepository, AlternativaSqlRepository>();
+builder.Services.AddTransient<IAlunoEmpresaSqlRepository, AlunoEmpresaSqlRepository>();
+builder.Services.AddTransient<IAlunoSqlRepository, AlunoSqlRepository>();
+builder.Services.AddTransient<IAlunoTreinamentoSqlRepository, AlunoTreinamentoSqlRepository>();
+builder.Services.AddTransient<ICadernoRespostaSqlRepository, CadernoRespostaSqlRepository>();
+builder.Services.AddTransient<ICertificadoSqlRepository, CertificadoSqlRepository>();
+builder.Services.AddTransient<ICidadeSqlRepository, CidadeSqlRepository>();
+builder.Services.AddTransient<IConteudoProgramaticoSqlRepository, ConteudoProgramaticoSqlRepository>();
+builder.Services.AddTransient<ICursoConteudoSqlRepository, CursoConteudoSqlRepository>();
+builder.Services.AddTransient<ICursoQuestaoSqlRepository, CursoQuestaoSqlRepository>();
+builder.Services.AddTransient<ICursoSqlRepository, CursoSqlRepository>();
+builder.Services.AddTransient<IEmpresaSqlRepository, EmpresaSqlRepository>();
+builder.Services.AddTransient<IEnderecoEmpresaSqlRepository, EnderecoEmpresaSqlRepository>();
+builder.Services.AddTransient<IEstadoSqlRepository, EstadoSqlRepository>();
+builder.Services.AddTransient<IInstrutorSqlRepository, InstrutorSqlRepository>();
+builder.Services.AddTransient<IInstrutorTreinamentoSqlRepository, InstrutorTreinamentoSqlRepository>();
+builder.Services.AddTransient<IListaPresencaSqlRepository, ListaPresencaSqlRepository>();
+builder.Services.AddTransient<IPessoaSqlRepository, PessoaSqlRepository>();
+builder.Services.AddTransient<IProvaQuestaoSqlRepository, ProvaQuestaoSqlRepository>();
+builder.Services.AddTransient<IProvaSqlRepository, ProvaSqlRepository>();
+builder.Services.AddTransient<IQuestaoSqlRepository, QuestaoSqlRepository>();
+builder.Services.AddTransient<ITelefonePessoaSqlRepository, TelefonePessoaSqlRepository>();
+builder.Services.AddTransient<ITelefoneEmpresaSqlRepository, TelefoneEmpresaSqlRepository>();
+builder.Services.AddTransient<ITreinamentoSqlRepository, TreinamentoSqlRepository>();
+builder.Services.AddTransient<IUsuarioSqlRepository, UsuarioSqlRepository>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

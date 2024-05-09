@@ -4,7 +4,7 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamentoRepository
+public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamentoSqlRepository
 {
     public void Create(AlunoTreinamento alunoTreinamento)
     {
@@ -38,7 +38,7 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
             alunoTreinamento.TreinamentoId = reader.GetGuid(1);
             alunoTreinamento.DataTreinamento = reader.GetDateTime(2);
             alunoTreinamento.DataInicioCertificado = reader.GetDateTime(3);
-            alunoTreinamento.Resultado = reader.GetInt16(4);
+            alunoTreinamento.Resultado = reader.GetInt32(4);
 
             alunosTreinamentos.Add(alunoTreinamento);
         }
@@ -50,7 +50,7 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID @treinamento_id, DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado";
+        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID = @treinamento_id, DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado";
 
         cmd.Parameters.AddWithValue("@pessoa_id", alunoTreinamento.PessoaId);
         cmd.Parameters.AddWithValue("@treinamento_id", alunoTreinamento.TreinamentoId);

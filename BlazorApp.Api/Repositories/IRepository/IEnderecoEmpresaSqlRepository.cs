@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IEnderecoEmpresaRepository
+public interface IEnderecoEmpresaSqlRepository
 {
     void Create(EnderecoEmpresa enderecoEmpresa);
     IEnumerable<EnderecoEmpresa> Read();

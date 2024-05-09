@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -8,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class EmpresaController : ControllerBase
 {
-    private readonly IEmpresaRepository _empresaRepository;
+    private readonly IEmpresaSqlRepository _empresaRepository;
 
-    public EmpresaController(IEmpresaRepository empresaRepository)
+    public EmpresaController(IEmpresaSqlRepository empresaRepository)
     {
         _empresaRepository = empresaRepository;
     }

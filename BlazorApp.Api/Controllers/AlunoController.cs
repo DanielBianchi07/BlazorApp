@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BlazorApp.Api.Models;
+using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Controllers;
 
@@ -7,9 +8,9 @@ namespace BlazorApp.Api.Controllers;
 [Route("api/[controller]")]
 public class AlunoController : ControllerBase
 {
-    private readonly IAlunoRepository _alunoRepository;
+    private readonly IAlunoSqlRepository _alunoRepository;
 
-    public AlunoController(IAlunoRepository alunoRepository)
+    public AlunoController(IAlunoSqlRepository alunoRepository)
     {
         _alunoRepository = alunoRepository;
     }

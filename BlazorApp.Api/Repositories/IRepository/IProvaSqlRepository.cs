@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IProvaRepository
+public interface IProvaSqlRepository
 {
     void Create(Prova prova);
     IEnumerable<Prova> Read();

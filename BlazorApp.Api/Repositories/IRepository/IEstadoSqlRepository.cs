@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IEstadoRepository
+public interface IEstadoSqlRepository
 {
     void Create(Estado estado);
     IEnumerable<Estado> Read();

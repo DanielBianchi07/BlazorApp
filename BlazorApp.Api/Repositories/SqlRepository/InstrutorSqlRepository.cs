@@ -4,15 +4,15 @@ using BlazorApp.Api.Repositories.Interface;
 
 namespace BlazorApp.Api.Repositories.SqlRepository;
 
-public class InstrutorSqlRepository : DatabaseConnection, IInstrutorRepository
+public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepository
 {
-    public void Create(Instrutor instrutor, Guid id)
+    public void Create(Instrutor instrutor)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "INSERT INTO INSTRUTORES VALUES (@id, @especializacao, @assinatura, @registro, @status)";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
         cmd.Parameters.AddWithValue("@especializacao", instrutor.Especializacao);
         cmd.Parameters.AddWithValue("@assinatura", instrutor.Assinatura);
         cmd.Parameters.AddWithValue("@registro", instrutor.Registro);

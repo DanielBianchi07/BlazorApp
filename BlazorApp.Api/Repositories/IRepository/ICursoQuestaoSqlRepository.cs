@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface ICursoQuestaoRepository
+public interface ICursoQuestaoSqlRepository
 {
     void Create(CursoQuestao cursoQuestao);
     IEnumerable<CursoQuestao> Read();

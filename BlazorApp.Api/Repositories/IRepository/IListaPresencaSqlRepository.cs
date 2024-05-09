@@ -2,7 +2,7 @@ using BlazorApp.Api.Models;
 
 namespace BlazorApp.Api.Repositories.Interface;
 
-public interface IListaPresencaRepository
+public interface IListaPresencaSqlRepository
 {
     void Create(ListaPresenca listaPresenca);
     IEnumerable<ListaPresenca> Read();
