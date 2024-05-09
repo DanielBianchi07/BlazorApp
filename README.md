@@ -6,6 +6,7 @@ Projeto interdisciplinar da faculdade em que é utilizado Blazor para front-end 
 ## Criar branch local e conectar com a branch remota
 
 1- Primeiro, certifique-se de que você já tenha clonado o repositório remoto para o seu computador local usando o comando git clone.\
+
 2- Crie uma nova branch local com o nome desejado usando o comando:\
 &emsp;``git branch nome-da-branch``
 
