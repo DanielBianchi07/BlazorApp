@@ -23,6 +23,13 @@ public class ProvaController : ControllerBase
         return Ok(provas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Prova>> ProvaReadId(Guid id)
+    {
+        IEnumerable<Prova> provas = _provaRepository.Read(id);
+        return Ok(provas);
+    }
+
     [HttpPost]
     public ActionResult ProvaCreate(Prova provaModel)
     {

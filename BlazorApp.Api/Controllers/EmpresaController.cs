@@ -17,14 +17,21 @@ public class EmpresaController : ControllerBase
 
 
     [HttpGet]
-    public ActionResult<IEnumerable<Empresa>> Read()
+    public ActionResult<IEnumerable<Empresa>> EmpresaRead()
     {
         IEnumerable<Empresa> empresas = _empresaRepository.Read();
         return Ok(empresas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Empresa>> EmpresaReadId(Guid id)
+    {
+        IEnumerable<Empresa> empresas = _empresaRepository.Read(id);
+        return Ok(empresas);
+    }
+
     [HttpPost]
-    public ActionResult Create(Empresa empresaModel)
+    public ActionResult EmpresaCreate(Empresa empresaModel)
     {
         _empresaRepository.Create(empresaModel);
         return Created();
@@ -32,7 +39,7 @@ public class EmpresaController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public ActionResult Update(Empresa empresaModel, Guid id) 
+    public ActionResult EmpresaUpdate(Empresa empresaModel, Guid id) 
     {
         _empresaRepository.Update(empresaModel, id);
         return Ok();
@@ -40,7 +47,7 @@ public class EmpresaController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    public ActionResult<Empresa> Delete(Guid id)
+    public ActionResult<Empresa> EmpresaDelete(Guid id)
     {
         _empresaRepository.Delete(id);
         return Ok();

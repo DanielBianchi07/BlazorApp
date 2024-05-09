@@ -23,6 +23,13 @@ public class TelefonePessoaController : ControllerBase
         return Ok(telefonePessoas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<TelefonePessoa>> TelefonePessoaReadId(Guid id)
+    {
+        IEnumerable<TelefonePessoa> telefonePessoas = _telefonePessoaRepository.Read(id);
+        return Ok(telefonePessoas);
+    }
+
     [HttpPost]
     public ActionResult TelefonePessoaCreate(TelefonePessoa telefonePessoaModel, Guid idPessoa)
     {

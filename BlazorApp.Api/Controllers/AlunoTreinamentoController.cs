@@ -23,6 +23,13 @@ public class AlunoTreinamentoController : ControllerBase
         return Ok(alunoTreinamentos);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<AlunoTreinamento>> AlunoTreinamentoReadId(Guid id)
+    {
+        IEnumerable<AlunoTreinamento> alunoTreinamentos = _alunoTreinamentoRepository.Read(id);
+        return Ok(alunoTreinamentos);
+    }
+
     [HttpPost]
     public ActionResult AlunoTreinamentoCreate(AlunoTreinamento alunoTreinamentoModel)
     {
