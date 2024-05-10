@@ -23,6 +23,13 @@ public class AlternativaController : ControllerBase
         return Ok(alternativas);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<Alternativa>> AlternativaReadId(Guid id)
+    {
+        IEnumerable<Alternativa> alternativas = _alternativaRepository.Read(id);
+        return Ok(alternativas);
+    }
+
     [HttpPost]
     public ActionResult AlternativaCreate(Alternativa alternativaModel)
     {

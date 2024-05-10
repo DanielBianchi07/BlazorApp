@@ -15,7 +15,6 @@ public class TelefoneEmpresaController : ControllerBase
         _telefoneEmpresaRepository = telefoneEmpresaRepository;
     }
 
-
     [HttpGet]
     public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead(Guid idEmpresa)
     {

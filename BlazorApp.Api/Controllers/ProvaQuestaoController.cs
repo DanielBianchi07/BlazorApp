@@ -23,6 +23,13 @@ public class ProvaQuestaoController : ControllerBase
         return Ok(provaQuestoes);
     }
 
+    [HttpGet]
+    public ActionResult<IEnumerable<ProvaQuestao>> ProvaQuestaoReadId(Guid id)
+    {
+        IEnumerable<ProvaQuestao> provaQuestoes = _provaQuestaoRepository.Read(id);
+        return Ok(provaQuestoes);
+    }
+
     [HttpPost]
     public ActionResult ProvaQuestaoCreate(ProvaQuestao provaQuestaoModel)
     {
