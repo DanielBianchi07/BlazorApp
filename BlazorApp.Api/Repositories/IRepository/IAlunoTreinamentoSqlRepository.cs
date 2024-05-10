@@ -6,6 +6,6 @@ public interface IAlunoTreinamentoSqlRepository
 {
     void Create(AlunoTreinamento alunoTreinamento);
     IEnumerable<AlunoTreinamento> Read();
-    void Update(AlunoTreinamento alunoTreinamento, Guid id);
+    void Update(AlunoTreinamento alunoTreinamento, Guid idAluno, Guid idTreinamento);
     void Delete(Guid id);
 }

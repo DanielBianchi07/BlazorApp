@@ -65,9 +65,9 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM ALUNOS WHERE ID_PESSOA = @pessoa_id";
+        cmd.CommandText = "DELETE FROM ALUNOS WHERE PESSOA_ID = @pessoa_id";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@pessoa_id", id);
         cmd.ExecuteNonQuery();
     }
 }

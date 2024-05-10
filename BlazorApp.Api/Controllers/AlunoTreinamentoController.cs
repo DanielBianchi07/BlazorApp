@@ -31,10 +31,10 @@ public class AlunoTreinamentoController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult AlunoTreinamentoUpdate(AlunoTreinamento alunoTreinamentoModel, Guid id) 
+    [HttpPut]
+    public ActionResult AlunoTreinamentoUpdate(AlunoTreinamento alunoTreinamento, Guid idAluno, Guid idTreinamento) 
     {
-        _alunoTreinamentoRepository.Update(alunoTreinamentoModel, id);
+        _alunoTreinamentoRepository.Update(alunoTreinamento, idAluno, idTreinamento);
         return Ok();
     }
 

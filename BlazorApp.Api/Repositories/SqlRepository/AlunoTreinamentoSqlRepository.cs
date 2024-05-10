@@ -46,14 +46,14 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
         return alunosTreinamentos;
     }
 
-    public void Update(AlunoTreinamento alunoTreinamento, Guid id)
+    public void Update(AlunoTreinamento alunoTreinamento, Guid idAluno, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID = @treinamento_id, DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado";
+        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado WHERE PESSOA_ID = @idAluno and TREINAMENTO_ID = @idTreinamento";
 
-        cmd.Parameters.AddWithValue("@pessoa_id", alunoTreinamento.PessoaId);
-        cmd.Parameters.AddWithValue("@treinamento_id", alunoTreinamento.TreinamentoId);
+        cmd.Parameters.AddWithValue("@idAluno", idAluno);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
         cmd.Parameters.AddWithValue("@data_treinamento", alunoTreinamento.DataTreinamento);
         cmd.Parameters.AddWithValue("@data_inicio_certificado", alunoTreinamento.DataInicioCertificado);
         cmd.Parameters.AddWithValue("@resultado", alunoTreinamento.Resultado);
