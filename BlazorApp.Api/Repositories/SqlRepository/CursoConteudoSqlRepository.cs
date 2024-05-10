@@ -42,6 +42,31 @@ public class CursoConteudoSqlRepository : DatabaseConnection, ICursoConteudoSqlR
         return cursoConteudos;
     }
 
+    public IEnumerable<CursoConteudo> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM CURSOS_CONTEUDOS WHERE CONTEUDO_ID = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<CursoConteudo> cursoConteudos = new List<CursoConteudo>();
+
+        while(reader.Read())
+        {
+            CursoConteudo cursoConteudo = new CursoConteudo();
+            cursoConteudo.CursoId = reader.GetGuid(0);
+            cursoConteudo.ConteudoProgramaticoId = reader.GetGuid(1);
+            cursoConteudo.Status = reader.GetInt32(2);
+
+            cursoConteudos.Add(cursoConteudo);
+        }
+
+        return cursoConteudos;
+    }
+
     public void Update(CursoConteudo cursoConteudo, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

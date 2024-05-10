@@ -23,7 +23,7 @@ public class ProvaController : ControllerBase
         return Ok(provas);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Prova>> ProvaReadId(Guid id)
     {
         IEnumerable<Prova> provas = _provaRepository.Read(id);

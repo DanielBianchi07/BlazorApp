@@ -6,6 +6,7 @@ public interface IAlternativaSqlRepository
 {
     void Create(Alternativa alternativa);
     IEnumerable<Alternativa> Read();
-    void Update(Alternativa alternativa);
+    IEnumerable<Alternativa> Read(Guid id);
+    void Update(Alternativa alternativa, Guid id);
     void Delete(Guid id);
 }

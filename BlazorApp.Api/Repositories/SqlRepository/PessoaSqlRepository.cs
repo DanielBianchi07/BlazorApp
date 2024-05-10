@@ -41,6 +41,30 @@ public class PessoaSqlRepository : DatabaseConnection, IPessoaSqlRepository
         return pessoas;
     }
 
+    public IEnumerable<Pessoa> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM PESSOAS WHERE ID_PESSOA = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Pessoa> pessoas = new List<Pessoa>();
+
+        while(reader.Read())
+        {
+            Pessoa pessoa = new Pessoa();
+            pessoa.Id = reader.GetGuid(0);
+            pessoa.Nome = reader.GetString(1);
+            pessoa.Email = reader.GetString(2);
+            pessoas.Add(pessoa);
+        }
+
+        return pessoas;
+    }
+
     public void Update(Pessoa pessoa, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

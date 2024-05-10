@@ -6,6 +6,7 @@ public interface IQuestaoSqlRepository
 {
     void Create(Questao questao);
     IEnumerable<Questao> Read();
+    IEnumerable<Questao> Read(Guid id);
     void Update(Questao questao, Guid id);
     void Delete(Guid id);
 }

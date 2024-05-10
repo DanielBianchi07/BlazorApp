@@ -23,10 +23,10 @@ public class AlunoEmpresaController : ControllerBase
         return Ok(alunoEmpresas);
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<AlunoEmpresa>> AlunoEmpresaReadId(Guid id)
+    [HttpGet("{alunoId}/{empresaId}")]
+    public ActionResult<IEnumerable<AlunoEmpresa>> AlunoEmpresaReadId(Guid alunoId, Guid empresaId)
     {
-        IEnumerable<AlunoEmpresa> alunoEmpresas = _alunoEmpresaRepository.Read(id);
+        IEnumerable<AlunoEmpresa> alunoEmpresas = _alunoEmpresaRepository.Read(alunoId, empresaId);
         return Ok(alunoEmpresas);
     }
 
@@ -38,18 +38,18 @@ public class AlunoEmpresaController : ControllerBase
     }
 
 
-    [HttpPut]
-    public ActionResult AlunoEmpresaUpdate(AlunoEmpresa alunoEmpresaModel, Guid aluno_id, Guid empresa_id) 
+    [HttpPut("{alunoId}/{empresaId}")]
+    public ActionResult AlunoEmpresaUpdate(AlunoEmpresa alunoEmpresaModel, Guid alunoId, Guid empresaId) 
     {
-        _alunoEmpresaRepository.Update(alunoEmpresaModel, aluno_id, empresa_id);
+        _alunoEmpresaRepository.Update(alunoEmpresaModel, alunoId, empresaId);
         return Ok();
     }
 
 
-    [HttpDelete]
-    public ActionResult<AlunoEmpresa> AlunoEmpresaDelete(Guid aluno_id, Guid empresa_id)
+    [HttpDelete("{alunoId}/{empresaId}")]
+    public ActionResult<AlunoEmpresa> AlunoEmpresaDelete(Guid alunoId, Guid empresaId)
     {
-        _alunoEmpresaRepository.Delete(aluno_id, empresa_id);
+        _alunoEmpresaRepository.Delete(alunoId, empresaId);
         return Ok();
     }
 }

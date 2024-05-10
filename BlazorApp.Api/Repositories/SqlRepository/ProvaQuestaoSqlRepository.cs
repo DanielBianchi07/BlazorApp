@@ -40,6 +40,30 @@ public class ProvaQuestaoSqlRepository : DatabaseConnection, IProvaQuestaoSqlRep
         return provaQuestoes;
     }
 
+    public IEnumerable<ProvaQuestao> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM PROVAS_QUESTOES WHERE QUESTAO_ID = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<ProvaQuestao> provaQuestoes = new List<ProvaQuestao>();
+
+        while(reader.Read())
+        {
+            ProvaQuestao provaQuestao = new ProvaQuestao();
+            provaQuestao.ProvaId = reader.GetGuid(0);
+            provaQuestao.QuestaoId = reader.GetGuid(1);
+
+            provaQuestoes.Add(provaQuestao);
+        }
+
+        return provaQuestoes;
+    }
+
     public void Update(ProvaQuestao provaQuestao, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

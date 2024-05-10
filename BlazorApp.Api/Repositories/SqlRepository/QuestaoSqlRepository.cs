@@ -40,6 +40,30 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
         return questoes;
     }
 
+    public IEnumerable<Questao> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM QUESTOES WHERE ID_QUESTAO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Questao> questoes = new List<Questao>();
+
+        while(reader.Read())
+        {
+            Questao questao = new Questao();
+            questao.Id = reader.GetGuid(0);
+            questao.Conteudo = reader.GetString(1);
+
+            questoes.Add(questao);
+        }
+
+        return questoes;
+    }
+
     public void Update(Questao questao, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

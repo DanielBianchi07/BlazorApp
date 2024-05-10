@@ -44,6 +44,32 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
         return treinamentos;
     }
 
+    public IEnumerable<Treinamento> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM TREINAMENTOS WHERE ID_TREINAMENTO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Treinamento> treinamentos = new List<Treinamento>();
+
+        while(reader.Read())
+        {
+            Treinamento treinamento = new Treinamento();
+            treinamento.Id = reader.GetGuid(0);
+            treinamento.Tipo = reader.GetInt32(1);
+            treinamento.CursoId = reader.GetGuid(2);
+            treinamento.Status = reader.GetInt32(3);
+
+            treinamentos.Add(treinamento);
+        }
+
+        return treinamentos;
+    }
+
     public void Update(Treinamento treinamento, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

@@ -42,6 +42,31 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
         return listaPresencas;
     }
 
+    public IEnumerable<ListaPresenca> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM LISTAS_PRESENCAS WHERE ID_TREINAMENTO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<ListaPresenca> listaPresencas = new List<ListaPresenca>();
+
+        while(reader.Read())
+        {
+            ListaPresenca listaPresenca = new ListaPresenca();
+            listaPresenca.TreinamentoId = reader.GetGuid(0);
+            listaPresenca.Codigo = reader.GetString(1);
+            listaPresenca.DataEmissao = reader.GetDateTime(2);
+
+            listaPresencas.Add(listaPresenca);
+        }
+
+        return listaPresencas;
+    }
+
     public void Update(ListaPresenca listaPresenca, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

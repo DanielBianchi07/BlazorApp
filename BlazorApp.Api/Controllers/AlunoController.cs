@@ -23,7 +23,7 @@ public class AlunoController : ControllerBase
         return Ok(alunos);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Aluno>> AlunoReadId(Guid id)
     {
         IEnumerable<Aluno> alunos = _alunoRepository.Read(id);

@@ -23,7 +23,7 @@ public class CadernoRespostaController : ControllerBase
         return Ok(cadernoRespostas);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<CadernoResposta>> CadernoRespostaReadId(Guid id)
     {
         IEnumerable<CadernoResposta> cadernoRespostas = _cadernoRespostaRepository.Read(id);

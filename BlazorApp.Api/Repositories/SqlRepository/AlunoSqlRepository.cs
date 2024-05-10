@@ -46,6 +46,33 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
         return alunos;
     }
 
+    public IEnumerable<Aluno> Read(Guid idPessoa)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM ALUNOS WHERE PESSOA_ID = @pessoa_id";
+
+        cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Aluno> alunos = new List<Aluno>();
+
+        while(reader.Read())
+        {
+            Aluno aluno = new Aluno();
+            aluno.PessoaId = reader.GetGuid(0);
+            aluno.CPF = reader.GetString(1);
+            aluno.RG = reader.GetString(2);
+            aluno.Assinatura = reader.GetString(3);
+            aluno.UsuarioId = reader.GetGuid(4);
+
+            alunos.Add(aluno);
+        }
+
+        return alunos;
+    }
+
     public void Update(Aluno aluno, Guid id)
     {
         SqlCommand cmd = new SqlCommand();
@@ -65,7 +92,7 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM ALUNOS WHERE PESSOA_ID = @pessoa_id";
+        cmd.CommandText = "DELETE FROM ALUNOS WHERE ID_PESSOA = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@pessoa_id", id);
         cmd.ExecuteNonQuery();

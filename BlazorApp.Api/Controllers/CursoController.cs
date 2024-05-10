@@ -23,7 +23,7 @@ public class CursoController : ControllerBase
         return Ok(cursos);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Curso>> CursoReadId(Guid id)
     {
         IEnumerable<Curso> cursos = _cursoRepository.Read(id);

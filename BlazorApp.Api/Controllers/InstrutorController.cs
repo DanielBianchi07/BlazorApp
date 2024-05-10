@@ -23,7 +23,7 @@ public class InstrutorController : ControllerBase
         return Ok(instrutores);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Instrutor>> InstrutorReadId(Guid id)
     {
         IEnumerable<Instrutor> instrutores = _instrutorRepository.Read(id);

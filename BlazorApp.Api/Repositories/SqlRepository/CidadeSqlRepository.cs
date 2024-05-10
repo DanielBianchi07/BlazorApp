@@ -42,6 +42,31 @@ public class CidadeSqlRepository : DatabaseConnection, ICidadeSqlRepository
         return cidades;
     }
 
+    public IEnumerable<Cidade> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM CIDADES WHERE ID_CIDADE = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Cidade> cidades = new List<Cidade>();
+
+        while(reader.Read())
+        {
+            Cidade cidade = new Cidade();
+            cidade.Id = reader.GetGuid(0);
+            cidade.Nome = reader.GetString(1);
+            cidade.EstadoId = reader.GetGuid(2);
+
+            cidades.Add(cidade);
+        }
+
+        return cidades;
+    }
+
     public void Update(Cidade cidade, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

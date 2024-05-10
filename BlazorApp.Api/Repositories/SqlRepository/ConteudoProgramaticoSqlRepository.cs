@@ -42,6 +42,31 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
         return conteudoProgramaticos;
     }
 
+    public IEnumerable<ConteudoProgramatico> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM COTEUDOS_PROGRAMATICOS WHERE ID_CONTEUDO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<ConteudoProgramatico> conteudoProgramaticos = new List<ConteudoProgramatico>();
+
+        while(reader.Read())
+        {
+            ConteudoProgramatico conteudoProgramatico = new ConteudoProgramatico();
+            conteudoProgramatico.Id = reader.GetGuid(0);
+            conteudoProgramatico.Assunto = reader.GetString(1);
+            conteudoProgramatico.CargaHoraria = reader.GetInt32(2);
+
+            conteudoProgramaticos.Add(conteudoProgramatico);
+        }
+
+        return conteudoProgramaticos;
+    }
+
     public void Update(ConteudoProgramatico conteudoProgramatico, Guid id)
     {
         SqlCommand cmd = new SqlCommand();
