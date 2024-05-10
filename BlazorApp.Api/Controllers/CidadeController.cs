@@ -23,7 +23,7 @@ public class CidadeController : ControllerBase
         return Ok(cidades);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Cidade>> CidadeReadId(Guid id)
     {
         IEnumerable<Cidade> cidades = _cidadeRepository.Read(id);

@@ -14,7 +14,5 @@ public class AlunoTreinamento
     [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
     public DateTime DataInicioCertificado { get; set; }
     public int Resultado { get; set; }
-    public Pessoa Pessoa { get; set; }
-
-    
+    //public Pessoa Pessoa { get; set; }
 }

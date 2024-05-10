@@ -23,7 +23,7 @@ public class EmpresaController : ControllerBase
         return Ok(empresas);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Empresa>> EmpresaReadId(Guid id)
     {
         IEnumerable<Empresa> empresas = _empresaRepository.Read(id);

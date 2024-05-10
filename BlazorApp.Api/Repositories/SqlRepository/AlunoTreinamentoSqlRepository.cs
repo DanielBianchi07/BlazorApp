@@ -46,7 +46,7 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
         return alunosTreinamentos;
     }
 
-    public void Update(AlunoTreinamento alunoTreinamento, Guid id)
+     public IEnumerable<AlunoTreinamento> Read(Guid idTreinamento, Guid idAluno)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -61,13 +61,14 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idTreinamento, Guid idAluno)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM ALUNOS_TREINAMENTOS WHERE TREINAMENTO_ID = @id";
+        cmd.CommandText = "DELETE FROM ALUNOS_TREINAMENTOS WHERE TREINAMENTO_ID = @idTreinamento AND PESSOA_ID = @idAluno";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
+        cmd.Parameters.AddWithValue("@idAluno", idAluno);
         cmd.ExecuteNonQuery();
     }
 }

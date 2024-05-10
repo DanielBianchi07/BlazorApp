@@ -46,6 +46,33 @@ public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepositor
         return instrutores;
     }
 
+    public IEnumerable<Instrutor> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM INSTRUTORES WHERE PESSOA_ID = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Instrutor> instrutores = new List<Instrutor>();
+
+        while(reader.Read())
+        {
+            Instrutor instrutor = new Instrutor();
+            instrutor.PessoaId = reader.GetGuid(0);
+            instrutor.Especializacao = reader.GetString(1);
+            instrutor.Assinatura = reader.GetString(2);
+            instrutor.Registro = reader.GetString(3);
+            instrutor.Status = reader.GetInt32(4);
+
+            instrutores.Add(instrutor);
+        }
+
+        return instrutores;
+    }
+
     public void Update(Instrutor instrutor, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

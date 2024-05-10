@@ -23,7 +23,7 @@ public class TreinamentoController : ControllerBase
         return Ok(treinamentos);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Treinamento>> TreinamentoReadId(Guid id)
     {
         IEnumerable<Treinamento> treinamentos = _treinamentoRepository.Read(id);

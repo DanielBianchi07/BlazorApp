@@ -23,7 +23,7 @@ public class CertificadoController : ControllerBase
         return Ok(certificados);
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public ActionResult<IEnumerable<Certificado>> CertificadoReadId(Guid id)
     {
         IEnumerable<Certificado> certificados = _certificadoRepository.Read(id);
