@@ -10,10 +10,10 @@ public class ProvaQuestaoSqlRepository : DatabaseConnection, IProvaQuestaoSqlRep
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO PROVAS_QUESTOES VALUES (@prova_id, @questao_id)";
+        cmd.CommandText = "INSERT INTO PROVAS_QUESTOES VALUES (@idProva, @idQuestao)";
 
-        cmd.Parameters.AddWithValue("@id_treinamento", provaQuestao.ProvaId);
-        cmd.Parameters.AddWithValue("@codigo", provaQuestao.QuestaoId);
+        cmd.Parameters.AddWithValue("@idProva", provaQuestao.ProvaId);
+        cmd.Parameters.AddWithValue("@idQuestao", provaQuestao.QuestaoId);
 
         cmd.ExecuteNonQuery();
     }
@@ -40,13 +40,14 @@ public class ProvaQuestaoSqlRepository : DatabaseConnection, IProvaQuestaoSqlRep
         return provaQuestoes;
     }
 
-    public IEnumerable<ProvaQuestao> Read(Guid id)
+    public IEnumerable<ProvaQuestao> Read(Guid idQuestao, Guid idProva)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM PROVAS_QUESTOES WHERE QUESTAO_ID = @id";
+        cmd.CommandText = "SELECT * FROM PROVAS_QUESTOES WHERE QUESTAO_ID = @idQuestao AND PROVA_ID = @idProva";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idQuestao", idQuestao);
+        cmd.Parameters.AddWithValue("@idProva", idProva);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -76,13 +77,14 @@ public class ProvaQuestaoSqlRepository : DatabaseConnection, IProvaQuestaoSqlRep
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idQuestao, Guid idProva)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM PROVAS_QUESTOES WHERE QUESTAO_ID = @id";
+        cmd.CommandText = "DELETE FROM PROVAS_QUESTOES WHERE QUESTAO_ID = @idQuestao AND PROVA_ID = @idProva";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idProva", idProva);
+        cmd.Parameters.AddWithValue("@idQuestao", idQuestao);
         cmd.ExecuteNonQuery();
     }
 }

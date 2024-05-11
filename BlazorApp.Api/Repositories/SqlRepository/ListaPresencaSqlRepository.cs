@@ -10,9 +10,9 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO LISTAS_PRESENCAS VALUES (@id_treinamento, @codigo, @data)";
+        cmd.CommandText = "INSERT INTO LISTAS_PRESENCAS VALUES (@idTreinamento, @codigo, @data)";
 
-        cmd.Parameters.AddWithValue("@id_treinamento", listaPresenca.TreinamentoId);
+        cmd.Parameters.AddWithValue("@idTreinamento", listaPresenca.TreinamentoId);
         cmd.Parameters.AddWithValue("@codigo", listaPresenca.Codigo);
         cmd.Parameters.AddWithValue("@data", listaPresenca.DataEmissao);
 
@@ -42,13 +42,13 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
         return listaPresencas;
     }
 
-    public IEnumerable<ListaPresenca> Read(Guid id)
+    public IEnumerable<ListaPresenca> Read(Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM LISTAS_PRESENCAS WHERE ID_TREINAMENTO = @id";
+        cmd.CommandText = "SELECT * FROM LISTAS_PRESENCAS WHERE ID_TREINAMENTO = @idTreinamento";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -67,26 +67,26 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
         return listaPresencas;
     }
 
-    public void Update(ListaPresenca listaPresenca, Guid id)
+    public void Update(ListaPresenca listaPresenca, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE LISTAS_PRESENCAS SET ID_TREINAMENTO = @id_treinamento, CODIGO = @codigo, DATA = @data";
+        cmd.CommandText = "UPDATE LISTAS_PRESENCAS SET CODIGO = @codigo, DATA = @data WHERE ID_TREINAMENTO = @idTreinamento";
 
-        cmd.Parameters.AddWithValue("@id_treinamento", listaPresenca.TreinamentoId);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
         cmd.Parameters.AddWithValue("@codigo", listaPresenca.Codigo);
         cmd.Parameters.AddWithValue("@data", listaPresenca.DataEmissao);
 
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM LISTAS_PRESENCAS WHERE ID_TREINAMENTO = @id";
+        cmd.CommandText = "DELETE FROM LISTAS_PRESENCAS WHERE ID_TREINAMENTO = @idTreinamento";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
         cmd.ExecuteNonQuery();
     }
 }

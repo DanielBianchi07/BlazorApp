@@ -42,13 +42,14 @@ public class ProvaSqlRepository : DatabaseConnection, IProvaSqlRepository
         return provas;
     }
 
-    public IEnumerable<Prova> Read(Guid id)
+    public IEnumerable<Prova> Read(Guid idProva, Guid idPessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM PROVAS WHERE ID_PROVA = @id";
+        cmd.CommandText = "SELECT * FROM PROVAS WHERE ID_PROVA = @idProva AND PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idProva", idProva);
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -67,26 +68,27 @@ public class ProvaSqlRepository : DatabaseConnection, IProvaSqlRepository
         return provas;
     }
 
-    public void Update(Prova prova, Guid id)
+    public void Update(Prova prova, Guid idProva, Guid idPessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE PROVAS SET ID_PROVA = @id_prova, DATA_PROVA = @data_prova, PESSOA_ID = pessoa_id";
+        cmd.CommandText = "UPDATE PROVAS SET DATA_PROVA = @dataProva WHERE ID_PROVA = @idProva AND PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id_prova", prova.Id);
-        cmd.Parameters.AddWithValue("@data_prova", prova.DataRealizacao);
-        cmd.Parameters.AddWithValue("@pessoa_id", prova.PessoaId);
+        cmd.Parameters.AddWithValue("@idProva", idProva);
+        cmd.Parameters.AddWithValue("@dataProva", prova.DataRealizacao);
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
 
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idProva, Guid idPessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM PROVAS WHERE ID_PROVA = @id";
+        cmd.CommandText = "DELETE FROM PROVAS WHERE ID_PROVA = @idProva AND PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idProva", idProva);
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
         cmd.ExecuteNonQuery();
     }
 }

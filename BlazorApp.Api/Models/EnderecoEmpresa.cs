@@ -7,7 +7,7 @@ public class EnderecoEmpresa
     public string NomeRua { get; set; } = string.Empty;
     public int Numero { get; set; }
     public string Bairro { get; set; } = string.Empty;
-    public string Complemento { get; set; } = string.Empty;
+    public string? Complemento { get; set; } = string.Empty;
     public Guid CidadeId { get; set; }
     public Guid EmpresaId { get; set; }
 }

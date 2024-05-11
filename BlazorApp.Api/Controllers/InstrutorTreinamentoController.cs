@@ -23,10 +23,10 @@ public class InstrutorTreinamentoController : ControllerBase
         return Ok(instrutorTreinamentos);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<InstrutorTreinamento>> InstrutorTreinamentoReadId(Guid id)
+    [HttpGet("{idPessoa}/{idTreinamento}")]
+    public ActionResult<IEnumerable<InstrutorTreinamento>> InstrutorTreinamentoReadId(Guid idPessoa, Guid idTreinamento)
     {
-        IEnumerable<InstrutorTreinamento> instrutorTreinamentos = _instrutorTreinamentoRepository.Read(id);
+        IEnumerable<InstrutorTreinamento> instrutorTreinamentos = _instrutorTreinamentoRepository.Read(idPessoa, idTreinamento);
         return Ok(instrutorTreinamentos);
     }
 
@@ -38,18 +38,18 @@ public class InstrutorTreinamentoController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult InstrutorTreinamentoUpdate(InstrutorTreinamento instrutorTreinamentoModel, Guid id) 
+    [HttpPut("{idPessoa}/{idTreinamento}")]
+    public ActionResult InstrutorTreinamentoUpdate(InstrutorTreinamento instrutorTreinamentoModel, Guid idPessoa, Guid idTreinamento) 
     {
-        _instrutorTreinamentoRepository.Update(instrutorTreinamentoModel, id);
+        _instrutorTreinamentoRepository.Update(instrutorTreinamentoModel, idPessoa, idTreinamento);
         return Ok();
     }
 
 
-    [HttpDelete("{id}")]
-    public ActionResult<InstrutorTreinamento> InstrutorTreinamentoDelete(Guid id)
+    [HttpDelete("{idPessoa}/{idTreinamento}")]
+    public ActionResult<InstrutorTreinamento> InstrutorTreinamentoDelete(Guid idPessoa, Guid idTreinamento)
     {
-        _instrutorTreinamentoRepository.Delete(id);
+        _instrutorTreinamentoRepository.Delete(idPessoa, idTreinamento);
         return Ok();
     }
 }

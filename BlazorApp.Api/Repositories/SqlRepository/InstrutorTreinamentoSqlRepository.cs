@@ -10,10 +10,10 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO INSTRUTORES_TREINAMENTOS VALUES (@pessoa_id, @treinamento_id)";
+        cmd.CommandText = "INSERT INTO INSTRUTORES_TREINAMENTOS VALUES (@idPessoa, @idTreinamento)";
 
-        cmd.Parameters.AddWithValue("@pessoa_id", instrutorTreinamento.PessoaId);
-        cmd.Parameters.AddWithValue("@treinamento_id", instrutorTreinamento.TreinamentoId);
+        cmd.Parameters.AddWithValue("@idPessoa", instrutorTreinamento.PessoaId);
+        cmd.Parameters.AddWithValue("@idTreinamento", instrutorTreinamento.TreinamentoId);
 
         cmd.ExecuteNonQuery();
     }
@@ -40,13 +40,13 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
         return instrutorTreinamentos;
     }
 
-     public IEnumerable<InstrutorTreinamento> Read(Guid id)
+     public IEnumerable<InstrutorTreinamento> Read(Guid idPessoa, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM INSTRUTORES_TREINAMENTOS WHERE PESSOA_ID = @id";
+        cmd.CommandText = "SELECT * FROM INSTRUTORES_TREINAMENTOS WHERE PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -64,25 +64,26 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
         return instrutorTreinamentos;
     }
 
-    public void Update(InstrutorTreinamento instrutorTreinamento, Guid id)
+    public void Update(InstrutorTreinamento instrutorTreinamento, Guid idPessoa, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE INSTRUTORES_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID = @treinamento_id";
+        cmd.CommandText = "";
 
-        cmd.Parameters.AddWithValue("@pessoa_id", instrutorTreinamento.PessoaId);
-        cmd.Parameters.AddWithValue("@treinamento_id", instrutorTreinamento.TreinamentoId);
+        cmd.Parameters.AddWithValue("", idPessoa);
+        cmd.Parameters.AddWithValue("", idTreinamento);
 
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idPessoa, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM INSTRUTORES_TREINAMENTOS WHERE PESSOA_ID = @id";
+        cmd.CommandText = "DELETE FROM INSTRUTORES_TREINAMENTOS WHERE PESSOA_ID = @idPessoa AND TREINAMENTO_ID = @idTreinamento";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
         cmd.ExecuteNonQuery();
     }
 }

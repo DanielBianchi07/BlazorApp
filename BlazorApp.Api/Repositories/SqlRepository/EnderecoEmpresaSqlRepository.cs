@@ -10,16 +10,16 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO ENDERECOS_EMPRESAS VALUES (@id_endereco, @cep, @nome_rua, @numero, @bairro, @complemento, @cidade_id, @empresa_id)";
+        cmd.CommandText = "INSERT INTO ENDERECOS_EMPRESAS VALUES (@idEndereco, @cep, @nomeRua, @numero, @bairro, @complemento, @idCidade, @idEmpresa)";
 
-        cmd.Parameters.AddWithValue("@id_endereco", Guid.NewGuid());
-        cmd.Parameters.AddWithValue("@cep", enderecoEmpresa.CEP);
-        cmd.Parameters.AddWithValue("@nome_rua", enderecoEmpresa.NomeRua);
+        cmd.Parameters.AddWithValue("@idEndereco", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@CEP", enderecoEmpresa.CEP);
+        cmd.Parameters.AddWithValue("@nomeRua", enderecoEmpresa.NomeRua);
         cmd.Parameters.AddWithValue("@numero", enderecoEmpresa.Numero);
         cmd.Parameters.AddWithValue("@bairro", enderecoEmpresa.Bairro);
         cmd.Parameters.AddWithValue("@complemento", enderecoEmpresa.Complemento);
-        cmd.Parameters.AddWithValue("@cidade_id", enderecoEmpresa.CidadeId);
-        cmd.Parameters.AddWithValue("@empresa_id", enderecoEmpresa.EmpresaId);
+        cmd.Parameters.AddWithValue("@idCidade", enderecoEmpresa.CidadeId);
+        cmd.Parameters.AddWithValue("@idEmpresa", enderecoEmpresa.EmpresaId);
 
         cmd.ExecuteNonQuery();
     }
@@ -42,7 +42,7 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
             enderecoEmpresa.NomeRua = reader.GetString(2);
             enderecoEmpresa.Numero = reader.GetInt32(3);
             enderecoEmpresa.Bairro = reader.GetString(4);
-            enderecoEmpresa.Complemento = reader.GetString(5);
+            enderecoEmpresa.Complemento = reader.IsDBNull(5) ? null : reader.GetString(5);
             enderecoEmpresa.CidadeId = reader.GetGuid(6);
             enderecoEmpresa.EmpresaId = reader.GetGuid(7);
 
@@ -52,13 +52,13 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
         return enderecoEmpresas;
     }
 
-    public IEnumerable<EnderecoEmpresa> Read(Guid id)
+    public IEnumerable<EnderecoEmpresa> Read(Guid idEndereco)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM ENDERECOS_EMPRESAS WHERE ID_ENDERECO = @id";
+        cmd.CommandText = "SELECT * FROM ENDERECOS_EMPRESAS WHERE ID_ENDERECO = @idEndereco";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idEndereco", idEndereco);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -72,7 +72,7 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
             enderecoEmpresa.NomeRua = reader.GetString(2);
             enderecoEmpresa.Numero = reader.GetInt32(3);
             enderecoEmpresa.Bairro = reader.GetString(4);
-            enderecoEmpresa.Complemento = reader.GetString(5);
+            enderecoEmpresa.Complemento = reader.IsDBNull(5) ? null : reader.GetString(5);
             enderecoEmpresa.CidadeId = reader.GetGuid(6);
             enderecoEmpresa.EmpresaId = reader.GetGuid(7);
 
@@ -82,20 +82,20 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
         return enderecoEmpresas;
     }
 
-    public void Update(EnderecoEmpresa enderecoEmpresa, Guid id)
+    public void Update(EnderecoEmpresa enderecoEmpresa, Guid idEndereco)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ENDERECOS_EMPRESA SET ID_ENDERECO = @id_endereco, CEP = @cep, NOME_RUA = @nome-rua, NUMERO = @numero, BAIRRO = @bairro, COMPLEMENTO = @complemento, CIDADE_ID = @cidade_id, EMPRESA_ID = @empresa_id";
+        cmd.CommandText = "UPDATE ENDERECOS_EMPRESAS SET CEP = @CEP, NOME_RUA = @nomeRua, NUMERO = @numero, BAIRRO = @bairro, COMPLEMENTO = @complemento, CIDADE_ID = @idCidade, EMPRESA_ID = @idEmpresa WHERE ID_ENDERECO = @idEndereco";
 
-        cmd.Parameters.AddWithValue("@id_endereco", enderecoEmpresa.Id);
-        cmd.Parameters.AddWithValue("@cep", enderecoEmpresa.CEP);
-        cmd.Parameters.AddWithValue("@nome_rua", enderecoEmpresa.NomeRua);
+        cmd.Parameters.AddWithValue("@idEndereco", idEndereco);
+        cmd.Parameters.AddWithValue("@CEP", enderecoEmpresa.CEP);
+        cmd.Parameters.AddWithValue("@nomeRua", enderecoEmpresa.NomeRua);
         cmd.Parameters.AddWithValue("@numero", enderecoEmpresa.Numero);
         cmd.Parameters.AddWithValue("@bairro", enderecoEmpresa.Bairro);
         cmd.Parameters.AddWithValue("@complemento", enderecoEmpresa.Complemento);
-        cmd.Parameters.AddWithValue("@cidade_id", enderecoEmpresa.CidadeId);
-        cmd.Parameters.AddWithValue("@empresa_id", enderecoEmpresa.EmpresaId);
+        cmd.Parameters.AddWithValue("@idCidade", enderecoEmpresa.CidadeId);
+        cmd.Parameters.AddWithValue("@idEmpresa", enderecoEmpresa.EmpresaId);
 
         cmd.ExecuteNonQuery();
     }

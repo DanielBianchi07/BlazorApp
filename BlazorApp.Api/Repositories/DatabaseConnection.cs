@@ -9,10 +9,8 @@ public abstract class DatabaseConnection : IDisposable
         Console.WriteLine("Abriu conexão");
         string strConn = @"Data Source=localhost; 
         Initial Catalog=BD_CERTIFICADOS; 
-        Integrated Security=False;
-        TrustServerCertificate=True;
-        User=aluno;
-        Password=dba";
+        Integrated Security=True;
+        TrustServerCertificate=True;";
         connection = new SqlConnection(strConn);
         connection.Open();
     }

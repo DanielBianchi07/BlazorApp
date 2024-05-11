@@ -23,10 +23,10 @@ public class ProvaQuestaoController : ControllerBase
         return Ok(provaQuestoes);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<ProvaQuestao>> ProvaQuestaoReadId(Guid id)
+    [HttpGet("{idQuestao}/{idProva}")]
+    public ActionResult<IEnumerable<ProvaQuestao>> ProvaQuestaoReadId(Guid idQuestao, Guid idProva)
     {
-        IEnumerable<ProvaQuestao> provaQuestoes = _provaQuestaoRepository.Read(id);
+        IEnumerable<ProvaQuestao> provaQuestoes = _provaQuestaoRepository.Read(idQuestao, idProva);
         return Ok(provaQuestoes);
     }
 
@@ -46,10 +46,10 @@ public class ProvaQuestaoController : ControllerBase
     }
 
 
-    [HttpDelete("{id}")]
-    public ActionResult<ProvaQuestao> ProvaQuestaoDelete(Guid id)
+    [HttpDelete("{idQuestao}/{idProva}")]
+    public ActionResult<ProvaQuestao> ProvaQuestaoDelete(Guid idQuestao, Guid idProva)
     {
-        _provaQuestaoRepository.Delete(id);
+        _provaQuestaoRepository.Delete(idQuestao, idProva);
         return Ok();
     }
 }

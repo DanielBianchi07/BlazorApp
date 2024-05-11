@@ -6,7 +6,7 @@ public interface IProvaQuestaoSqlRepository
 {
     void Create(ProvaQuestao provaQuestao);
     IEnumerable<ProvaQuestao> Read();
-    IEnumerable<ProvaQuestao> Read(Guid id);
+    IEnumerable<ProvaQuestao> Read(Guid idQuestao, Guid idProva);
     void Update(ProvaQuestao provaQuestao, Guid id);
-    void Delete(Guid id);
+    void Delete(Guid idQuestao, Guid idProva);
 }

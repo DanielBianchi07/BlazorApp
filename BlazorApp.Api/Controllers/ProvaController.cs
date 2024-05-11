@@ -23,10 +23,10 @@ public class ProvaController : ControllerBase
         return Ok(provas);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Prova>> ProvaReadId(Guid id)
+    [HttpGet("{idProva}/{idPessoa}")]
+    public ActionResult<IEnumerable<Prova>> ProvaReadId(Guid idProva, Guid idPessoa)
     {
-        IEnumerable<Prova> provas = _provaRepository.Read(id);
+        IEnumerable<Prova> provas = _provaRepository.Read(idProva, idPessoa);
         return Ok(provas);
     }
 
@@ -38,18 +38,18 @@ public class ProvaController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult ProvaUpdate(Prova provaModel, Guid id) 
+    [HttpPut("{idProva}/{idPessoa}")]
+    public ActionResult ProvaUpdate(Prova provaModel, Guid idProva, Guid idPessoa) 
     {
-        _provaRepository.Update(provaModel, id);
+        _provaRepository.Update(provaModel, idProva, idPessoa);
         return Ok();
     }
 
 
-    [HttpDelete("{id}")]
-    public ActionResult<Prova> ProvaDelete(Guid id)
+    [HttpDelete("{idProva}/{idPessoa}")]
+    public ActionResult<Prova> ProvaDelete(Guid idProva, Guid idPessoa)
     {
-        _provaRepository.Delete(id);
+        _provaRepository.Delete(idProva, idPessoa);
         return Ok();
     }
 }

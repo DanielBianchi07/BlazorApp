@@ -10,10 +10,10 @@ public class EstadoSqlRepository : DatabaseConnection, IEstadoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO ESTADOS VALUES (@id_estado, @nome_estado, @uf)";
+        cmd.CommandText = "INSERT INTO ESTADOS VALUES (@idEstado, @nomeEstado, @uf)";
 
-        cmd.Parameters.AddWithValue("@id_estado", Guid.NewGuid());
-        cmd.Parameters.AddWithValue("@nome_estado", estado.Nome);
+        cmd.Parameters.AddWithValue("@idEstado", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
         cmd.Parameters.AddWithValue("@uf", estado.UF);
 
         cmd.ExecuteNonQuery();
@@ -42,13 +42,13 @@ public class EstadoSqlRepository : DatabaseConnection, IEstadoSqlRepository
         return estados;
     }
 
-    public IEnumerable<Estado> Read(Guid id)
+    public IEnumerable<Estado> Read(Guid idEstado)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM ESTADOS WHERE ID_ESTADO = @id";
+        cmd.CommandText = "SELECT * FROM ESTADOS WHERE ID_ESTADO = @idEstado";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idEstado", idEstado);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -67,26 +67,26 @@ public class EstadoSqlRepository : DatabaseConnection, IEstadoSqlRepository
         return estados;
     }
 
-    public void Update(Estado estado, Guid id)
+    public void Update(Estado estado, Guid idEstado)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ESTADOS SET ID_ESTADO = @id_estado, NOME_ESTADO = @nome_estado, UF = @uf";
+        cmd.CommandText = "UPDATE ESTADOS SET NOME_ESTADO = @nomeEstado, UF = @uf WHERE ID_ESTADO = @idEstado";
 
-        cmd.Parameters.AddWithValue("@id_estado", estado.Id);
-        cmd.Parameters.AddWithValue("@nome_estado", estado.Nome);
+        cmd.Parameters.AddWithValue("@idEstado", idEstado);
+        cmd.Parameters.AddWithValue("@nomeEstado", estado.Nome);
         cmd.Parameters.AddWithValue("@uf", estado.UF);
 
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idEstado)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM ESTADOS WHERE ID_ESTADO = @id";
+        cmd.CommandText = "DELETE FROM ESTADOS WHERE ID_ESTADO = @idEstado";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idEstado", idEstado);
         cmd.ExecuteNonQuery();
     }
 }

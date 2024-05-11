@@ -10,9 +10,9 @@ public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepositor
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO INSTRUTORES VALUES (@id, @especializacao, @assinatura, @registro, @status)";
+        cmd.CommandText = "INSERT INTO INSTRUTORES VALUES (@idInstrutor, @especializacao, @assinatura, @registro, @status)";
 
-        cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@idInstrutor", instrutor.PessoaId);
         cmd.Parameters.AddWithValue("@especializacao", instrutor.Especializacao);
         cmd.Parameters.AddWithValue("@assinatura", instrutor.Assinatura);
         cmd.Parameters.AddWithValue("@registro", instrutor.Registro);
@@ -50,9 +50,9 @@ public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepositor
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM INSTRUTORES WHERE PESSOA_ID = @id";
+        cmd.CommandText = "SELECT * FROM INSTRUTORES WHERE PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idPessoa", id);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -77,9 +77,9 @@ public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepositor
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE INSTRUTORES SET ESPECIALIZACAO = @especializacao, ASSINATURA = @assinatura, REGISTRO = @registro, STATUS = @status WHERE PESSOA_ID = @id";
+        cmd.CommandText = "UPDATE INSTRUTORES SET ESPECIALIZACAO = @especializacao, ASSINATURA = @assinatura, REGISTRO = @registro, STATUS = @status WHERE PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idPessoa", id);
         cmd.Parameters.AddWithValue("@especializacao", instrutor.Especializacao);
         cmd.Parameters.AddWithValue("@assinatura", instrutor.Assinatura);
         cmd.Parameters.AddWithValue("@registro", instrutor.Registro);
@@ -92,9 +92,9 @@ public class InstrutorSqlRepository : DatabaseConnection, IInstrutorSqlRepositor
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM INSTRUTORES WHERE PESSOA_ID = @id";
+        cmd.CommandText = "DELETE FROM INSTRUTORES WHERE PESSOA_ID = @idPessoa";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idPessoa", id);
         cmd.ExecuteNonQuery();
     }
 }
