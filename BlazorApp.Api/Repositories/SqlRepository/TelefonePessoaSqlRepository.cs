@@ -42,6 +42,32 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
         return telefonePessoas;
     }
 
+    public IEnumerable<TelefonePessoa> Read(Guid idPessoa, Guid idTelefone)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM TELEFONES_PESSOAS WHERE ID_TELEFONE_PES = @idTelefone AND PESSOA_ID = @idPessoa";
+
+        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
+        cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<TelefonePessoa> telefonePessoas = new List<TelefonePessoa>();
+
+        while(reader.Read())
+        {
+            TelefonePessoa telefonePessoa = new TelefonePessoa();
+            telefonePessoa.Id = reader.GetGuid(0);
+            telefonePessoa.PessoaId = reader.GetGuid(1);
+            telefonePessoa.NroTelefone = reader.GetString(2);
+
+            telefonePessoas.Add(telefonePessoa);
+        }
+
+        return telefonePessoas;
+    }
+
     public void Update(TelefonePessoa telefonePessoa, Guid idPessoa, Guid idTelefone)
     {
         SqlCommand cmd = new SqlCommand();

@@ -42,6 +42,31 @@ public class EstadoSqlRepository : DatabaseConnection, IEstadoSqlRepository
         return estados;
     }
 
+    public IEnumerable<Estado> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM ESTADOS WHERE ID_ESTADO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Estado> estados = new List<Estado>();
+
+        while(reader.Read())
+        {
+            Estado estado = new Estado();
+            estado.Id = reader.GetGuid(0);
+            estado.Nome = reader.GetString(1);
+            estado.UF = reader.GetString(2);
+
+            estados.Add(estado);
+        }
+
+        return estados;
+    }
+
     public void Update(Estado estado, Guid id)
     {
         SqlCommand cmd = new SqlCommand();
@@ -59,7 +84,7 @@ public class EstadoSqlRepository : DatabaseConnection, IEstadoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM ESTADOS WHERE ID_ESTADO   = @id";
+        cmd.CommandText = "DELETE FROM ESTADOS WHERE ID_ESTADO = @id";
 
         cmd.Parameters.AddWithValue("@id", id);
         cmd.ExecuteNonQuery();

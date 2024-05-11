@@ -23,7 +23,32 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM COTEUDOS_PROGRAMATICOS";
+        cmd.CommandText = "SELECT * FROM CONTEUDOS_PROGRAMATICOS";
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<ConteudoProgramatico> conteudoProgramaticos = new List<ConteudoProgramatico>();
+
+        while(reader.Read())
+        {
+            ConteudoProgramatico conteudoProgramatico = new ConteudoProgramatico();
+            conteudoProgramatico.Id = reader.GetGuid(0);
+            conteudoProgramatico.Assunto = reader.GetString(1);
+            conteudoProgramatico.CargaHoraria = reader.GetInt32(2);
+
+            conteudoProgramaticos.Add(conteudoProgramatico);
+        }
+
+        return conteudoProgramaticos;
+    }
+
+    public IEnumerable<ConteudoProgramatico> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM CONTEUDOS_PROGRAMATICOS WHERE ID_CONTEUDO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
 
         SqlDataReader reader = cmd.ExecuteReader();
 
@@ -46,11 +71,11 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE CONTEUDOS_PROGRAMATICOS SET ID_CONTEUDO = @id_conteudo, ASSUNTO = @assunto, CARGA_HORARIA = @carga_horaria";
+        cmd.CommandText = "UPDATE CONTEUDOS_PROGRAMATICOS SET ASSUNTO = @assunto, CARGA_HORARIA = @cargaHoraria WHERE ID_CONTEUDO = @idConteudo";
 
-        cmd.Parameters.AddWithValue("@id_conteudo", conteudoProgramatico.Id);
+        cmd.Parameters.AddWithValue("@idConteudo", id);
         cmd.Parameters.AddWithValue("@assunto", conteudoProgramatico.Assunto);
-        cmd.Parameters.AddWithValue("@carga_horaria", conteudoProgramatico.CargaHoraria);
+        cmd.Parameters.AddWithValue("@cargaHoraria", conteudoProgramatico.CargaHoraria);
 
         cmd.ExecuteNonQuery();
     }
@@ -59,9 +84,9 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM CONTEUDOS_PROGRAMATICOS WHERE ID_CONTEUDO = @id";
+        cmd.CommandText = "DELETE FROM CONTEUDOS_PROGRAMATICOS WHERE ID_CONTEUDO = @idConteudo";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idConteudo", id);
         cmd.ExecuteNonQuery();
     }
 }

@@ -52,6 +52,36 @@ public class EnderecoEmpresaSqlRepository : DatabaseConnection, IEnderecoEmpresa
         return enderecoEmpresas;
     }
 
+    public IEnumerable<EnderecoEmpresa> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM ENDERECOS_EMPRESAS WHERE ID_ENDERECO = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<EnderecoEmpresa> enderecoEmpresas = new List<EnderecoEmpresa>();
+
+        while(reader.Read())
+        {
+            EnderecoEmpresa enderecoEmpresa = new EnderecoEmpresa();
+            enderecoEmpresa.Id = reader.GetGuid(0);
+            enderecoEmpresa.CEP = reader.GetString(1);
+            enderecoEmpresa.NomeRua = reader.GetString(2);
+            enderecoEmpresa.Numero = reader.GetInt32(3);
+            enderecoEmpresa.Bairro = reader.GetString(4);
+            enderecoEmpresa.Complemento = reader.GetString(5);
+            enderecoEmpresa.CidadeId = reader.GetGuid(6);
+            enderecoEmpresa.EmpresaId = reader.GetGuid(7);
+
+            enderecoEmpresas.Add(enderecoEmpresa);
+        }
+
+        return enderecoEmpresas;
+    }
+
     public void Update(EnderecoEmpresa enderecoEmpresa, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

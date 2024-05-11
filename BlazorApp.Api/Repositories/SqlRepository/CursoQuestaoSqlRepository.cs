@@ -10,10 +10,10 @@ public class CursoQuestaoSqlRepository : DatabaseConnection, ICursoQuestaoSqlRep
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO CURSOS_QUESTOES VALUES (@curso_id, @questao_id, @status)";
+        cmd.CommandText = "INSERT INTO CURSOS_QUESTOES VALUES (@cursoId, @questaoId, @status)";
 
-        cmd.Parameters.AddWithValue("@curso_id", cursoQuestao.CursoId);
-        cmd.Parameters.AddWithValue("@questao_id", cursoQuestao.QuestaoId);
+        cmd.Parameters.AddWithValue("@cursoid", cursoQuestao.CursoId);
+        cmd.Parameters.AddWithValue("@questaoId", cursoQuestao.QuestaoId);
         cmd.Parameters.AddWithValue("@status", cursoQuestao.Status);
 
         cmd.ExecuteNonQuery();
@@ -42,26 +42,53 @@ public class CursoQuestaoSqlRepository : DatabaseConnection, ICursoQuestaoSqlRep
         return cursoQuestoes;
     }
 
-    public void Update(CursoQuestao cursoQuestao, Guid id)
+    public IEnumerable<CursoQuestao> Read(Guid idCurso, Guid idQuestao)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE CURSOS_QUESTOES SET CURSO_ID = @curso_id, QUESTAO_ID = @questao_id, STATUS = @status";
+        cmd.CommandText = "SELECT * FROM CURSOS_QUESTOES WHERE QUESTAO_ID = @idQuestao AND CURSO_ID = @idCurso";
 
-        cmd.Parameters.AddWithValue("@curso_id", cursoQuestao.CursoId);
-        cmd.Parameters.AddWithValue("@questao_id", cursoQuestao.QuestaoId);
+        cmd.Parameters.AddWithValue("@idCurso", idCurso);
+        cmd.Parameters.AddWithValue("@idQuestao", idQuestao);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<CursoQuestao> cursoQuestoes = new List<CursoQuestao>();
+
+        while(reader.Read())
+        {
+            CursoQuestao cursoQuestao = new CursoQuestao();
+            cursoQuestao.CursoId = reader.GetGuid(0);
+            cursoQuestao.QuestaoId = reader.GetGuid(1);
+            cursoQuestao.Status = reader.GetInt32(2);
+
+            cursoQuestoes.Add(cursoQuestao);
+        }
+
+        return cursoQuestoes;
+    }
+
+    public void Update(CursoQuestao cursoQuestao, Guid idCurso, Guid idQuestao)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "UPDATE CURSOS_QUESTOES SET STATUS = @status WHERE QUESTAO_ID = @idQuestao AND CURSO_ID = @idCurso";
+
+        cmd.Parameters.AddWithValue("@idCurso", idCurso);
+        cmd.Parameters.AddWithValue("@idQuestao", idQuestao);
         cmd.Parameters.AddWithValue("@status", cursoQuestao.Status);
 
         cmd.ExecuteNonQuery();
     }
 
-    public void Delete(Guid id)
+    public void Delete(Guid idCurso, Guid idQuestao)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM CURSOS_QUESTOES WHERE QUESTAO_ID = @id";
+        cmd.CommandText = "DELETE FROM CURSOS_QUESTOES WHERE QUESTAO_ID = @idQuestao AND CURSO_ID = @idCurso";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idCurso", idCurso);
+        cmd.Parameters.AddWithValue("@idQuestao", idQuestao);
         cmd.ExecuteNonQuery();
     }
 }

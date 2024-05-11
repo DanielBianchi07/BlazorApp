@@ -44,6 +44,32 @@ public class CertificadoSqlRepository : DatabaseConnection, ICertificadoSqlRepos
         return certificados;
     }
 
+    public IEnumerable<Certificado> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM CERTIFICADOS WHERE TREINAMENTO_ID = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Certificado> certificados = new List<Certificado>();
+
+        while(reader.Read())
+        {
+            Certificado certificado = new Certificado();
+            certificado.TreinamentoId = reader.GetGuid(0);
+            certificado.Codigo = reader.GetString(1);
+            certificado.DataEmissao = reader.GetDateTime(2);
+            certificado.Status = reader.GetInt32(3);
+
+            certificados.Add(certificado);
+        }
+
+        return certificados;
+    }
+
     public void Update(Certificado certificado, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

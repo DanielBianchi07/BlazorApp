@@ -38,10 +38,10 @@ public class AlternativaController : ControllerBase
     }
 
 
-    [HttpPut]
-    public ActionResult AlternativaUpdate(Alternativa alternativaModel) 
+    [HttpPut("{id}")]
+    public ActionResult AlternativaUpdate(Alternativa alternativaModel, Guid id) 
     {
-        _alternativaRepository.Update(alternativaModel);
+        _alternativaRepository.Update(alternativaModel, id);
         return Ok();
     }
 
