@@ -6,7 +6,7 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepository
 {
-    public void Create(Treinamento treinamento)
+    public void Create(Treinamento treinamento, Guid idCurso)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -14,7 +14,7 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
 
         cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
-        cmd.Parameters.AddWithValue("@razao_social", treinamento.CursoId);
+        cmd.Parameters.AddWithValue("@curso_id", idCurso);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 
         cmd.ExecuteNonQuery();
@@ -70,15 +70,15 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
         return treinamentos;
     }
 
-    public void Update(Treinamento treinamento, Guid id)
+    public void Update(Treinamento treinamento, Guid idCurso)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "UPDATE TREINAMENTOS SET TIPO = @tipo, CURSO_ID = @curso_id, STATUS = @status WHERE ID_TREINAMENTO = @id";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@id", treinamento.Id);
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
-        cmd.Parameters.AddWithValue("@curso_id", treinamento.CursoId);
+        cmd.Parameters.AddWithValue("@curso_id", idCurso);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 
         cmd.ExecuteNonQuery();

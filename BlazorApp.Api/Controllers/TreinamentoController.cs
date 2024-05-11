@@ -31,9 +31,9 @@ public class TreinamentoController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult TreinamentoCreate(Treinamento treinamentoModel)
+    public ActionResult TreinamentoCreate(Treinamento treinamentoModel, Guid cursoId)
     {
-        _treinamentoRepository.Create(treinamentoModel);
+        _treinamentoRepository.Create(treinamentoModel, cursoId);
         return Created();
     }
 

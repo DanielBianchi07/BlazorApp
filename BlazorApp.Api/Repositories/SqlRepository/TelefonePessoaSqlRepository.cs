@@ -6,14 +6,14 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSqlRepository
 {
-    public void Create(TelefonePessoa telefonePessoa, Guid idPessoa)
+    public void Create(TelefonePessoa telefonePessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "INSERT INTO TELEFONES_PESSOAS VALUES (@id_telefone_pes, @pessoa_id, @nro_telefone)";
 
         cmd.Parameters.AddWithValue("@id_telefone_pes", Guid.NewGuid());
-        cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
+        cmd.Parameters.AddWithValue("@pessoa_id", telefonePessoa.PessoaId);
         cmd.Parameters.AddWithValue("@nro_telefone", telefonePessoa.NroTelefone);
 
         cmd.ExecuteNonQuery();
@@ -46,7 +46,7 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM TELEFONES_PESSOAS WHERE ID_TELEFONE_PES = @idTelefone AND PESSOA_ID = @idPessoa";
+        cmd.CommandText = "SELECT * FROM TELEFONES_PESSOAS WHERE PESSOA_ID = @idPessoa AND ID_TELEFONE_PES = @idTelefone";
 
         cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);

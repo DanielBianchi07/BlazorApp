@@ -23,22 +23,22 @@ public class TelefonePessoaController : ControllerBase
         return Ok(telefonePessoas);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<TelefonePessoa>> TelefonePessoaReadId()
+    [HttpGet("{idPessoa}/{idTelefone}")]
+    public ActionResult<IEnumerable<TelefonePessoa>> TelefonePessoaReadId(Guid idPessoa, Guid idTelefone)
     {
-        IEnumerable<TelefonePessoa> telefonePessoas = _telefonePessoaRepository.Read();
+        IEnumerable<TelefonePessoa> telefonePessoas = _telefonePessoaRepository.Read(idPessoa, idTelefone);
         return Ok(telefonePessoas);
     }
 
     [HttpPost]
-    public ActionResult TelefonePessoaCreate(TelefonePessoa telefonePessoaModel, Guid idPessoa)
+    public ActionResult TelefonePessoaCreate(TelefonePessoa telefonePessoaModel)
     {
-        _telefonePessoaRepository.Create(telefonePessoaModel, idPessoa);
+        _telefonePessoaRepository.Create(telefonePessoaModel);
         return Created();
     }
 
 
-    [HttpPut("{id}")]
+    [HttpPut("{idPessoa}/{idTelefone}")]
     public ActionResult TelefonePessoaUpdate(TelefonePessoa telefonePessoaModel, Guid idPessoa, Guid idTelefone) 
     {
         _telefonePessoaRepository.Update(telefonePessoaModel, idPessoa, idTelefone);
@@ -46,7 +46,7 @@ public class TelefonePessoaController : ControllerBase
     }
 
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{idPessoa}/{idTelefone}")]
     public ActionResult<TelefonePessoa> TelefonePessoaDelete(Guid idPessoa, Guid idTelefone)
     {
         _telefonePessoaRepository.Delete(idPessoa, idTelefone);
