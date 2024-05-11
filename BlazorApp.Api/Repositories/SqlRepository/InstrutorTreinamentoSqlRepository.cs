@@ -40,6 +40,30 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
         return instrutorTreinamentos;
     }
 
+     public IEnumerable<InstrutorTreinamento> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM INSTRUTORES_TREINAMENTOS WHERE PESSOA_ID = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<InstrutorTreinamento> instrutorTreinamentos = new List<InstrutorTreinamento>();
+
+        while(reader.Read())
+        {
+            InstrutorTreinamento instrutorTreinamento = new InstrutorTreinamento();
+            instrutorTreinamento.PessoaId = reader.GetGuid(0);
+            instrutorTreinamento.TreinamentoId = reader.GetGuid(1);
+
+            instrutorTreinamentos.Add(instrutorTreinamento);
+        }
+
+        return instrutorTreinamentos;
+    }
+
     public void Update(InstrutorTreinamento instrutorTreinamento, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

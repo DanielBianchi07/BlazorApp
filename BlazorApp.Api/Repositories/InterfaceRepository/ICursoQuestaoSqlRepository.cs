@@ -6,7 +6,7 @@ public interface ICursoQuestaoSqlRepository
 {
     void Create(CursoQuestao cursoQuestao);
     IEnumerable<CursoQuestao> Read();
-    IEnumerable<CursoQuestao> Read(Guid id);
-    void Update(CursoQuestao cursoQuestao, Guid id);
-    void Delete(Guid id);
+    IEnumerable<CursoQuestao> Read(Guid idCurso, Guid idQuestao);
+    void Update(CursoQuestao cursoQuestao, Guid idCurso, Guid idQuestao);
+    void Delete(Guid idCurso, Guid idQuestao);
 }

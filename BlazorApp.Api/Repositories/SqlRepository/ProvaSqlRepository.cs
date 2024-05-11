@@ -42,6 +42,31 @@ public class ProvaSqlRepository : DatabaseConnection, IProvaSqlRepository
         return provas;
     }
 
+    public IEnumerable<Prova> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM PROVAS WHERE ID_PROVA = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Prova> provas = new List<Prova>();
+
+        while(reader.Read())
+        {
+            Prova prova = new Prova();
+            prova.Id = reader.GetGuid(0);
+            prova.DataRealizacao = reader.GetDateTime(1);
+            prova.PessoaId = reader.GetGuid(2);
+
+            provas.Add(prova);
+        }
+
+        return provas;
+    }
+
     public void Update(Prova prova, Guid id)
     {
         SqlCommand cmd = new SqlCommand();

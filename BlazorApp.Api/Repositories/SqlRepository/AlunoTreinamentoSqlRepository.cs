@@ -50,7 +50,35 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID = @treinamento_id, DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado";
+        cmd.CommandText = "SELECT * FROM ALUNOS_TREINAMENTOS WHERE TREINAMENTO_ID = @idTreinamento AND PESSOA_ID = @idAluno";
+
+        cmd.Parameters.AddWithValue("@idTreinamento", idTreinamento);
+        cmd.Parameters.AddWithValue("@idAluno", idAluno);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<AlunoTreinamento> alunosTreinamentos = new List<AlunoTreinamento>();
+
+        while(reader.Read())
+        {
+            AlunoTreinamento alunoTreinamento = new AlunoTreinamento();
+            alunoTreinamento.PessoaId = reader.GetGuid(0);
+            alunoTreinamento.TreinamentoId = reader.GetGuid(1);
+            alunoTreinamento.DataTreinamento = reader.GetDateTime(2);
+            alunoTreinamento.DataInicioCertificado = reader.GetDateTime(3);
+            alunoTreinamento.Resultado = reader.GetInt32(4);
+
+            alunosTreinamentos.Add(alunoTreinamento);
+        }
+
+        return alunosTreinamentos;
+    }
+
+    public void Update(AlunoTreinamento alunoTreinamento, Guid idTreinamento, Guid idAluno)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "UPDATE ALUNOS_TREINAMENTOS SET PESSOA_ID = @pessoa_id, TREINAMENTO_ID = @treinamento_id, DATA_TREINAMENTO = @data_treinamento, DATA_INICIO_CERTIFICADO = @data_inicio_certificado, RESULTADO = @resultado WHERE TREINAMENTO_ID = @idTreinamento AND PESSOA_ID = idAluno";
 
         cmd.Parameters.AddWithValue("@pessoa_id", alunoTreinamento.PessoaId);
         cmd.Parameters.AddWithValue("@treinamento_id", alunoTreinamento.TreinamentoId);

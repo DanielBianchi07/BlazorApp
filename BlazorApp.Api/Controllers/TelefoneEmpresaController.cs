@@ -16,10 +16,17 @@ public class TelefoneEmpresaController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead(Guid idEmpresa)
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaRead()
     {
-        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read(idEmpresa);
+        IEnumerable<TelefoneEmpresa> telefoneEmpresas = _telefoneEmpresaRepository.Read();
         return Ok(telefoneEmpresas);
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaReadId(Guid idEmpresa, Guid idTelefone)
+    {
+        IEnumerable<TelefoneEmpresa> telefonesEmpresa = _telefoneEmpresaRepository.Read(idEmpresa, idTelefone);
+        return Ok(telefonesEmpresa);
     }
 
     [HttpPost]

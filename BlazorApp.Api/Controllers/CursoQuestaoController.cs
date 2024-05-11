@@ -23,10 +23,10 @@ public class CursoQuestaoController : ControllerBase
         return Ok(cursoQuestoes);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<CursoQuestao>> CursoQuestaoReadId(Guid id)
+    [HttpGet("{idCurso}/{idQuestao}")]
+    public ActionResult<IEnumerable<CursoQuestao>> CursoQuestaoReadId(Guid idCurso, Guid idQuestao)
     {
-        IEnumerable<CursoQuestao> cursoQuestoes = _cursoQuestaoRepository.Read(id);
+        IEnumerable<CursoQuestao> cursoQuestoes = _cursoQuestaoRepository.Read(idCurso, idQuestao);
         return Ok(cursoQuestoes);
     }
 
@@ -38,18 +38,18 @@ public class CursoQuestaoController : ControllerBase
     }
 
 
-    [HttpPut("{id}")]
-    public ActionResult CursoQuestaoUpdate(CursoQuestao cursoQuestaoModel, Guid id) 
+    [HttpPut("{idCurso}/{idQuestao}")]
+    public ActionResult CursoQuestaoUpdate(CursoQuestao cursoQuestaoModel, Guid idCurso, Guid idQuestao) 
     {
-        _cursoQuestaoRepository.Update(cursoQuestaoModel, id);
+        _cursoQuestaoRepository.Update(cursoQuestaoModel, idCurso, idQuestao);
         return Ok();
     }
 
 
-    [HttpDelete("{id}")]
-    public ActionResult<CursoQuestao> CursoQuestaoDelete(Guid id)
+    [HttpDelete("{idCurso}/{idQuestao}")]
+    public ActionResult<CursoQuestao> CursoQuestaoDelete(Guid idCurso, Guid idQuestao)
     {
-        _cursoQuestaoRepository.Delete(id);
+        _cursoQuestaoRepository.Delete(idCurso, idQuestao);
         return Ok();
     }
 }

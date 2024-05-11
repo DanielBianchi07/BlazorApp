@@ -44,13 +44,39 @@ public class AlternativaSqlRepository : DatabaseConnection, IAlternativaSqlRepos
         return alternativas;
     }
 
-    public void Update(Alternativa alternativa)
+     public IEnumerable<Alternativa> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM ALTERNATIVAS WHERE ID_ALTERNATIVA = @id";
+
+        cmd.Parameters.AddWithValue("@id", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Alternativa> alternativas = new List<Alternativa>();
+
+        while(reader.Read())
+        {
+            Alternativa alternativa = new Alternativa();
+            alternativa.Id = reader.GetGuid(0);
+            alternativa.Conteudo = reader.GetString(1);
+            alternativa.Status = reader.GetInt32(2);
+            alternativa.QuestaoId = reader.GetGuid(3);
+
+            alternativas.Add(alternativa);
+        }
+
+        return alternativas;
+    }
+
+    public void Update(Alternativa alternativa, Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "UPDATE ALTERNATIVAS SET CONTEUDO = @conteudo, STATUS = @status, QUESTAO_ID = @questao_id WHERE ID_ALTERNATIVA = @id";
 
-        cmd.Parameters.AddWithValue("@id", alternativa.Id);
+        cmd.Parameters.AddWithValue("@id", id);
         cmd.Parameters.AddWithValue("@conteudo", alternativa.Conteudo);
         cmd.Parameters.AddWithValue("@status", alternativa.Status);
         cmd.Parameters.AddWithValue("@questao_id", alternativa.QuestaoId);

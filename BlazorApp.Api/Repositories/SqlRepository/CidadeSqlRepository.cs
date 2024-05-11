@@ -10,11 +10,11 @@ public class CidadeSqlRepository : DatabaseConnection, ICidadeSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO CIDADES VALUES (@id_cidade, @nome_cidade, @estado_id)";
+        cmd.CommandText = "INSERT INTO CIDADES VALUES (@idCidade, @nomeCidade, @idEstado)";
 
-        cmd.Parameters.AddWithValue("@id_cidade", Guid.NewGuid());
-        cmd.Parameters.AddWithValue("@nome_cidade", cidade.Nome);
-        cmd.Parameters.AddWithValue("@estado_id", cidade.EstadoId);
+        cmd.Parameters.AddWithValue("@idCidade", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
+        cmd.Parameters.AddWithValue("@idEstado", cidade.EstadoId);
 
         cmd.ExecuteNonQuery();
     }
@@ -42,15 +42,39 @@ public class CidadeSqlRepository : DatabaseConnection, ICidadeSqlRepository
         return cidades;
     }
 
+    public IEnumerable<Cidade> Read(Guid id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "SELECT * FROM CIDADES WHERE ID_CIDADE = @idCidade";
+
+        cmd.Parameters.AddWithValue("@idCidade", id);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        List<Cidade> cidades = new List<Cidade>();
+
+        while(reader.Read())
+        {
+            Cidade cidade = new Cidade();
+            cidade.Id = reader.GetGuid(0);
+            cidade.Nome = reader.GetString(1);
+            cidade.EstadoId = reader.GetGuid(2);
+
+            cidades.Add(cidade);
+        }
+
+        return cidades;
+    }
+
     public void Update(Cidade cidade, Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE CIDADES SET ID_CIDADE = @id_cidade, NOME_CIDADE = @nome_cidade, ESTADO_ID = @estado_id";
+        cmd.CommandText = "UPDATE CIDADES SET NOME_CIDADE = @nomeCidade WHERE ID_CIDADE = @idCidade";
 
-        cmd.Parameters.AddWithValue("@id_cidade", cidade.Id);
-        cmd.Parameters.AddWithValue("@nome_cidade", cidade.Nome);
-        cmd.Parameters.AddWithValue("@estado_id", cidade.EstadoId);
+        cmd.Parameters.AddWithValue("@idCidade", id);
+        cmd.Parameters.AddWithValue("@nomeCidade", cidade.Nome);
 
         cmd.ExecuteNonQuery();
     }
@@ -59,9 +83,9 @@ public class CidadeSqlRepository : DatabaseConnection, ICidadeSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM CIDADES WHERE ID_CIDADE = @id";
+        cmd.CommandText = "DELETE FROM CIDADES WHERE ID_CIDADE = @idCidade";
 
-        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@idCidade", id);
         cmd.ExecuteNonQuery();
     }
 }
