@@ -72,10 +72,10 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE TELEFONES_PESSOAS SET ID_TELEFONE_PES = @id_telefone_pes, PESSOA_ID = @pessoa_id, NRO_TELEFONE = @nro_telefone";
+        cmd.CommandText = "UPDATE TELEFONES_PESSOAS SET NRO_TELEFONE = @nro_telefone WHERE ID_TELEFONE_PES = @idTelefone AND  PESSOA_ID = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
-        cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
+        cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
         cmd.Parameters.AddWithValue("@nro_telefone", telefonePessoa.NroTelefone);
 
         cmd.ExecuteNonQuery();
@@ -85,7 +85,7 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM TELEFONES_PESSOAS WHERE ID_TELEFONE_PES = @idTelefone AND PESSOA_ID = @idPessoa";
+        cmd.CommandText = "DELETE FROM TELEFONES_PESSOAS WHERE PESSOA_ID = @idPessoa AND ID_TELEFONE_PES = @idTelefone";
 
         cmd.Parameters.AddWithValue("@idPessoa", idPessoa);
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);

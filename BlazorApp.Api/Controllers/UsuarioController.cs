@@ -31,9 +31,9 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult UsuarioCreate(Usuario usuarioModel, Guid id)
+    public ActionResult UsuarioCreate(Usuario usuarioModel)
     {
-        _usuarioRepository.Create(usuarioModel, id);
+        _usuarioRepository.Create(usuarioModel);
         return Created();
     }
 

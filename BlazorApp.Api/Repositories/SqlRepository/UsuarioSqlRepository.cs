@@ -6,13 +6,13 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class UsuarioSqlRepository : DatabaseConnection, IUsuarioSqlRepository
 {
-    public void Create(Usuario usuario, Guid idPessoa)
+    public void Create(Usuario usuario)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO USUARIOS VALUES (@pessoa_id, @nome_usuario, @senha, @status)";
+        cmd.CommandText = "INSERT INTO USUARIOS VALUES (@pessoaId, @nome_usuario, @senha, @status)";
 
-        cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
+        cmd.Parameters.AddWithValue("@pessoaId", usuario.PessoaId);
         cmd.Parameters.AddWithValue("@nome_usuario", usuario.Nome);
         cmd.Parameters.AddWithValue("@senha", usuario.Senha);
         cmd.Parameters.AddWithValue("@status", usuario.Status);
@@ -77,7 +77,6 @@ public class UsuarioSqlRepository : DatabaseConnection, IUsuarioSqlRepository
         cmd.CommandText = "UPDATE USUARIOS SET NOME_USUARIO = @nome_usuario, SENHA = @senha, STATUS = @status WHERE PESSOA_ID = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
-        cmd.Parameters.AddWithValue("@usuario_id", usuario.PessoaId);
         cmd.Parameters.AddWithValue("@nome_usuario", usuario.Nome);
         cmd.Parameters.AddWithValue("@senha", usuario.Senha);
         cmd.Parameters.AddWithValue("@status", usuario.Status);
