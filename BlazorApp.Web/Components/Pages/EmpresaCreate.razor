@@ -1,63 +1,30 @@
-@page "/empresa"
+@page "/empresas/cadastrar"
+@rendermode InteractiveServer
 
 @inject EmpresaService empresaService
-@using BlazorApp.Api.Models
+@inject TelefoneEmpresaService telefoneEmpresaService
+<!-- EnderecoEmpresaService EnderecoEmpresaService -->
 
-<h3>empresas</h3>
+<title>Empresas</title>
 
-<!-- <button @onclick="">Criar empresa</button> -->
+<h3 class="mb-2">Empresas</h3>
 
+<hr class="mb-3">
 
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-success">Cadastrar</button>
+    </div>
+      <div class="form-check form-switch col-auto text-right">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
+        </div>
+  </div>
+</div>
 
+<p>asdjoasidjoaisdjasdjaojdaoijdsoiaojis</p>
 
-
-@if (empresas != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Razão Social</th>
-                <th>CNPJ</th>
-                <th>Email</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var empresa in empresas)
-            {
-                <tr>
-                    <td>@empresa.Id</td>
-                    <td>@empresa.RazaoSocial</td>
-                    <td>@empresa.CNPJ</td>
-                    <td>@empresa.Email</td>
-                    <td>@empresa.Status</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Carregando empresas...</p>
-}
 @code {
-/*
 
-    public Empresa empresa = new Empresa();
-*/
-    public string razao_social { get; set; }
-
-    private List<Empresa> empresas;
-    protected override async Task OnInitializedAsync()
-    {
-        empresas = await empresaService.GetEmpresasAsync();
-    }
-
-    public async Task OnSave()
-    {
-        await empresaService.CriarEmpresaAsync(null);
-        empresas = await empresaService.GetEmpresasAsync();
-    //    telefone = await telefoneService.GetTelefoneAsync();
-    }
 }

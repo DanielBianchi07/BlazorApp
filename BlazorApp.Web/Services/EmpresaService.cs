@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Configuration;
-using BlazorApp.Api.Models;
+using BlazorApp.Web.Models;
+
+namespace BlazorApp.Web.Services;
 
 public class EmpresaService
 {

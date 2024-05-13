@@ -1,0 +1,115 @@
+@page "/empresas"
+@rendermode InteractiveServer
+
+@inject EmpresaService empresaService
+@inject TelefoneEmpresaService telefoneEmpresaService
+
+<title>Empresas</title>
+
+<h3 class="mb-2">Empresas</h3>
+
+<hr class="mb-3">
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-success"><a href="empresas/cadastrar">Cadastrar</a></button>
+    </div>
+      <div class="form-check form-switch col-auto text-right">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @onclick="EmpresasInativas">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
+        </div>
+  </div>
+</div>
+
+
+
+@if (empresas != null)
+{
+    <table class="table table-light table-bordered border-dark table-striped-columns mt-5">
+        <thead>
+            <tr>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+                <th>Telefones</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var empresa in empresas)
+            {
+                @if (!MostrarInativas && empresa.Status == 1)
+                {
+                 <tr>
+                    
+                    <td><a href="testes">@empresa.RazaoSocial</a></td>
+                    <td>@empresa.CNPJ</td>
+                    <td>@empresa.Email</td>
+                    <td>
+                    @foreach (var telefone in telefonesEmpresas)
+                        {
+                            @if (telefone.EmpresaId == empresa.Id)
+                            {
+                               @telefone.NroTelefone<br>
+                            }
+                        }
+                    </td>
+                    <td>Ativa</td>
+                </tr>
+                }
+                else if (MostrarInativas && empresa.Status == 0)
+                {
+                    <tr>
+                    
+                    <td><a href="testes">@empresa.RazaoSocial</a></td>
+                    <td>@empresa.CNPJ</td>
+                    <td>@empresa.Email</td>
+                    <td>
+                    @foreach (var telefone in telefonesEmpresas)
+                        {
+                            @if (telefone.EmpresaId == empresa.Id)
+                            {
+                               @telefone.NroTelefone<br>
+                            }
+                        }
+                    </td>
+                    <td>Inativa</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>   
+}
+else
+{
+    <p>Carregando empresas...</p>
+}
+
+@code {
+    public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
+    public Empresa empresa = new Empresa();
+
+    [Parameter]
+    public Guid empresaId { get; set; }
+    private List<TelefoneEmpresa> telefonesEmpresas;
+    private List<Empresa> empresas;
+    protected override async Task OnInitializedAsync()
+    {
+        telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
+        empresas = await empresaService.GetEmpresasAsync();
+    }
+/*
+    public async Task OnSave()
+    {
+        await empresaService.CriarEmpresaAsync(null);
+        empresas = await empresaService.GetEmpresasAsync();
+    }
+*/
+    private bool MostrarInativas = false;
+    
+    private void EmpresasInativas()
+    {
+        MostrarInativas = !MostrarInativas;
+    }
+}

@@ -1,0 +1,51 @@
+@page "/testes"
+@rendermode InteractiveServer
+
+@inject TelefoneEmpresaService telefoneEmpresaService
+
+<h3>Telefones Empresas</h3>
+
+<input @onclick="Checar"></input>
+<p>@check</p>
+
+@if (telefonesEmpresas != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Telefone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var telefoneEmpresa in telefonesEmpresas)
+            {
+                <tr>
+                    <td>@telefoneEmpresa.EmpresaId</td>
+                    <td>@telefoneEmpresa.NroTelefone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Carregando Telefones...</p>
+}
+@code {
+
+    public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
+
+    private List<TelefoneEmpresa> telefonesEmpresas;
+    protected override async Task OnInitializedAsync()
+    {
+        telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
+    }
+
+    private bool check = false;
+    private void Checar()
+    {
+        check = !check;
+    }
+
+}

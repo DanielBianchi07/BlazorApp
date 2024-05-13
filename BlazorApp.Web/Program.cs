@@ -1,4 +1,5 @@
 using BlazorApp.Web.Components;
+using BlazorApp.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddSingleton<HttpClient>(sp =>
 
 // Adicionar o HttpClient aos serviços
 builder.Services.AddScoped<EmpresaService>();
+builder.Services.AddScoped<TelefoneEmpresaService>();
 
 var app = builder.Build();
 
