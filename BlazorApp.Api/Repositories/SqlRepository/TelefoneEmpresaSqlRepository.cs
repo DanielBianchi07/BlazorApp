@@ -6,7 +6,7 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresaSqlRepository
 {
-    public void Create(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa)
+    public void Create(TelefoneEmpresa telefoneEmpresa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -45,7 +45,7 @@ public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresa
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "SELECT * FROM TELEFONES_EMPRESAS WHERE ID_EMPRESA = @id AND ID_TELEFONE_EMP = @idTelefone";
+        cmd.CommandText = "SELECT * FROM TELEFONES_EMPRESAS WHERE EMPRESA_ID = @idEmpresa AND ID_TELEFONE_EMP = @idTelefone";
 
         cmd.Parameters.AddWithValue("@idEmpresa", idEmpresa);
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
@@ -71,12 +71,11 @@ public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresa
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE EMPRESAS SET CNPJ = @cnpj, RAZAO_SOCIAL = @razao_social, EMAIL = @email, STATUS = @status WHERE ID_EMPRESA = @idEmpresa AND ID_TELEFONE_EMP = @idTelefone";
+        cmd.CommandText = "UPDATE TELEFONES_EMPRESAS SET NRO_TELEFONE = @nroTelefone WHERE ID_TELEFONE_EMP = @idTelefone AND EMPRESA_ID = @idEmpresa";
 
         cmd.Parameters.AddWithValue("@idEmpresa", idEmpresa);
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
-        cmd.Parameters.AddWithValue("@cnpj", telefoneEmpresa.EmpresaId);
-        cmd.Parameters.AddWithValue("@razao_social", telefoneEmpresa.NroTelefone);
+        cmd.Parameters.AddWithValue("@nroTelefone", telefoneEmpresa.NroTelefone);
 
         cmd.ExecuteNonQuery();
     }
@@ -85,7 +84,7 @@ public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresa
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "DELETE FROM TELEFONES_EMPRESAS WHERE ID_EMPRESA = @id AND ID_TELEFONE_EMP = @idTelefone";
+        cmd.CommandText = "DELETE FROM TELEFONES_EMPRESAS WHERE EMPRESA_ID = @idEmpresa AND ID_TELEFONE_EMP = @idTelefone";
 
         cmd.Parameters.AddWithValue("@idEmpresa", idEmpresa);
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
