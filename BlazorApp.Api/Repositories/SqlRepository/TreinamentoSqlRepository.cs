@@ -10,11 +10,11 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO TREINAMENTOS VALUES (@id, @tipo, @curso_id, @status)";
+        cmd.CommandText = "INSERT INTO TREINAMENTOS VALUES (@id, @tipo, @cursoId, @status)";
 
         cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
-        cmd.Parameters.AddWithValue("@razao_social", treinamento.CursoId);
+        cmd.Parameters.AddWithValue("@cursoId", treinamento.CursoId);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 
         cmd.ExecuteNonQuery();
@@ -74,11 +74,11 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE TREINAMENTOS SET TIPO = @tipo, CURSO_ID = @curso_id, STATUS = @status WHERE ID_TREINAMENTO = @id";
+        cmd.CommandText = "UPDATE TREINAMENTOS SET TIPO = @tipo, CURSO_ID = @cursoId, STATUS = @status WHERE ID_TREINAMENTO = @id";
 
         cmd.Parameters.AddWithValue("@id", id);
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
-        cmd.Parameters.AddWithValue("@curso_id", treinamento.CursoId);
+        cmd.Parameters.AddWithValue("@cursoId", treinamento.CursoId);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 
         cmd.ExecuteNonQuery();

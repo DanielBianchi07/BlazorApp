@@ -4,9 +4,10 @@ namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IUsuarioSqlRepository
 {
-    void Create(Usuario usuario, Guid IdPessoa);
+    void Create(Usuario usuario);
     IEnumerable<Usuario> Read();
     IEnumerable<Usuario> Read(Guid id);
-    void Update(Usuario usuario, Guid idPessoa);
+    void Update(Usuario usuario, Guid id);
     void Delete(Guid id);
+
 }
