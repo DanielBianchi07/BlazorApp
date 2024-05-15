@@ -6,28 +6,13 @@
 
 <title>Empresas</title>
 
-<h3 class="mb-2">Empresas</h3>
-
-<hr class="mb-3">
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <button class="btn btn-success"><a href="empresas/cadastrar">Cadastrar</a></button>
-    </div>
-      <div class="form-check form-switch col-auto text-right">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @onclick="EmpresasInativas">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
-        </div>
-  </div>
-</div>
-
-
+<Cabecalho Titulo="Empresas" />
 
 @if (empresas != null)
 {
-    <table class="table table-light table-bordered border-dark table-striped-columns mt-5">
-        <thead>
+  <div class="table-responsive">
+    <table class="table table-responsive-sm align-middle table-hover">
+        <thead class="table-dark">
             <tr>
                 <th>Razão Social</th>
                 <th>CNPJ</th>
@@ -43,7 +28,7 @@
                 {
                  <tr>
                     
-                    <td><a href="testes">@empresa.RazaoSocial</a></td>
+                    <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
                     <td>@empresa.CNPJ</td>
                     <td>@empresa.Email</td>
                     <td>
@@ -79,7 +64,8 @@
                 }
             }
         </tbody>
-    </table>   
+    </table>
+  </div>
 }
 else
 {
@@ -87,18 +73,17 @@ else
 }
 
 @code {
-    public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
-    public Empresa empresa = new Empresa();
-
-    [Parameter]
-    public Guid empresaId { get; set; }
-    private List<TelefoneEmpresa> telefonesEmpresas;
-    private List<Empresa> empresas;
-    protected override async Task OnInitializedAsync()
-    {
-        telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
-        empresas = await empresaService.GetEmpresasAsync();
-    }
+  public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
+  public Empresa empresa = new Empresa();
+  [Parameter]
+  public Guid empresaId { get; set; }
+  private List<TelefoneEmpresa> telefonesEmpresas;
+  private List<Empresa> empresas;
+  protected override async Task OnInitializedAsync()
+  {
+      telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
+      empresas = await empresaService.GetEmpresasAsync();
+  }
 /*
     public async Task OnSave()
     {
@@ -106,10 +91,11 @@ else
         empresas = await empresaService.GetEmpresasAsync();
     }
 */
-    private bool MostrarInativas = false;
-    
-    private void EmpresasInativas()
-    {
-        MostrarInativas = !MostrarInativas;
-    }
+  [Parameter]
+  public bool MostrarInativas { get; set; }
+  
+  private void EmpresasInativas()
+  {
+      MostrarInativas = !MostrarInativas;
+  }
 }

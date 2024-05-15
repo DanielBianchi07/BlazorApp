@@ -1,36 +1,85 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp</a>
+        <a class="navbar-brand" href="">Performance</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick='document.querySelector(".navbar-toggler").click()'>
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="/home" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="/Counter" Match="NavLinkMatch.All">
+                <span class="bi bi-mortarboard-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/empresas" Match="NavLinkMatch.All">
+                <span class="bi bi-award-nav-menu" aria-hidden="true"></span> Empresas
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/testes" Match="NavLinkMatch.All">
+                <span class="bi bi-list-check-nav-menu" aria-hidden="true"></span> Testes
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="ToggleButtonMenu">
+                <span class="bi bi-caret-down-nav-menu" aria-hidden="true"></span> Cadastros
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
+        @if(collapseButton)
+        {
+            <div class="nav-sub-item px-3 ms-3 fade-in">
+                <NavLink class="nav-link" href="/empresas" Match="NavLinkMatch.All">
+                    <span class="bi bi-buildings-fill-nav-menu" aria-hidden="true"></span> Empresas
+                </NavLink>
+            </div>
+            <div class="nav-sub-item px-3 ms-3 fade-in">
+                <NavLink class="nav-link" href="/exemplos" Match="NavLinkMatch.All">
+                    <span class="bi bi-person-raised-hand-nav-menu" aria-hidden="true"></span> Funcionários
+                </NavLink>
+            </div>
+            <div class="nav-sub-item px-3 ms-3 fade-in">
+                <NavLink class="nav-link" href="/instrutores" Match="NavLinkMatch.All">
+                    <span class="bi bi-teach-poll-nav-menu" aria-hidden="true"></span> Instrutores
+                </NavLink>
+            </div>
+            <div class="nav-sub-item px-3 ms-3 fade-in">
+                <NavLink class="nav-link" href="/cursos" Match="NavLinkMatch.All">
+                    <span class="bi bi-person-raised-hand-nav-menu" aria-hidden="true"></span> Cursos
+                </NavLink>
+            </div>
+            <div class="nav-sub-item px-3 ms-3 fade-in">
+                <NavLink class="nav-link" href="/provas" Match="NavLinkMatch.All">
+                    <span class="bi bi-journals-nav-menu" aria-hidden="true"></span> Provas
+                </NavLink>
+            </div>
+        }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="empresas">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Empresas
-            </NavLink>
-        </div>
     </nav>
 </div>
 
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private bool collapseButton = false;
+    private void ToggleButtonMenu()
+    {
+        collapseButton = !collapseButton;
+    }
+}

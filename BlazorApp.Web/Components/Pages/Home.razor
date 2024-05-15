@@ -1,18 +1,11 @@
 ﻿@page "/"
+@page "/home"
 @rendermode InteractiveServer
 
 @inject EmpresaService empresaService
 
 <h2>Home</h2>
-<p>@razao_social</p>
-
-<input @bind-Value="razao_social" @bind-Value:event="oninput" />
-<br>
-
 
 @code {
-    public string razao_social { get; set; }
-
-    public Empresa empresa = new Empresa();
 
 }
