@@ -6,19 +6,48 @@
 
 <title>Empresas</title>
 
-<Cabecalho Titulo="Empresas" />
+<Cabecalho Titulo="Empresas" CaminhoUrl="empresas/cadastrar">
+<div class="col-3 text-right align-content-end mb-1">
+    <div class="form-check form-switch col-auto text-right">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @bind="MostrarInativas">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
+    </div>
+</div>
+</Cabecalho>
+
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Título do modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Salvar mudanças</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @if (empresas != null)
 {
   <div class="table-responsive">
-    <table class="table table-responsive-sm align-middle table-hover">
+    <table class="table table-responsive-sm align-middle table-hover text-center">
         <thead class="table-dark">
             <tr>
+                <th>Id</th>
                 <th>Razão Social</th>
                 <th>CNPJ</th>
                 <th>Email</th>
                 <th>Telefones</th>
                 <th>Status</th>
+                <th>Opções</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +56,7 @@
                 @if (!MostrarInativas && empresa.Status == 1)
                 {
                  <tr>
-                    
+                    <td>@empresa.Id</td>
                     <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
                     <td>@empresa.CNPJ</td>
                     <td>@empresa.Email</td>
@@ -41,13 +70,19 @@
                         }
                     </td>
                     <td>Ativa</td>
+                    <td>
+                        <div class="grid gap-0 column-gap-3">
+                            <BotaoUpdate CaminhoUrl="empresas/alterar" />
+                            <BotaoDelete CaminhoUrl="empresas/deletar" />
+                        </div>
+                    </td>
                 </tr>
                 }
                 else if (MostrarInativas && empresa.Status == 0)
                 {
                     <tr>
                     
-                    <td><a href="testes">@empresa.RazaoSocial</a></td>
+                    <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
                     <td>@empresa.CNPJ</td>
                     <td>@empresa.Email</td>
                     <td>
@@ -55,11 +90,25 @@
                         {
                             @if (telefone.EmpresaId == empresa.Id)
                             {
-                               @telefone.NroTelefone<br>
+                               @telefone.NroTelefone
                             }
                         }
                     </td>
                     <td>Inativa</td>
+                    <td>
+                        <div class="grid gap-0 column-gap-3">
+                            <a href="empresas/alterar">
+                                <button class="btn btn-primary">
+                                    <i class="bi bi-pencil text-light"></i>
+                                </button>
+                            </a>
+                            <a href="empresas/deletar">
+                                <button type="button" class="btn btn-danger">
+                                    <i class="bi bi-trash text-black"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
                 }
             }
@@ -75,8 +124,6 @@ else
 @code {
   public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
   public Empresa empresa = new Empresa();
-  [Parameter]
-  public Guid empresaId { get; set; }
   private List<TelefoneEmpresa> telefonesEmpresas;
   private List<Empresa> empresas;
   protected override async Task OnInitializedAsync()
@@ -91,7 +138,6 @@ else
         empresas = await empresaService.GetEmpresasAsync();
     }
 */
-  [Parameter]
   public bool MostrarInativas { get; set; }
   
   private void EmpresasInativas()

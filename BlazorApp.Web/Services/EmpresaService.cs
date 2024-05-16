@@ -19,14 +19,38 @@ public class EmpresaService
         return await _httpClient.GetFromJsonAsync<List<Empresa>>(_baseUrl + "api/Empresa");
     }
 
-//    public async Task<Empresa> GetEmpresaIdAsync(int id)
-//    {
-//        return await _httpClient.GetFromJsonAsync<Empresa>($"api/Empresa/{id}");
- //   }
-
-    public async Task<HttpResponseMessage> CriarEmpresaAsync(Empresa empresa)
+    /*public async Task<Empresa> GetEmpresaIdAsync(int id)
     {
-        return await _httpClient.PostAsJsonAsync(_baseUrl + "api/Empresa", empresa);
+        return await _httpClient.GetFromJsonAsync<Empresa>($"api/Empresa/{id}");
+    }*/
+
+    public async Task<Guid> CriarEmpresaAsync(Empresa empresa)
+    {
+    HttpResponseMessage response = await _httpClient.PostAsJsonAsync(_baseUrl + "api/Empresa", empresa);
+    
+    if (response.IsSuccessStatusCode)
+    {
+        // Extrai o ID da empresa da resposta da API como string
+        string empresaIdString = await response.Content.ReadAsStringAsync();
+
+        // Converte a string para um Guid
+        Guid empresaId;
+        if (Guid.TryParse(empresaIdString, out empresaId))
+        {
+            return empresaId;
+        }
+        else
+        {
+            // Se a conversão falhar, você pode tratar o erro aqui
+            throw new Exception("Falha ao converter o ID da empresa.");
+        }
+        }
+        else
+        {
+        // Se a criação da empresa falhar, você pode tratar o erro aqui
+        // Por exemplo, lançar uma exceção, logar o erro, etc.
+        throw new Exception("Falha ao criar a empresa: " + response.ReasonPhrase);
+        }
     }
 
     public async Task<HttpResponseMessage> AtualizarEmpresaAsync(int id, Empresa Empresa)

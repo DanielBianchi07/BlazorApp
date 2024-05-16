@@ -4,7 +4,7 @@ namespace BlazorApp.Api.Repositories.Interface;
 
 public interface IEmpresaSqlRepository
 {
-    void Create(Empresa empresa);
+    Guid Create(Empresa empresa);
     IEnumerable<Empresa> Read();
     IEnumerable<Empresa> Read(Guid id);
     void Update(Empresa empresa, Guid id);

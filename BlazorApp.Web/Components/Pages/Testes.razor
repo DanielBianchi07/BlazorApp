@@ -3,20 +3,10 @@
 @inject EmpresaService empresaService
 @inject TelefoneEmpresaService telefoneEmpresaService
 
+<title>Empresas</title>
 
-<Cabecalho Titulo="Teste 01" />
 
-<TesteComponente Items="@empresas" PropriedadesVisiveis="@propriedades" />
 
 @code {
-    List<string> propriedades = new List<string>(){"CNPJ", "RazaoSocial", "Email","Telefones", "Status"};
     
-    private List<Empresa> empresas;
-    private List<TelefoneEmpresa> telefonesEmpresas;
-    
-    protected override async Task OnInitializedAsync()
-  {
-      empresas = await empresaService.GetEmpresasAsync();
-      telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
-  }
 }

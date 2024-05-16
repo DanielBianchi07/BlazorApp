@@ -1,25 +1,100 @@
 @page "/empresas/cadastrar"
 @rendermode InteractiveServer
-
 @inject EmpresaService empresaService
 @inject TelefoneEmpresaService telefoneEmpresaService
 
-<hr class="mb-3">
+<title>Empresas</title>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <BotaoCadastro />
+<!-- Formulário de criação de empresa -->
+<form @onsubmit="CriarEmpresa">
+    <div class="col-9 form-group mb-2">
+        <label for="razaoSocial">Id</label>
+        <input type="text" class="form-control" id="razaoSocial" @bind="empresa.Id">
     </div>
-      <div class="form-check form-switch col-auto text-right">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
-        </div>
-  </div>
-</div>
+    <div class="col-9 form-group mb-2">
+        <label for="razaoSocial">Razão Social:</label>
+        <input type="text" class="form-control" id="razaoSocial" @bind="empresa.RazaoSocial">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" class="form-control" id="cnpj" @bind="empresa.CNPJ">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="email">Email:</label>
+        <input type="text" class="form-control" id="email" @bind="empresa.Email">
+    </div>
+<!-- ------------------------------- -->
 
-<p>asdjoasidjoaisdjasdjaojdaoijdsoiaojis</p>
+    <div class="row mb-2">
+        <div class="col-8 form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" class="form-control" id="telefone" @bind="nroTelefone">
+        </div>
+        <div class="col-4 form-group align-content-end">
+            <button type="button" class="btn btn-success" @onclick="AddNewTelefone"><i class="bi bi-plus-square"></i></button>
+        </div>
+    </div>
+
+    @foreach(var item in telefonesEmpresas)
+    {
+        <div class="row mb-2">
+            <div class="col-8 form-group mt-2">
+                <input type="text" class="form-control" id="telefone" @bind="item.NroTelefone">
+            </div>
+            <div class="col-4 form-group align-content-end">
+                <button type="button" class="btn btn-danger" @onclick="AddNewTelefone"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    }
+
+<!-- ------------------------------- -->    
+    <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" @onchange="EstadoEmpresa" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+            Ativa
+        </label>
+    </div>
+
+    <!-- Adicione mais campos conforme necessário (e-mail, telefones, etc.) -->
+    <button type="submit" class="btn btn-primary m-3 mt-4">Criar Empresa</button>
+</form>
 
 @code {
+    private Empresa empresa = new Empresa(){
+        Status = 1
+    };
 
+    private async Task CriarEmpresa()
+    {
+        var empresaId = await empresaService.CriarEmpresaAsync(empresa);
+        foreach (var telEmpresa in telefonesEmpresas)
+        {
+            telEmpresa.EmpresaId = empresaId;
+            await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telEmpresa);
+        }
+        // Limpa os campos do formulário
+        //empresa = new Empresa();
+        //telefonesEmpresas.Clear();
+    }
+///==========================================================
+    
+    private string nroTelefone = "";
+    private List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
+
+    void AddNewTelefone()
+    {
+        if(!string.IsNullOrWhiteSpace(nroTelefone)){
+            telefonesEmpresas.Add(new TelefoneEmpresa {NroTelefone = nroTelefone});
+            nroTelefone = "";
+        }
+    }
+
+///===============================================================
+    public void EstadoEmpresa() 
+    {
+        if (empresa.Status == 0)
+            empresa.Status = 1;
+        else
+            empresa.Status = 0;
+    }
 }

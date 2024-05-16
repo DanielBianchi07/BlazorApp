@@ -6,7 +6,7 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class EmpresaSqlRepository : DatabaseConnection, IEmpresaSqlRepository
 {
-    public void Create(Empresa empresa)
+    public Guid Create(Empresa empresa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -19,6 +19,7 @@ public class EmpresaSqlRepository : DatabaseConnection, IEmpresaSqlRepository
         cmd.Parameters.AddWithValue("@status", empresa.Status);
 
         cmd.ExecuteNonQuery();
+        return empresa.Id;
     }
 
     public IEnumerable<Empresa> Read()
