@@ -34,7 +34,7 @@ public class EmpresaController : ControllerBase
     public ActionResult EmpresaCreate(Empresa empresaModel)
     {
         _empresaRepository.Create(empresaModel);
-        return Created();
+        return Ok(EmpresaModel);
     }
 
 

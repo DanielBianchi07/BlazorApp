@@ -29,10 +29,10 @@ public class TelefoneEmpresaController : ControllerBase
         return Ok(telefonesEmpresa);
     }
 
-    [HttpPost]
-    public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel)
+    [HttpPost("{idEmpresa}")]
+    public ActionResult TelefoneEmpresaCreate(TelefoneEmpresa telefoneEmpresaModel, Guid idEmpresa)
     {
-        _telefoneEmpresaRepository.Create(telefoneEmpresaModel);
+        _telefoneEmpresaRepository.Create(telefoneEmpresaModel, idEmpresa);
         return Created();
     }
 

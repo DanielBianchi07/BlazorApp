@@ -24,17 +24,17 @@ public class TelefoneEmpresaService
 //        return await _httpClient.GetFromJsonAsync<TelefoneEmpresa>($"api/TelefoneEmpresa/{id}");
  //   }
 
-    public async Task<HttpResponseMessage> CriarTelefoneEmpresaAsync(TelefoneEmpresa telefoneEmpresa)
+    public async Task<HttpResponseMessage> CriarTelefoneEmpresaAsync(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa)
     {
-        return await _httpClient.PostAsJsonAsync(_baseUrl + "api/TelefoneEmpresa", telefoneEmpresa);
+        return await _httpClient.PostAsJsonAsync(_baseUrl + $"api/TelefoneEmpresa/{idEmpresa}", telefoneEmpresa);
     }
 
-    public async Task<HttpResponseMessage> AtualizarTelefoneEmpresaAsync(int id, TelefoneEmpresa telefoneEmpresa)
+    public async Task<HttpResponseMessage> AtualizarTelefoneEmpresaAsync(Guid id, TelefoneEmpresa telefoneEmpresa)
     {
         return await _httpClient.PutAsJsonAsync(_baseUrl + $"api/TelefoneEmpresa/{id}", telefoneEmpresa);
     }
 
-    public async Task<HttpResponseMessage> ExcluirTelefoneEmpresaAsync(int id)
+    public async Task<HttpResponseMessage> ExcluirTelefoneEmpresaAsync(Guid id)
     {
         return await _httpClient.DeleteAsync(_baseUrl + $"api/TelefoneEmpresa/{id}");
     }

@@ -6,20 +6,20 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class EmpresaSqlRepository : DatabaseConnection, IEmpresaSqlRepository
 {
-    public Guid Create(Empresa empresa)
+    public void Create(Empresa empresa)
     {
+        empresa.Id = Guid.NewGuid();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "INSERT INTO EMPRESAS VALUES (@id, @cnpj, @razao_social, @email, @status)";
 
-        cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@id", empresa.Id);
         cmd.Parameters.AddWithValue("@cnpj", empresa.CNPJ);
         cmd.Parameters.AddWithValue("@razao_social", empresa.RazaoSocial);
         cmd.Parameters.AddWithValue("@email", empresa.Email);
         cmd.Parameters.AddWithValue("@status", empresa.Status);
 
         cmd.ExecuteNonQuery();
-        return empresa.Id;
     }
 
     public IEnumerable<Empresa> Read()

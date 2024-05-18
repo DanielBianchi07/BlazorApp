@@ -8,10 +8,6 @@
 <!-- Formulário de criação de empresa -->
 <form @onsubmit="CriarEmpresa">
     <div class="col-9 form-group mb-2">
-        <label for="razaoSocial">Id</label>
-        <input type="text" class="form-control" id="razaoSocial" @bind="empresa.Id">
-    </div>
-    <div class="col-9 form-group mb-2">
         <label for="razaoSocial">Razão Social:</label>
         <input type="text" class="form-control" id="razaoSocial" @bind="empresa.RazaoSocial">
     </div>
@@ -42,7 +38,7 @@
                 <input type="text" class="form-control" id="telefone" @bind="item.NroTelefone">
             </div>
             <div class="col-4 form-group align-content-end">
-                <button type="button" class="btn btn-danger" @onclick="AddNewTelefone"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-danger" @onclick="() => RemoveTelefone(item)"><i class="bi bi-trash"></i></button>
             </div>
         </div>
     }
@@ -60,27 +56,24 @@
 </form>
 
 @code {
+    private string nroTelefone = "";
     private Empresa empresa = new Empresa(){
         Status = 1
     };
+    private List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
 
     private async Task CriarEmpresa()
     {
-        var empresaId = await empresaService.CriarEmpresaAsync(empresa);
-        foreach (var telEmpresa in telefonesEmpresas)
+        Empresa empresaModel = await empresaService.CriarEmpresaAsync(empresa);
+        foreach (TelefoneEmpresa telEmpresa in telefonesEmpresas)
         {
-            telEmpresa.EmpresaId = empresaId;
-            await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telEmpresa);
+            await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telEmpresa, empresaModel.Id);
         }
         // Limpa os campos do formulário
-        //empresa = new Empresa();
-        //telefonesEmpresas.Clear();
+        empresa = new Empresa();
+        telefonesEmpresas.Clear();
     }
 ///==========================================================
-    
-    private string nroTelefone = "";
-    private List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
-
     void AddNewTelefone()
     {
         if(!string.IsNullOrWhiteSpace(nroTelefone)){
@@ -89,6 +82,10 @@
         }
     }
 
+    void RemoveTelefone(TelefoneEmpresa telfone)
+    {
+        telefonesEmpresas.Remove(telfone);
+    }
 ///===============================================================
     public void EstadoEmpresa() 
     {
