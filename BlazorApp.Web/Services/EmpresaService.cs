@@ -30,12 +30,12 @@ public class EmpresaService
         return await response.Content.ReadFromJsonAsync<Empresa>();
     }
 
-    public async Task<HttpResponseMessage> AtualizarEmpresaAsync(int id, Empresa Empresa)
+    public async Task<HttpResponseMessage> AtualizarEmpresaAsync(Guid id, Empresa Empresa)
     {
         return await _httpClient.PutAsJsonAsync(_baseUrl + $"api/Empresa/{id}", Empresa);
     }
 
-    public async Task<HttpResponseMessage> ExcluirEmpresaAsync(int id)
+    public async Task<HttpResponseMessage> ExcluirEmpresaAsync(Guid id)
     {
         return await _httpClient.DeleteAsync(_baseUrl + $"api/Empresa/{id}");
     }

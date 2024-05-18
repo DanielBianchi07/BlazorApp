@@ -1,5 +1,6 @@
 @page "/empresas"
 @rendermode InteractiveServer
+@attribute [StreamRendering]
 
 @inject EmpresaService empresaService
 @inject TelefoneEmpresaService telefoneEmpresaService
@@ -41,7 +42,6 @@
     <table class="table table-responsive-sm align-middle table-hover text-center">
         <thead class="table-dark">
             <tr>
-                <th>Id</th>
                 <th>Razão Social</th>
                 <th>CNPJ</th>
                 <th>Email</th>
@@ -56,7 +56,6 @@
                 @if (!MostrarInativas && empresa.Status == 1)
                 {
                  <tr>
-                    <td>@empresa.Id</td>
                     <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
                     <td>@empresa.CNPJ</td>
                     <td>@empresa.Email</td>
@@ -120,7 +119,9 @@ else
 {
     <p>Carregando empresas...</p>
 }
+<!-- ----------------------------------------------------------------- -->
 
+<!-- ----------------------------------------------------------------- -->
 @code {
   public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
   public Empresa empresa = new Empresa();

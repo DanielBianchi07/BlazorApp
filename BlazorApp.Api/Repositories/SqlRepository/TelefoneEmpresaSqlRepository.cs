@@ -6,14 +6,14 @@ namespace BlazorApp.Api.Repositories.SqlRepository;
 
 public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresaSqlRepository
 {
-    public void Create(TelefoneEmpresa telefoneEmpresa)
+    public void Create(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
         cmd.CommandText = "INSERT INTO TELEFONES_EMPRESAS VALUES (@idTelefone, @idEmpresa, @nroTelefone)";
 
         cmd.Parameters.AddWithValue("@idTelefone", Guid.NewGuid());
-        cmd.Parameters.AddWithValue("@idEmpresa", telefoneEmpresa.EmpresaId);
+        cmd.Parameters.AddWithValue("@idEmpresa", idEmpresa);
         cmd.Parameters.AddWithValue("@nroTelefone", telefoneEmpresa.NroTelefone);
 
         cmd.ExecuteNonQuery();

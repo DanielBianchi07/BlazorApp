@@ -2,6 +2,9 @@
 @rendermode InteractiveServer
 @inject EmpresaService empresaService
 @inject TelefoneEmpresaService telefoneEmpresaService
+@inject EstadoService estadoService
+@inject CidadeService cidadeService
+@inject EnderecoEmpresaService enderecoEmpresaService
 
 <title>Empresas</title>
 
@@ -42,6 +45,62 @@
             </div>
         </div>
     }
+    <div class="col-9 form-group mb-2">
+        <label for="NomeRua">Nome Rua:</label>
+        <input type="text" class="form-control" id="NomeRua" @bind="enderecoEmpresa.NomeRua">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="Numero">Numero:</label>
+        <input type="text" class="form-control" id="Numero" @bind="enderecoEmpresa.Numero">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="Bairro">Bairro:</label>
+        <input type="text" class="form-control" id="Bairro" @bind="enderecoEmpresa.Bairro">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="Complemento">Complemento:</label>
+        <input type="text" class="form-control" id="Complemento" @bind="enderecoEmpresa.Complemento">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="CEP">CEP:</label>
+        <input type="text" class="form-control" id="CEP" @bind="enderecoEmpresa.CEP">
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="Cidade">Cidade:</label>
+        <input type="text" class="form-control mb-1" id="Cidade" @bind-value="cidadeGet">
+        <select @bind="idCidade" class="form-select" aria-label="Default select example">
+            <option selected></option>
+            @if(cidades != null)
+            {
+                @foreach(var cidade in cidades)
+                {
+                    if(!string.IsNullOrWhiteSpace(cidadeGet))
+                    {
+                        if(cidade.Nome.StartsWith(cidadeGet))
+                        {
+                            <option value="@cidade.Id" selected>@cidade.Nome</option>
+                        }
+                    }
+                    else{
+                        <option value="@cidade.Id">@cidade.Nome</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <div class="col-9 form-group mb-2">
+        <label for="Complemento">Estado:</label>
+        <select @bind="idEstado" class="form-select" aria-label="Default select example">
+            <option selected></option>
+            @if(estados != null)
+            {
+                @foreach(var estado in estados)
+                {
+                    <option value="@estado.Id">@estado.Nome - @estado.UF</option>
+                }
+            }
+        </select>
+    </div>
 
 <!-- ------------------------------- -->    
     <div class="form-check mt-3">
@@ -61,7 +120,18 @@
         Status = 1
     };
     private List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
+    public Guid idEstado;
+    public Guid idCidade;
+    public string cidadeGet { get; set; }
+    private EnderecoEmpresa enderecoEmpresa = new EnderecoEmpresa();
+    private List<Cidade> cidades;
+    private List<Estado> estados;
 
+    protected override async Task OnInitializedAsync()
+    {
+        estados = await estadoService.GetEstadosAsync();
+        cidades = await cidadeService.GetCidadesAsync();
+    }
     private async Task CriarEmpresa()
     {
         Empresa empresaModel = await empresaService.CriarEmpresaAsync(empresa);
@@ -69,8 +139,12 @@
         {
             await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telEmpresa, empresaModel.Id);
         }
+        enderecoEmpresa.CidadeId = idCidade;
+        enderecoEmpresa.EmpresaId = empresaModel.Id;
+        await enderecoEmpresaService.CriarEnderecoEmpresaAsync(enderecoEmpresa);
         // Limpa os campos do formulário
         empresa = new Empresa();
+        enderecoEmpresa = new EnderecoEmpresa();
         telefonesEmpresas.Clear();
     }
 ///==========================================================
@@ -94,4 +168,5 @@
         else
             empresa.Status = 0;
     }
+    
 }
