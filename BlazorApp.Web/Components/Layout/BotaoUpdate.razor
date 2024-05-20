@@ -1,4 +1,4 @@
-<a href="@CaminhoUrl">
+<a href="@CaminhoUrl/@Id">
     <button type="button" class="btn btn-primary">
         <i class="bi bi-pencil text-light"></i>
     </button>
@@ -7,4 +7,6 @@
 @code {
     [Parameter]
     public string CaminhoUrl { get; set; }
+    [Parameter]
+    public Guid Id { get; set; }
 }

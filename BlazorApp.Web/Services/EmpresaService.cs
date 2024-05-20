@@ -19,10 +19,10 @@ public class EmpresaService
         return await _httpClient.GetFromJsonAsync<List<Empresa>>(_baseUrl + "api/Empresa");
     }
 
-    /*public async Task<Empresa> GetEmpresaIdAsync(int id)
+    public async Task<Empresa> GetEmpresaIdAsync(Guid id)
     {
         return await _httpClient.GetFromJsonAsync<Empresa>($"api/Empresa/{id}");
-    }*/
+    }
 
     public async Task<Empresa> CriarEmpresaAsync(Empresa empresa)
     {

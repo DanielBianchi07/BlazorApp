@@ -1,2 +1,182 @@
-@page "/empresas/alterar"
+@page "/empresas/alterar/{Id}"
 @rendermode InteractiveServer
+
+@inject NavigationManager NavigationManager
+@inject EmpresaService empresaService
+@inject TelefoneEmpresaService telefoneEmpresaService
+@inject EstadoService estadoService
+@inject CidadeService cidadeService
+@inject EnderecoEmpresaService enderecoEmpresaService
+
+<title>Empresas</title>
+
+<!-- Formulário de criação de empresa -->
+<form class="row g-3" @onsubmit="AtualizarEmpresa">
+    <div class="col-md-6">
+        <label for="razaoSocial" class="form-label">Razão Social</label>
+        <input type="text" class="form-control" id="razaoSocial" @bind="empresa.RazaoSocial">
+    </div>
+    <div class="col-md-4">
+        <label for="cnpj" class="form-label">CNPJ</label>
+        <input type="text" class="form-control" id="cnpj" @bind="empresa.CNPJ">
+    </div>
+    <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" @bind="empresa.Email">
+    </div>
+<!-- ------------------------------- -->
+    
+    <div class="col-4">
+        <label for="telefone" class="form-label">Telefone</label>
+        <div class="col-3 input-group">
+            <input type="text" class="form-control" @bind="nroTelefone">
+            <button class="btn btn-outline-primary" type="button" @onclick="AddNewTelefone"><i class="bi bi-plus-circle"></i></button>
+        </div>
+    </div>
+    @foreach(var item in telefonesEmpresas)
+    {
+        <div class="col-md-6">
+            <label for="space" class="form-label"></label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="item.NroTelefone">
+                <button class="btn btn-outline-danger" type="button" id="button-addon2" @onclick="() => RemoveTelefone(item)"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    }
+    <h2 class="mt-4">Endereço</h2>
+    <hr>
+    <div class="col-3">
+        <label for="CEP" class="form-label">CEP</label>
+        <input type="text" class="form-control" id="CEP" @bind="enderecoEmpresa.CEP">
+    </div>
+    <div class="col-5">
+        <label for="nomeRua" class="form-label">Rua</label>
+        <input type="text" class="form-control" id="nomeRua" @bind="enderecoEmpresa.NomeRua">
+    </div>
+    <div class="col-2">
+        <label for="Numero" class="form-label">Número</label>
+        <input type="text" class="form-control" id="Numero" @bind="enderecoEmpresa.Numero">
+    </div>
+    <div class="col-4">
+        <label for="Bairro" class="form-label">Bairro</label>
+        <input type="text" class="form-control" id="Bairro" @bind="enderecoEmpresa.Bairro">
+    </div>
+    <div class="col-6">
+        <label for="Complemento" class="form-label">Complemento</label>
+        <input type="text" class="form-control" id="Complemento" @bind="enderecoEmpresa.Complemento">
+    </div>
+    <div class="col-md-5">
+        <label for="Estado" class="form-label">Estado</label>
+        <select id="Estado" class="form-select" @bind="idEstado">
+            @if(estados != null)
+            {
+                @foreach(var estado in estados)
+                {
+                    @if(estado.Id == cidade.EstadoId)
+                    {
+                        <option value="@estado.Id" selected>@estado.Nome - @estado.UF</option>
+                    }
+                    else 
+                    {
+                        <option value="@estado.Id">@estado.Nome - @estado.UF</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-5">
+        <label for="Cidade" class="form-label">Cidade</label>
+        <select id="Cidade" class="form-select" @bind="enderecoEmpresa.CidadeId">
+            @if(cidades != null)
+            {
+                @foreach(var cidade in cidades)
+                {
+                    @if(cidade.Id == enderecoEmpresa.CidadeId)
+                    {
+                        <option value="@cidade.Id" selected>@cidade.Nome</option>
+                    }
+                    else if(idEstado == cidade.EstadoId)
+                    {
+                        <option value="@cidade.Id">@cidade.Nome</option>                
+                    }
+                } 
+            }
+        </select>
+    </div>
+
+<!-- ------------------------------- -->
+    <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" @onchange="EstadoEmpresa" checked>
+        <label class="form-check-label" for="flexCheckChecked">
+            Ativa
+        </label>
+    </div>
+<!-- --------------------------------- -->
+    <div class="col-12 mt-4 mb-5">
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+    </div>
+</form>
+
+@code {
+    private string nroTelefone = "";
+    
+    private List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
+    public Guid idEstado;
+    public Guid idCidade;
+    public Cidade cidade = new Cidade();
+    private Empresa empresa = new Empresa();
+    private EnderecoEmpresa enderecoEmpresa = new EnderecoEmpresa();
+    private List<Cidade> cidades;
+    private List<Estado> estados;
+    [Parameter]public string Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        empresa = await empresaService.GetEmpresaIdAsync(Guid.Parse(Id));
+        enderecoEmpresa = await enderecoEmpresaService.GetEnderecoEmpresaIdAsync(empresa.Id);
+        telefonesEmpresas = await telefoneEmpresaService.GetTelefoneEmpresaIdAsync(empresa.Id);
+        estados = await estadoService.GetEstadosAsync();
+        cidades = await cidadeService.GetCidadesAsync();
+        cidade = await cidadeService.GetCidadeIdAsync(enderecoEmpresa.CidadeId);
+    }
+    private async Task AtualizarEmpresa()
+    {
+        await empresaService.AtualizarEmpresaAsync(Guid.Parse(Id), empresa);
+        foreach (TelefoneEmpresa telEmpresa in telefonesEmpresas)
+        {
+            foreach(var telefone in telefonesEmpresas)
+            {
+                if(telefone.NroTelefone != nroTelefone)
+                {
+                    await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telefone, empresa.Id);
+                }
+            }
+            await telefoneEmpresaService.AtualizarTelefoneEmpresaAsync(telEmpresa.Id, telEmpresa);
+        }
+        await enderecoEmpresaService.AtualizarEnderecoEmpresaAsync(enderecoEmpresa.Id, enderecoEmpresa);
+    }
+///==========================================================
+    void AddNewTelefone()
+    {
+        if(!string.IsNullOrWhiteSpace(nroTelefone))
+        {
+            telefonesEmpresas.Add(new TelefoneEmpresa{NroTelefone = nroTelefone});
+            nroTelefone = "";
+        }
+    }
+
+    void RemoveTelefone(TelefoneEmpresa telfone)
+    {
+        telefonesEmpresas.Remove(telfone);
+    }
+///===============================================================
+    public void EstadoEmpresa() 
+    {
+        if (empresa.Status == 0)
+            empresa.Status = 1;
+        else
+            empresa.Status = 0;
+    }
+    
+}

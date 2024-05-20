@@ -19,10 +19,10 @@ public class CidadeService
         return await _httpClient.GetFromJsonAsync<List<Cidade>>(_baseUrl + "api/Cidade");
     }
 
-    /*public async Task<Cidade> GetCidadeIdAsync(int id)
+    public async Task<Cidade> GetCidadeIdAsync(Guid id)
     {
-        return await _httpClient.GetFromJsonAsync<Cidade>($"api/Cidade/{id}");
-    }*/
+        return await _httpClient.GetFromJsonAsync<Cidade>(_baseUrl + $"api/Cidade/{id}");
+    }
 
     public async Task<HttpResponseMessage> CriarCidadeAsync(Cidade cidade)
     {

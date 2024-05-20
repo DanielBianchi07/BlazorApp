@@ -19,10 +19,10 @@ public class EnderecoEmpresaService
         return await _httpClient.GetFromJsonAsync<List<EnderecoEmpresa>>(_baseUrl + "api/EnderecoEmpresa");
     }
 
-    /*public async Task<Empresa> GetEmpresaIdAsync(int id)
+    public async Task<EnderecoEmpresa> GetEnderecoEmpresaIdAsync(Guid idEmpresa)
     {
-        return await _httpClient.GetFromJsonAsync<Empresa>($"api/Empresa/{id}");
-    }*/
+        return await _httpClient.GetFromJsonAsync<EnderecoEmpresa>(_baseUrl + $"api/EnderecoEmpresa/{idEmpresa}");
+    }
 
     public async Task<HttpResponseMessage> CriarEnderecoEmpresaAsync(EnderecoEmpresa enderecoEmpresa)
     {

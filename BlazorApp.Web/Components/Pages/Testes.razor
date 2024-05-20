@@ -2,3 +2,10 @@
 @rendermode InteractiveServer
 
 <title>Testes</title>
+
+<input type="text" @bind="nome">
+<p>@nome</p>
+
+@code {
+  public string nome { get; set; } = string.Empty;
+}

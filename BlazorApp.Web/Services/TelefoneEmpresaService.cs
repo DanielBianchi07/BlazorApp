@@ -19,10 +19,10 @@ public class TelefoneEmpresaService
         return await _httpClient.GetFromJsonAsync<List<TelefoneEmpresa>>(_baseUrl + "api/TelefoneEmpresa");
     }
 
-//    public async Task<TelefoneEmpresa> GetTelefoneEmpresaIdAsync(int id)
-//    {
-//        return await _httpClient.GetFromJsonAsync<TelefoneEmpresa>($"api/TelefoneEmpresa/{id}");
- //   }
+    public async Task<List<TelefoneEmpresa>> GetTelefoneEmpresaIdAsync(Guid idEmpresa)
+    {
+        return await _httpClient.GetFromJsonAsync<List<TelefoneEmpresa>>(_baseUrl + $"api/TelefoneEmpresa/{idEmpresa}");
+    }
 
     public async Task<HttpResponseMessage> CriarTelefoneEmpresaAsync(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa)
     {
