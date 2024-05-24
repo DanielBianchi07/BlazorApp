@@ -1,0 +1,31 @@
+@inherits Editor<Empresa>
+
+<div class="col-md-6">
+    <label for="razaoSocial" class="form-label">Razão Social</label>
+    <InputText type="text" class="form-control" id="razaoSocial" @bind-Value="Value!.RazaoSocial" />
+    <ValidationMessage For="() => Value!.RazaoSocial" />
+    @if(!razaoSocialValida){<p class="text-danger">Já existe uma empresa cadastrada com esta Razão Social</p>}
+
+</div>
+<div class="col-md-4">
+    <label for="cnpj" class="form-label">CNPJ</label>
+    <InputText type="text" class="form-control" id="cnpj" @bind-Value="@Value!.CNPJ" />
+    <ValidationMessage For="() => Value!.CNPJ" />
+    @if(!cnpjValido){<p class="text-danger">Já existe uma empresa cadastrada com este CNPJ</p>}
+</div>
+<div class="col-md-6">
+    <label for="email" class="form-label">Email</label>
+    <InputText type="text" class="form-control" id="email" @bind-Value="@Value!.Email" />
+    <ValidationMessage For="() => Value!.Email" />
+    @if(!emailValido){<p class="text-danger">Já existe uma empresa cadastrada com este Email</p>}
+</div>
+
+@code {
+    [Parameter]
+    public bool cnpjValido { get; set; } = false;
+    [Parameter]
+    public bool emailValido { get; set; } = false;
+    [Parameter]
+    public bool razaoSocialValida { get; set; } = false;
+    
+}

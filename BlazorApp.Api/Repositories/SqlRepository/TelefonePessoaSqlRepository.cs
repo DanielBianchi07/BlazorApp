@@ -8,13 +8,15 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
 {
     public void Create(TelefonePessoa telefonePessoa)
     {
+        telefonePessoa.Id = Guid.NewGuid();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO TELEFONES_PESSOAS VALUES (@id_telefone_pes, @pessoa_id, @nro_telefone)";
+        cmd.CommandText = "INSERT INTO TELEFONES_PESSOAS VALUES (@id_telefone_pes, @pessoa_id, @nro_telefone, @status)";
 
-        cmd.Parameters.AddWithValue("@id_telefone_pes", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@id_telefone_pes", telefonePessoa.Id);
         cmd.Parameters.AddWithValue("@pessoa_id", telefonePessoa.PessoaId);
         cmd.Parameters.AddWithValue("@nro_telefone", telefonePessoa.NroTelefone);
+        cmd.Parameters.AddWithValue("@status", telefonePessoa.Status);
 
         cmd.ExecuteNonQuery();
     }
@@ -35,6 +37,7 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
             telefonePessoa.Id = reader.GetGuid(0);
             telefonePessoa.PessoaId = reader.GetGuid(1);
             telefonePessoa.NroTelefone = reader.GetString(2);
+            telefonePessoa.Status = reader.GetInt32(3);
 
             telefonePessoas.Add(telefonePessoa);
         }
@@ -61,6 +64,7 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
             telefonePessoa.Id = reader.GetGuid(0);
             telefonePessoa.PessoaId = reader.GetGuid(1);
             telefonePessoa.NroTelefone = reader.GetString(2);
+            telefonePessoa.Status = reader.GetInt32(3);
 
             telefonePessoas.Add(telefonePessoa);
         }
@@ -72,11 +76,12 @@ public class TelefonePessoaSqlRepository : DatabaseConnection, ITelefonePessoaSq
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE TELEFONES_PESSOAS SET NRO_TELEFONE = @nro_telefone WHERE ID_TELEFONE_PES = @idTelefone AND  PESSOA_ID = @pessoa_id";
+        cmd.CommandText = "UPDATE TELEFONES_PESSOAS SET NRO_TELEFONE = @nro_telefone, STATUS = @status WHERE ID_TELEFONE_PES = @idTelefone AND  PESSOA_ID = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@idTelefone", idTelefone);
         cmd.Parameters.AddWithValue("@pessoa_id", idPessoa);
         cmd.Parameters.AddWithValue("@nro_telefone", telefonePessoa.NroTelefone);
+        cmd.Parameters.AddWithValue("@status", telefonePessoa.Status);
 
         cmd.ExecuteNonQuery();
     }

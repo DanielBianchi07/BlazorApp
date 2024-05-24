@@ -6,7 +6,7 @@ public interface IEmpresaSqlRepository
 {
     void Create(Empresa empresa);
     IEnumerable<Empresa> Read();
-    IEnumerable<Empresa> Read(Guid id);
+    Empresa Read(Guid id);
     void Update(Empresa empresa, Guid id);
     void Delete(Guid id);
 }

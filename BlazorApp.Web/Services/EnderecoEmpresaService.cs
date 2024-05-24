@@ -29,7 +29,7 @@ public class EnderecoEmpresaService
         return await _httpClient.PostAsJsonAsync(_baseUrl + $"api/EnderecoEmpresa", enderecoEmpresa);
     }
 
-    public async Task<HttpResponseMessage> AtualizarEnderecoEmpresaAsync(Guid id, EnderecoEmpresa enderecoEmpresa)
+    public async Task<HttpResponseMessage> AtualizarEnderecoEmpresaAsync(EnderecoEmpresa enderecoEmpresa, Guid id)
     {
         return await _httpClient.PutAsJsonAsync(_baseUrl + $"api/EnderecoEmpresa/{id}", enderecoEmpresa);
     }

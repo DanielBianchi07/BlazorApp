@@ -10,11 +10,12 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO CONTEUDOS_PROGRAMATICOS VALUES (@id_conteudo, @assunto, @carga_horaria)";
+        cmd.CommandText = "INSERT INTO CONTEUDOS_PROGRAMATICOS VALUES (@id_conteudo, @assunto, @carga_horaria, @status)";
 
         cmd.Parameters.AddWithValue("@id_conteudo", Guid.NewGuid());
         cmd.Parameters.AddWithValue("@assunto", conteudoProgramatico.Assunto);
         cmd.Parameters.AddWithValue("@carga_horaria", conteudoProgramatico.CargaHoraria);
+        cmd.Parameters.AddWithValue("@status", conteudoProgramatico.Status);
 
         cmd.ExecuteNonQuery();
     }
@@ -35,6 +36,7 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
             conteudoProgramatico.Id = reader.GetGuid(0);
             conteudoProgramatico.Assunto = reader.GetString(1);
             conteudoProgramatico.CargaHoraria = reader.GetInt32(2);
+            conteudoProgramatico.Status = reader.GetInt32(4);
 
             conteudoProgramaticos.Add(conteudoProgramatico);
         }
@@ -60,6 +62,7 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
             conteudoProgramatico.Id = reader.GetGuid(0);
             conteudoProgramatico.Assunto = reader.GetString(1);
             conteudoProgramatico.CargaHoraria = reader.GetInt32(2);
+            conteudoProgramatico.Status = reader.GetInt32(4);
 
             conteudoProgramaticos.Add(conteudoProgramatico);
         }
@@ -71,11 +74,12 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE CONTEUDOS_PROGRAMATICOS SET ASSUNTO = @assunto, CARGA_HORARIA = @cargaHoraria WHERE ID_CONTEUDO = @idConteudo";
+        cmd.CommandText = "UPDATE CONTEUDOS_PROGRAMATICOS SET ASSUNTO = @assunto, CARGA_HORARIA = @cargaHoraria, STATUS = @status WHERE ID_CONTEUDO = @idConteudo";
 
         cmd.Parameters.AddWithValue("@idConteudo", id);
         cmd.Parameters.AddWithValue("@assunto", conteudoProgramatico.Assunto);
         cmd.Parameters.AddWithValue("@cargaHoraria", conteudoProgramatico.CargaHoraria);
+        cmd.Parameters.AddWithValue("@status", conteudoProgramatico.Status);
 
         cmd.ExecuteNonQuery();
     }

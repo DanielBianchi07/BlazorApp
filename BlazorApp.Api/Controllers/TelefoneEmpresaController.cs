@@ -22,10 +22,10 @@ public class TelefoneEmpresaController : ControllerBase
         return Ok(telefoneEmpresas);
     }
 
-    [HttpGet("{idEmpresa}/{idTelefone}")]
-    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaReadId(Guid idEmpresa, Guid idTelefone)
+    [HttpGet("{idEmpresa}")]
+    public ActionResult<IEnumerable<TelefoneEmpresa>> TelefoneEmpresaReadId(Guid idEmpresa)
     {
-        IEnumerable<TelefoneEmpresa> telefonesEmpresa = _telefoneEmpresaRepository.Read(idEmpresa, idTelefone);
+        IEnumerable<TelefoneEmpresa> telefonesEmpresa = _telefoneEmpresaRepository.Read(idEmpresa);
         return Ok(telefonesEmpresa);
     }
 
@@ -37,18 +37,18 @@ public class TelefoneEmpresaController : ControllerBase
     }
 
 
-    [HttpPut("{idEmpresa}/{idTelefone}")]
-    public ActionResult TelefoneEmpresaUpdate(TelefoneEmpresa telefoneEmpresaModel, Guid idEmpresa, Guid idTelefone) 
+    [HttpPut("{idTelefone}")]
+    public ActionResult TelefoneEmpresaUpdate(TelefoneEmpresa telefoneEmpresaModel,Guid idTelefone) 
     {
-        _telefoneEmpresaRepository.Update(telefoneEmpresaModel, idEmpresa, idTelefone);
+        _telefoneEmpresaRepository.Update(telefoneEmpresaModel, idTelefone);
         return Ok();
     }
 
 
-    [HttpDelete("{idEmpresa}/{idTelefone}")]
-    public ActionResult<TelefoneEmpresa> TelefoneEmpresaDelete(Guid idEmpresa, Guid idTelefone)
+    [HttpDelete("{idTelefone}")]
+    public ActionResult<TelefoneEmpresa> TelefoneEmpresaDelete(Guid idTelefone)
     {
-        _telefoneEmpresaRepository.Delete(idEmpresa, idTelefone);
+        _telefoneEmpresaRepository.Delete(idTelefone);
         return Ok();
     }
 }

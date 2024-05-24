@@ -10,12 +10,13 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO ALUNOS VALUES (@pessoa_id, @cpf, @rg, @assinatura, @usuario_id)";
+        cmd.CommandText = "INSERT INTO ALUNOS VALUES (@pessoa_id, @cpf, @rg, @assinatura, @status, @usuario_id)";
 
         cmd.Parameters.AddWithValue("@pessoa_id", aluno.PessoaId);
         cmd.Parameters.AddWithValue("@cpf", aluno.CPF);
         cmd.Parameters.AddWithValue("@rg", aluno.RG);
         cmd.Parameters.AddWithValue("@assinatura", aluno.Assinatura);
+        cmd.Parameters.AddWithValue("@status", aluno.Status);
         cmd.Parameters.AddWithValue("@usuario_id", aluno.UsuarioId);
 
         cmd.ExecuteNonQuery();
@@ -38,7 +39,8 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
             aluno.CPF = reader.GetString(1);
             aluno.RG = reader.GetString(2);
             aluno.Assinatura = reader.GetString(3);
-            aluno.UsuarioId = reader.GetGuid(4);
+            aluno.Status = reader.GetInt32(4);
+            aluno.UsuarioId = reader.GetGuid(5);
 
             alunos.Add(aluno);
         }
@@ -65,7 +67,8 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
             aluno.CPF = reader.GetString(1);
             aluno.RG = reader.GetString(2);
             aluno.Assinatura = reader.GetString(3);
-            aluno.UsuarioId = reader.GetGuid(4);
+            aluno.Status = reader.GetInt32(4);
+            aluno.UsuarioId = reader.GetGuid(5);
 
             alunos.Add(aluno);
         }
@@ -77,12 +80,13 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE ALUNOS SET PESSOA_ID = @pessoa_id, CPF = @cpf, RG = @rg, ASSINATURA = @assinatura, USUARIO_ID = @usuario_id WHERE PESSOA_ID = @pessoa_id";
+        cmd.CommandText = "UPDATE ALUNOS SET PESSOA_ID = @pessoa_id, CPF = @cpf, RG = @rg, ASSINATURA = @assinatura, STATUS = @status, USUARIO_ID = @usuario_id WHERE PESSOA_ID = @pessoa_id";
 
         cmd.Parameters.AddWithValue("@pessoa_id", id);
         cmd.Parameters.AddWithValue("@cpf", aluno.CPF);
         cmd.Parameters.AddWithValue("@rg", aluno.RG);
         cmd.Parameters.AddWithValue("@assinatura", aluno.Assinatura);
+        cmd.Parameters.AddWithValue("@status", aluno.Status);
         cmd.Parameters.AddWithValue("@usuario_id", aluno.UsuarioId);
 
         cmd.ExecuteNonQuery();

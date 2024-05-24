@@ -19,8 +19,6 @@ builder.Services.AddSingleton<HttpClient>(sp =>
 builder.Services.AddScoped<EmpresaService>();
 builder.Services.AddScoped<TelefoneEmpresaService>();
 builder.Services.AddScoped<EnderecoEmpresaService>();
-builder.Services.AddScoped<EstadoService>();
-builder.Services.AddScoped<CidadeService>();
 
 var app = builder.Build();
 

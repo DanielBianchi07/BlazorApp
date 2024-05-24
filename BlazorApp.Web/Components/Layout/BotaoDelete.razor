@@ -1,10 +1,45 @@
-<a href="@CaminhoUrl">
-    <button type="button" class="btn btn-danger">
-        <i class="bi bi-trash"></i>
-    </button>
-</a>
+@inject NavigationManager NavigationManager
+@inject EmpresaService empresaService
+
+
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="bi bi-trash text-light"></i>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja inativar a empresa @empresa.RazaoSocial</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="InativarEmpresa">Inativar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @code {
+    public Empresa empresa = new Empresa();
+
+    protected override async Task OnInitializedAsync()
+    {
+      empresa = await empresaService.GetEmpresaIdAsync(Id);
+    }
+    
+    private async Task InativarEmpresa()
+    {
+        empresa.Status = 0;
+        await empresaService.AtualizarEmpresaAsync(Id, empresa);
+        this.StateHasChanged();
+    }
+
     [Parameter]
-    public string CaminhoUrl { get; set; }
+    public Guid Id { get; set; }
+
 }

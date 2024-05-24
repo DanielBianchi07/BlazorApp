@@ -6,7 +6,7 @@ public interface ITelefoneEmpresaSqlRepository
 {
     void Create(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa);
     IEnumerable<TelefoneEmpresa> Read();
-    IEnumerable<TelefoneEmpresa> Read(Guid idEmpresa, Guid idTelefone);
-    void Update(TelefoneEmpresa telefoneEmpresa, Guid idEmpresa, Guid idTelefone);
-    void Delete(Guid idEmpresa, Guid idTelefone);
+    IEnumerable<TelefoneEmpresa> Read(Guid idEmpresa);
+    void Update(TelefoneEmpresa telefoneEmpresa, Guid idTelefone);
+    void Delete(Guid idTelefone);
 }

@@ -6,7 +6,7 @@ public interface IEnderecoEmpresaSqlRepository
 {
     void Create(EnderecoEmpresa enderecoEmpresa);
     IEnumerable<EnderecoEmpresa> Read();
-    IEnumerable<EnderecoEmpresa> Read(Guid id);
+    EnderecoEmpresa Read(Guid idEmpresa);
     void Update(EnderecoEmpresa enderecoEmpresa, Guid id);
     void Delete(Guid id);
 }

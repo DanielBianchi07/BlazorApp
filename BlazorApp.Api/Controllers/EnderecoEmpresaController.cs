@@ -23,11 +23,11 @@ public class EnderecoEmpresaController : ControllerBase
         return Ok(enderecoEmpresas);
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<EnderecoEmpresa>> EnderecoEmpresaReadId(Guid id)
+    [HttpGet("{idEmpresa}")]
+    public ActionResult<EnderecoEmpresa> EnderecoEmpresaReadId(Guid idEmpresa)
     {
-        IEnumerable<EnderecoEmpresa> enderecoEmpresas = _enderecoEmpresaRepository.Read(id);
-        return Ok(enderecoEmpresas);
+        EnderecoEmpresa enderecoEmpresa = _enderecoEmpresaRepository.Read(idEmpresa);
+        return Ok(enderecoEmpresa);
     }
 
     [HttpPost]

@@ -1,5 +1,4 @@
 namespace BlazorApp.Web.Models;
-
 public class Curso
 {
     public Guid Id { get; set; }

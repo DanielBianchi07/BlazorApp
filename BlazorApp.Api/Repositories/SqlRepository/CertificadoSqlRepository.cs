@@ -10,12 +10,12 @@ public class CertificadoSqlRepository : DatabaseConnection, ICertificadoSqlRepos
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO CERTIFICADOS VALUES (@treinamento_id, @codigo, @data_emissao, @status)";
+        cmd.CommandText = "INSERT INTO CERTIFICADOS VALUES (@treinamento_id, @codigo, @data_emissao, @situacao)";
 
         cmd.Parameters.AddWithValue("@treinamento_id", certificado.TreinamentoId);
         cmd.Parameters.AddWithValue("@codigo", certificado.Codigo);
         cmd.Parameters.AddWithValue("@data_emissao", certificado.DataEmissao);
-        cmd.Parameters.AddWithValue("@status", certificado.Status);
+        cmd.Parameters.AddWithValue("@situacao", certificado.Situacao);
 
         cmd.ExecuteNonQuery();
     }
@@ -36,7 +36,7 @@ public class CertificadoSqlRepository : DatabaseConnection, ICertificadoSqlRepos
             certificado.TreinamentoId = reader.GetGuid(0);
             certificado.Codigo = reader.GetString(1);
             certificado.DataEmissao = reader.GetDateTime(2);
-            certificado.Status = reader.GetInt32(3);
+            certificado.Situacao = reader.GetInt32(3);
 
             certificados.Add(certificado);
         }
@@ -62,7 +62,7 @@ public class CertificadoSqlRepository : DatabaseConnection, ICertificadoSqlRepos
             certificado.TreinamentoId = reader.GetGuid(0);
             certificado.Codigo = reader.GetString(1);
             certificado.DataEmissao = reader.GetDateTime(2);
-            certificado.Status = reader.GetInt32(3);
+            certificado.Situacao = reader.GetInt32(3);
 
             certificados.Add(certificado);
         }
@@ -74,12 +74,12 @@ public class CertificadoSqlRepository : DatabaseConnection, ICertificadoSqlRepos
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE CERTIFICADOS SET TREINAMENTO_ID = @treinamento_id, CODIGO = @codigo, DATA_EMISSAO = @data_emissao, STATUS = @status";
+        cmd.CommandText = "UPDATE CERTIFICADOS SET TREINAMENTO_ID = @treinamento_id, CODIGO = @codigo, DATA_EMISSAO = @data_emissao, STATUS = @situacao";
 
         cmd.Parameters.AddWithValue("@treinamento_id", certificado.TreinamentoId);
         cmd.Parameters.AddWithValue("@codigo", certificado.Codigo);
         cmd.Parameters.AddWithValue("@data_emissao", certificado.DataEmissao);
-        cmd.Parameters.AddWithValue("@status", certificado.Status);
+        cmd.Parameters.AddWithValue("@situacao", certificado.Situacao);
 
         cmd.ExecuteNonQuery();
     }

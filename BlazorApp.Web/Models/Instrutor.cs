@@ -1,5 +1,4 @@
 namespace BlazorApp.Web.Models;
-
 public class Instrutor
 {
     public Guid PessoaId { get; set; }

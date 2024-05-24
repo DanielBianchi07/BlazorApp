@@ -8,13 +8,16 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
 {
     public void Create(Treinamento treinamento)
     {
+        treinamento.Id = Guid.NewGuid();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO TREINAMENTOS VALUES (@id, @tipo, @cursoId, @status)";
+        cmd.CommandText = "INSERT INTO TREINAMENTOS VALUES (@id, @tipo, @situacao, @cursoId, @provaId, @status)";
 
-        cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+        cmd.Parameters.AddWithValue("@id", treinamento.Id);
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
+        cmd.Parameters.AddWithValue("@situacao", treinamento.Situacao);
         cmd.Parameters.AddWithValue("@cursoId", treinamento.CursoId);
+        cmd.Parameters.AddWithValue("@provaId", treinamento.ProvaId);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 
         cmd.ExecuteNonQuery();
@@ -35,8 +38,10 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
             Treinamento treinamento = new Treinamento();
             treinamento.Id = reader.GetGuid(0);
             treinamento.Tipo = reader.GetInt32(1);
-            treinamento.CursoId = reader.GetGuid(2);
-            treinamento.Status = reader.GetInt32(3);
+            treinamento.Situacao = reader.GetInt32(2);
+            treinamento.CursoId = reader.GetGuid(3);
+            treinamento.ProvaId = reader.GetGuid(4);
+            treinamento.Status = reader.GetInt32(5);
 
             treinamentos.Add(treinamento);
         }
@@ -61,8 +66,10 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
             Treinamento treinamento = new Treinamento();
             treinamento.Id = reader.GetGuid(0);
             treinamento.Tipo = reader.GetInt32(1);
-            treinamento.CursoId = reader.GetGuid(2);
-            treinamento.Status = reader.GetInt32(3);
+            treinamento.Situacao = reader.GetInt32(2);
+            treinamento.CursoId = reader.GetGuid(3);
+            treinamento.ProvaId = reader.GetGuid(4);
+            treinamento.Status = reader.GetInt32(5);
 
             treinamentos.Add(treinamento);
         }
@@ -74,10 +81,11 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE TREINAMENTOS SET TIPO = @tipo, CURSO_ID = @cursoId, STATUS = @status WHERE ID_TREINAMENTO = @id";
+        cmd.CommandText = "UPDATE TREINAMENTOS SET TIPO = @tipo, SITUACAO = @situacao, CURSO_ID = @cursoId, STATUS = @status WHERE ID_TREINAMENTO = @id";
 
         cmd.Parameters.AddWithValue("@id", id);
         cmd.Parameters.AddWithValue("@tipo", treinamento.Tipo);
+        cmd.Parameters.AddWithValue("@situacao", treinamento.Situacao);
         cmd.Parameters.AddWithValue("@cursoId", treinamento.CursoId);
         cmd.Parameters.AddWithValue("@status", treinamento.Status);
 

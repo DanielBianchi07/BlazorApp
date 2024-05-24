@@ -1,6 +1,5 @@
 @page "/empresas"
 @rendermode InteractiveServer
-@attribute [StreamRendering]
 
 @inject EmpresaService empresaService
 @inject TelefoneEmpresaService telefoneEmpresaService
@@ -8,12 +7,14 @@
 <title>Empresas</title>
 
 <Cabecalho Titulo="Empresas" CaminhoUrl="empresas/cadastrar">
+
 <div class="col-3 text-right align-content-end mb-1">
     <div class="form-check form-switch col-auto text-right">
         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @bind="MostrarInativas">
         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
     </div>
 </div>
+
 </Cabecalho>
 
 @if (empresas != null)
@@ -52,7 +53,7 @@
                     <td>
                         <div class="grid gap-0 column-gap-3">
                             <BotaoUpdate CaminhoUrl="empresas/alterar" Id="@empresa.Id" />
-                            <BotaoDelete CaminhoUrl="empresas/deletar" />
+                            <BotaoDelete Id="@empresa.Id" />
                         </div>
                     </td>
                 </tr>
@@ -75,16 +76,7 @@
                     <td>Inativa</td>
                     <td>
                         <div class="grid gap-0 column-gap-3">
-                            <a href="empresas/alterar/@empresa.Id">
-                                <button class="btn btn-primary">
-                                    <i class="bi bi-pencil text-light"></i>
-                                </button>
-                            </a>
-                            <a href="empresas/deletar">
-                                <button type="button" class="btn btn-danger">
-                                    <i class="bi bi-trash text-black"></i>
-                                </button>
-                            </a>
+                            <BotaoUpdate CaminhoUrl="empresas/alterar" Id="@empresa.Id" />
                         </div>
                     </td>
                 </tr>
@@ -102,26 +94,19 @@ else
 
 <!-- ----------------------------------------------------------------- -->
 @code {
-  public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
-  public Empresa empresa = new Empresa();
-  private List<TelefoneEmpresa> telefonesEmpresas;
-  private List<Empresa> empresas;
-  protected override async Task OnInitializedAsync()
-  {
-      telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
-      empresas = await empresaService.GetEmpresasAsync();
-  }
-/*
-    public async Task OnSave()
+    public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
+    public Empresa empresa = new Empresa();
+    private List<TelefoneEmpresa> telefonesEmpresas;
+    private List<Empresa> empresas;
+    protected override async Task OnInitializedAsync()
     {
-        await empresaService.CriarEmpresaAsync(null);
+        telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
         empresas = await empresaService.GetEmpresasAsync();
+        StateHasChanged();
     }
-*/
-  public bool MostrarInativas { get; set; }
-  
-  private void EmpresasInativas()
-  {
-      MostrarInativas = !MostrarInativas;
-  }
+    public bool MostrarInativas { get; set; }
+    private void EmpresasInativas()
+    {
+        MostrarInativas = !MostrarInativas;
+    }
 }

@@ -1,5 +1,4 @@
 namespace BlazorApp.Web.Models;
-
 public class AlunoEmpresa
 {
     public Guid AlunoId { get; set; }

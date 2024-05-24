@@ -34,8 +34,8 @@ public class TelefoneEmpresaService
         return await _httpClient.PutAsJsonAsync(_baseUrl + $"api/TelefoneEmpresa/{id}", telefoneEmpresa);
     }
 
-    public async Task<HttpResponseMessage> ExcluirTelefoneEmpresaAsync(Guid id)
+    public async Task<HttpResponseMessage> ExcluirTelefoneEmpresaAsync(Guid idTelefone)
     {
-        return await _httpClient.DeleteAsync(_baseUrl + $"api/TelefoneEmpresa/{id}");
+        return await _httpClient.DeleteAsync(_baseUrl + $"api/TelefoneEmpresa/{idTelefone}");
     }
 }

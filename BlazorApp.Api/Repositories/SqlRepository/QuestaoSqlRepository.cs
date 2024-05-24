@@ -10,10 +10,11 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "INSERT INTO QUESTOES VALUES (@id_questao, @pergunta)";
+        cmd.CommandText = "INSERT INTO QUESTOES VALUES (@id_questao, @pergunta, @status)";
 
         cmd.Parameters.AddWithValue("@id_questao", Guid.NewGuid());
         cmd.Parameters.AddWithValue("@pergunta", questao.Conteudo);
+        cmd.Parameters.AddWithValue("@status", questao.Status);
 
         cmd.ExecuteNonQuery();
     }
@@ -33,6 +34,7 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
             Questao questao = new Questao();
             questao.Id = reader.GetGuid(0);
             questao.Conteudo = reader.GetString(1);
+            questao.Status = reader.GetInt32(2);
 
             questoes.Add(questao);
         }
@@ -57,6 +59,7 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
             Questao questao = new Questao();
             questao.Id = reader.GetGuid(0);
             questao.Conteudo = reader.GetString(1);
+            questao.Status = reader.GetInt32(2);
 
             questoes.Add(questao);
         }
@@ -68,10 +71,11 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "UPDATE QUESTOES SET ID_QUESTAO = @id_questao, PERGUNTA = @pergunta";
+        cmd.CommandText = "UPDATE QUESTOES SET PERGUNTA = @pergunta, STATUS = @status WHERE ID_QUESTAO = @id_questao";
 
         cmd.Parameters.AddWithValue("@id_questao", questao.Id);
         cmd.Parameters.AddWithValue("@pergunta", questao.Conteudo);
+        cmd.Parameters.AddWithValue("@status", questao.Status);
 
         cmd.ExecuteNonQuery();
     }

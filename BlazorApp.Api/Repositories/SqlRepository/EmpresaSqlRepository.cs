@@ -47,7 +47,7 @@ public class EmpresaSqlRepository : DatabaseConnection, IEmpresaSqlRepository
         return empresas;
     }
 
-    public IEnumerable<Empresa> Read(Guid id)
+    public Empresa Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -57,21 +57,17 @@ public class EmpresaSqlRepository : DatabaseConnection, IEmpresaSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Empresa> empresas = new List<Empresa>();
-
+        Empresa empresa = new Empresa();
         while(reader.Read())
         {
-            Empresa empresa = new Empresa();
             empresa.Id = reader.GetGuid(0);
             empresa.CNPJ = reader.GetString(1);
             empresa.RazaoSocial = reader.GetString(2);
             empresa.Email = reader.GetString(3);
             empresa.Status = reader.GetInt32(4);
-
-            empresas.Add(empresa);
         }
 
-        return empresas;
+        return empresa;
     }
 
     public void Update(Empresa empresa, Guid id)
