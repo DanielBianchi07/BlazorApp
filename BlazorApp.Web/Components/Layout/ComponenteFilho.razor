@@ -1,0 +1,11 @@
+<div>
+    @ChildContent
+    <h2>Componente Filho</h2>
+    <!-- Aqui você renderiza o componente filho passado como parâmetro -->
+    
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

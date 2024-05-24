@@ -1,0 +1,165 @@
+@page "/empresas/alterar/{Id}"
+@rendermode InteractiveServer
+
+@inject NavigationManager NavigationManager
+@inject EmpresaService empresaService
+@inject TelefoneEmpresaService telefoneEmpresaService
+@inject EnderecoEmpresaService enderecoEmpresaService
+
+<title>Empresas</title>
+
+<!-- Formulário de criação de empresa -->
+<EditForm Model="Model" class="row g-3" OnValidSubmit="Submit" FormName="Form1">
+    <h2>Empresa</h2>
+
+    <DataAnnotationsValidator />
+    <ObjectGraphDataAnnotationsValidator />
+    
+    <OnlyEmpresaForm @bind-Value="Model!.empresa" cnpjValido="@cnpjValido" emailValido="@emailValido" razaoSocialValida="@razaoSocialValida" />
+    
+    <div class="col-4">
+        <label for="telefone" class="form-label">Telefone</label>
+        <div class="col-3 input-group">
+            <InputText type="text" class="form-control" @bind-Value="Model!.nroTelefone" />
+            <button class="btn btn-outline-primary" type="button" @onclick="AddNewTelefone"><i class="bi bi-plus-circle"></i></button>
+        </div>
+    </div>
+    @foreach(var item in Model!.telefonesEmpresas)
+    {
+        <div class="col-md-6">
+            <label for="space" class="form-label"></label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <InputText type="text" class="form-control" @bind-Value="@item.NroTelefone" />
+                <button class="btn btn-outline-danger" type="button" id="button-addon2" @onclick="() => RemoveTelefone(item)"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    }
+    <h2 class="mt-4">Endereço</h2>
+    <hr>
+    <OnlyEnderecoEmpresaForm @bind-Value="Model!.enderecoEmpresa" />
+    
+    <div class="form-check mt-3">
+        @if(Model!.empresa.Status == 1){
+            <input class="form-check-input" type="checkbox" id="flexCheckChecked" @onchange="EstadoEmpresa" checked />
+            <label class="form-check-label" for="flexCheckChecked">
+                <p>Ativa</p>
+            </label>
+        }
+        else{<input class="form-check-input" type="checkbox" id="flexCheckChecked" @onchange="EstadoEmpresa" />
+            <label class="form-check-label" for="flexCheckChecked">
+                <p>Inativa</p>
+            </label>}
+    </div>
+    
+    <div class="col-12 mt-4 mb-5">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</EditForm>
+
+@code {
+    List<Empresa> empresas = new List<Empresa>();
+    private string nroTelefone = "";
+    public class FormEmpresa
+    {
+        public string nroTelefone { get; set; } = "";
+        
+        [ValidateComplexType]
+        public Empresa empresa { get; set; } = new ();
+        [ValidateComplexType]
+        public EnderecoEmpresa enderecoEmpresa { get; set; } = new();
+        public List<TelefoneEmpresa> telefonesEmpresas { get; set; } = new();
+    }
+    [SupplyParameterFromForm]
+    public FormEmpresa? Model { get; set; }
+    [Parameter]public string Id { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        Model ??= new();
+        Model!.empresa = await empresaService.GetEmpresaIdAsync(Guid.Parse(Id));
+        Model.enderecoEmpresa = await enderecoEmpresaService.GetEnderecoEmpresaIdAsync(Model!.empresa.Id);
+        Model.telefonesEmpresas = await telefoneEmpresaService.GetTelefoneEmpresaIdAsync(Model!.empresa.Id);
+        empresas = await empresaService.GetEmpresasAsync();
+    }
+    public bool cnpjValido = true;
+    public bool emailValido = true;
+    public bool razaoSocialValida = true;
+    private async Task Submit()
+    {
+        foreach (var emp in empresas)
+        {
+            if (emp.CNPJ == Model!.empresa.CNPJ && emp.Id != Model!.empresa.Id)
+            {
+                cnpjValido = false;
+            }
+            else
+            {
+                cnpjValido = true;
+            }
+            if(emp.Email == Model!.empresa.Email && emp.Id != Model!.empresa.Id)
+            {
+                emailValido = false;   
+            }
+            else
+            {
+                emailValido = true;
+            }
+            if(emp.RazaoSocial == Model!.empresa.RazaoSocial && emp.Id != Model!.empresa.Id)
+            {
+                razaoSocialValida = false;
+            }
+            else
+            {
+                razaoSocialValida = true;
+            }
+        }
+        if(cnpjValido && emailValido && razaoSocialValida)
+        {
+            await empresaService.AtualizarEmpresaAsync(Guid.Parse(Id), Model!.empresa);
+            
+            foreach(var telefone in Model!.telefonesEmpresas)
+            {
+                if (telefone.Id == Guid.Empty)
+                {
+                    await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telefone, Model!.empresa.Id);
+                }
+                else
+                {
+                    await telefoneEmpresaService.AtualizarTelefoneEmpresaAsync(telefone.Id, telefone);
+                }
+            }
+            await enderecoEmpresaService.AtualizarEnderecoEmpresaAsync(Model!.enderecoEmpresa, Model!.enderecoEmpresa.Id);
+        }
+        NavigationManager.NavigateTo("empresas");
+    }
+///==========================================================
+    void AddNewTelefone()
+    {
+        if(!string.IsNullOrWhiteSpace(Model!.nroTelefone)){
+            Model!.telefonesEmpresas.Add(new TelefoneEmpresa {NroTelefone = Model!.nroTelefone});
+            Model!.nroTelefone = "";
+        }
+    }
+
+    private async Task RemoveTelefone(TelefoneEmpresa telfone)
+    {
+        try
+        {
+            await telefoneEmpresaService.ExcluirTelefoneEmpresaAsync(telfone.Id);
+            Model!.telefonesEmpresas.Remove(telfone);
+        }
+        catch
+        {
+            Model!.telefonesEmpresas.Remove(telfone);
+        }
+    }
+///===============================================================
+    public void EstadoEmpresa() 
+    {
+        if (Model!.empresa.Status == 0)
+            Model!.empresa.Status = 1;
+        else
+            Model!.empresa.Status = 0;
+    }
+}

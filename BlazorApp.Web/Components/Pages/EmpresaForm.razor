@@ -1,0 +1,131 @@
+@page "/empresas/cadastrar"
+@rendermode InteractiveServer
+
+@inject EmpresaService empresaService
+@inject TelefoneEmpresaService telefoneEmpresaService
+@inject EnderecoEmpresaService enderecoEmpresaService
+
+<title>Empresas</title>
+
+<!-- Formulário de criação de empresa -->
+<EditForm Model="Model" class="row g-3" OnValidSubmit="Submit" FormName="Form1">
+    <h2>Empresa</h2>
+
+    <DataAnnotationsValidator />
+    <ObjectGraphDataAnnotationsValidator />
+    
+    <OnlyEmpresaForm @bind-Value="Model!.empresa" cnpjValido="@cnpjValido" emailValido="@emailValido" razaoSocialValida="@razaoSocialValida" />
+    
+    <div class="col-4">
+        <label for="telefone" class="form-label">Telefone</label>
+        <div class="col-3 input-group">
+            <InputText type="text" class="form-control" @bind-Value="Model!.nroTelefone" />
+            <button class="btn btn-outline-primary" type="button" @onclick="AddNewTelefone"><i class="bi bi-plus-circle"></i></button>
+        </div>
+    </div>
+    @foreach(var item in Model!.telefonesEmpresas)
+    {
+        <div class="col-md-6">
+            <label for="space" class="form-label"></label>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <InputText type="text" class="form-control" @bind-Value="@item.NroTelefone" />
+                <button class="btn btn-outline-danger" type="button" id="button-addon2" @onclick="() => RemoveTelefone(item)"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+    }
+    <h2 class="mt-4">Endereço</h2>
+    <hr>
+    <OnlyEnderecoEmpresaForm @bind-Value="Model!.enderecoEmpresa" />
+    
+    <div class="col-12 mt-4 mb-5">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</EditForm>
+
+@code {
+    List<Empresa> empresas = new List<Empresa>();
+    public class FormEmpresa
+    {
+        public string nroTelefone { get; set; } = "";
+        
+        [ValidateComplexType]
+        public Empresa empresa { get; set; } = new(){Status = 1};
+        [ValidateComplexType]
+        public EnderecoEmpresa enderecoEmpresa { get; set; } = new();
+        public List<TelefoneEmpresa> telefonesEmpresas { get; set; } = new();
+    }
+    [SupplyParameterFromForm]
+    public FormEmpresa? Model { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        Model ??= new();
+        empresas = await empresaService.GetEmpresasAsync();
+    }
+    public bool cnpjValido = true;
+    public bool emailValido = true;
+    public bool razaoSocialValida = true;
+    private async Task Submit()
+    {
+        foreach (var emp in empresas)
+        {
+            if (emp.CNPJ == Model!.empresa.CNPJ)
+            {
+                cnpjValido = false;
+            }
+            else
+            {
+                cnpjValido = true;
+            }
+            if(emp.Email == Model!.empresa.Email)
+            {
+                emailValido = false;   
+            }
+            else
+            {
+                emailValido = true;
+            }
+            if(emp.RazaoSocial == Model!.empresa.RazaoSocial)
+            {
+                razaoSocialValida = false;
+            }
+            else
+            {
+                razaoSocialValida = true;
+            }
+        }
+        if(cnpjValido && emailValido && razaoSocialValida)
+        {
+            Empresa empresaModel;
+            empresaModel = await empresaService.CriarEmpresaAsync(Model!.empresa);
+            foreach (TelefoneEmpresa telEmpresa in Model!.telefonesEmpresas)
+            {
+                await telefoneEmpresaService.CriarTelefoneEmpresaAsync(telEmpresa, empresaModel.Id);
+            }
+            Model!.enderecoEmpresa.EmpresaId = empresaModel.Id;
+            await enderecoEmpresaService.CriarEnderecoEmpresaAsync(Model!.enderecoEmpresa);
+            ClearForm();
+        }
+    }
+///==========================================================
+    void AddNewTelefone()
+    {
+        if(!string.IsNullOrWhiteSpace(Model!.nroTelefone)){
+            Model!.telefonesEmpresas.Add(new TelefoneEmpresa {NroTelefone = Model!.nroTelefone});
+            Model!.nroTelefone = "";
+        }
+    }
+
+    void RemoveTelefone(TelefoneEmpresa telfone)
+    {
+        Model!.telefonesEmpresas.Remove(telfone);
+    }
+///===============================================================
+    private void ClearForm()
+    {
+        Model!.empresa = new Empresa();
+        Model!.enderecoEmpresa = new EnderecoEmpresa();
+        Model!.telefonesEmpresas.Clear();
+    }
+}

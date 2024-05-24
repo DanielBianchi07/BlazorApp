@@ -1,0 +1,113 @@
+@page "/empresas"
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+@inject EmpresaService empresaService
+@inject TelefoneEmpresaService telefoneEmpresaService
+
+<title>Empresas</title>
+
+<Cabecalho Titulo="Empresas" CaminhoUrl="empresas/cadastrar">
+
+<div class="col-3 text-right align-content-end mb-1">
+    <div class="form-check form-switch col-auto text-right">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" @bind="MostrarInativas">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar somente inativas</label>
+    </div>
+</div>
+
+</Cabecalho>
+
+@if (empresas != null)
+{
+  <div class="table-responsive">
+    <table class="table table-responsive-sm align-middle table-hover text-center mb-5">
+        <thead class="table-dark">
+            <tr>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+                <th>Telefones</th>
+                <th>Status</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var empresa in empresas)
+            {
+                @if (!MostrarInativas && empresa.Status == 1)
+                {
+                 <tr>
+                    <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
+                    <td>@empresa.CNPJ</td>
+                    <td>@empresa.Email</td>
+                    <td>
+                    @foreach (var telefone in telefonesEmpresas)
+                        {
+                            @if (telefone.EmpresaId == empresa.Id)
+                            {
+                               @telefone.NroTelefone<br>
+                            }
+                        }
+                    </td>
+                    <td>Ativa</td>
+                    <td>
+                        <div class="grid gap-0 column-gap-3">
+                            <BotaoUpdate CaminhoUrl="empresas/alterar" Id="@empresa.Id" />
+                            <BotaoDelete Id="@empresa.Id" />
+                        </div>
+                    </td>
+                </tr>
+                }
+                else if (MostrarInativas && empresa.Status == 0)
+                {
+                    <tr>
+                    <td><a class="text-dark" href="testes" style="text-decoration: none;">@empresa.RazaoSocial</a></td>
+                    <td>@empresa.CNPJ</td>
+                    <td>@empresa.Email</td>
+                    <td>
+                    @foreach (var telefone in telefonesEmpresas)
+                        {
+                            @if (telefone.EmpresaId == empresa.Id)
+                            {
+                               @telefone.NroTelefone
+                            }
+                        }
+                    </td>
+                    <td>Inativa</td>
+                    <td>
+                        <div class="grid gap-0 column-gap-3">
+                            <BotaoUpdate CaminhoUrl="empresas/alterar" Id="@empresa.Id" />
+                        </div>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+  </div>
+}
+else
+{
+    <p>Carregando empresas...</p>
+}
+<!-- ----------------------------------------------------------------- -->
+
+<!-- ----------------------------------------------------------------- -->
+@code {
+    public TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
+    public Empresa empresa = new Empresa();
+    private List<TelefoneEmpresa> telefonesEmpresas;
+    private List<Empresa> empresas;
+    protected override async Task OnInitializedAsync()
+    {
+        telefonesEmpresas = await telefoneEmpresaService.GetTelefonesEmpresasAsync();
+        empresas = await empresaService.GetEmpresasAsync();
+        StateHasChanged();
+    }
+    public bool MostrarInativas { get; set; }
+    private void EmpresasInativas()
+    {
+        MostrarInativas = !MostrarInativas;
+    }
+}

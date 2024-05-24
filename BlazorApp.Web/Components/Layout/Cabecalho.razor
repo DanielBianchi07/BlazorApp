@@ -1,0 +1,24 @@
+<div class="container mb-4">
+    <div class="">
+        <Title Titulo="@Titulo" />
+    </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col">
+      <BotaoCreate UrlCaminho="@CaminhoUrl" />
+    </div>
+    @ChildContent
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Titulo { get; set; }
+
+    [Parameter]
+    public string CaminhoUrl { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

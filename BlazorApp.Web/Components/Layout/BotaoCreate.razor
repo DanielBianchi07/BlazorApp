@@ -1,0 +1,16 @@
+@inject NavigationManager NavigationManager
+
+<button type="button" class="btn btn-success" @onclick="IrParaOutraRota">@TextoBotao</button>
+
+@code {
+    [Parameter]
+    public string? TextoBotao { get; set; } = "Cadastrar";
+
+    [Parameter]
+    public string? UrlCaminho { get; set; }
+
+    private void IrParaOutraRota()
+    {
+        NavigationManager.NavigateTo($"{UrlCaminho}");
+    }
+}
