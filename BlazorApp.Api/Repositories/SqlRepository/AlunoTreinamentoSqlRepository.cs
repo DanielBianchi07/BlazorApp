@@ -46,7 +46,7 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
         return alunosTreinamentos;
     }
 
-     public IEnumerable<AlunoTreinamento> Read(Guid idTreinamento, Guid idAluno)
+     public AlunoTreinamento Read(Guid idTreinamento, Guid idAluno)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -57,21 +57,18 @@ public class AlunoTreinamentoSqlRepository : DatabaseConnection, IAlunoTreinamen
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<AlunoTreinamento> alunosTreinamentos = new List<AlunoTreinamento>();
+        AlunoTreinamento alunoTreinamento = new AlunoTreinamento();
 
         while(reader.Read())
         {
-            AlunoTreinamento alunoTreinamento = new AlunoTreinamento();
             alunoTreinamento.PessoaId = reader.GetGuid(0);
             alunoTreinamento.TreinamentoId = reader.GetGuid(1);
             alunoTreinamento.DataTreinamento = reader.GetDateTime(2);
             alunoTreinamento.DataInicioCertificado = reader.GetDateTime(3);
             alunoTreinamento.Resultado = reader.GetInt32(4);
-
-            alunosTreinamentos.Add(alunoTreinamento);
         }
 
-        return alunosTreinamentos;
+        return alunoTreinamento;
     }
 
     public void Update(AlunoTreinamento alunoTreinamento, Guid idTreinamento, Guid idAluno)

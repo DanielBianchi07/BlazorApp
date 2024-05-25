@@ -42,7 +42,7 @@ public class CursoQuestaoSqlRepository : DatabaseConnection, ICursoQuestaoSqlRep
         return cursoQuestoes;
     }
 
-    public IEnumerable<CursoQuestao> Read(Guid idCurso, Guid idQuestao)
+    public CursoQuestao Read(Guid idCurso, Guid idQuestao)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -53,19 +53,16 @@ public class CursoQuestaoSqlRepository : DatabaseConnection, ICursoQuestaoSqlRep
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<CursoQuestao> cursoQuestoes = new List<CursoQuestao>();
+        CursoQuestao cursoQuestao = new CursoQuestao();
 
         while(reader.Read())
         {
-            CursoQuestao cursoQuestao = new CursoQuestao();
             cursoQuestao.CursoId = reader.GetGuid(0);
             cursoQuestao.QuestaoId = reader.GetGuid(1);
             cursoQuestao.Status = reader.GetInt32(2);
-
-            cursoQuestoes.Add(cursoQuestao);
         }
 
-        return cursoQuestoes;
+        return cursoQuestao;
     }
 
     public void Update(CursoQuestao cursoQuestao, Guid idCurso, Guid idQuestao)

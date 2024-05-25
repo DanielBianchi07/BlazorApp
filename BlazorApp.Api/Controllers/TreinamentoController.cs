@@ -24,10 +24,10 @@ public class TreinamentoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Treinamento>> TreinamentoReadId(Guid id)
+    public ActionResult<Treinamento> TreinamentoReadId(Guid id)
     {
-        IEnumerable<Treinamento> treinamentos = _treinamentoRepository.Read(id);
-        return Ok(treinamentos);
+        Treinamento treinamento = _treinamentoRepository.Read(id);
+        return Ok(treinamento);
     }
 
     [HttpPost]

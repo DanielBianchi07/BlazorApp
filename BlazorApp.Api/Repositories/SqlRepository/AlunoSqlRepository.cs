@@ -48,7 +48,7 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
         return alunos;
     }
 
-    public IEnumerable<Aluno> Read(Guid idPessoa)
+    public Aluno Read(Guid idPessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -58,11 +58,10 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Aluno> alunos = new List<Aluno>();
+        Aluno aluno = new Aluno();
 
         while(reader.Read())
         {
-            Aluno aluno = new Aluno();
             aluno.PessoaId = reader.GetGuid(0);
             aluno.CPF = reader.GetString(1);
             aluno.RG = reader.GetString(2);
@@ -70,10 +69,9 @@ public class AlunoSqlRepository : DatabaseConnection, IAlunoSqlRepository
             aluno.Status = reader.GetInt32(4);
             aluno.UsuarioId = reader.GetGuid(5);
 
-            alunos.Add(aluno);
         }
 
-        return alunos;
+        return aluno;
     }
 
     public void Update(Aluno aluno, Guid id)

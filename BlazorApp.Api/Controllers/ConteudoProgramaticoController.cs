@@ -24,10 +24,10 @@ public class ConteudoProgramaticoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<ConteudoProgramatico>> ConteudoProgramaticoReadId(Guid id)
+    public ActionResult<ConteudoProgramatico> ConteudoProgramaticoReadId(Guid id)
     {
-        IEnumerable<ConteudoProgramatico> conteudoProgramaticos = _conteudoProgramaticoRepository.Read(id);
-        return Ok(conteudoProgramaticos);
+        ConteudoProgramatico conteudoProgramatico = _conteudoProgramaticoRepository.Read(id);
+        return Ok(conteudoProgramatico);
     }
 
     [HttpPost]

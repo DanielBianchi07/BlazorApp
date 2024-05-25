@@ -47,7 +47,7 @@ public class AlternativaSqlRepository : DatabaseConnection, IAlternativaSqlRepos
         return alternativas;
     }
 
-     public IEnumerable<Alternativa> Read(Guid id)
+     public Alternativa Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -57,21 +57,18 @@ public class AlternativaSqlRepository : DatabaseConnection, IAlternativaSqlRepos
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Alternativa> alternativas = new List<Alternativa>();
+        Alternativa alternativa = new Alternativa();
 
         while(reader.Read())
         {
-            Alternativa alternativa = new Alternativa();
             alternativa.Id = reader.GetGuid(0);
             alternativa.Conteudo = reader.GetString(1);
             alternativa.Resposta = reader.GetInt32(2);
             alternativa.Status = reader.GetInt32(3);
             alternativa.QuestaoId = reader.GetGuid(4);
-
-            alternativas.Add(alternativa);
         }
 
-        return alternativas;
+        return alternativa;
     }
 
     public void Update(Alternativa alternativa, Guid id)

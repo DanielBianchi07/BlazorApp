@@ -24,10 +24,10 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Usuario>> UsuarioReadId(Guid id)
+    public ActionResult<Usuario> UsuarioReadId(Guid id)
     {
-        IEnumerable<Usuario> usuarios = _usuarioRepository.Read(id);
-        return Ok(usuarios);
+        Usuario usuario = _usuarioRepository.Read(id);
+        return Ok(usuario);
     }
 
     [HttpPost]

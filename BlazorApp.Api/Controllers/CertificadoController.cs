@@ -24,10 +24,10 @@ public class CertificadoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Certificado>> CertificadoReadId(Guid id)
+    public ActionResult<Certificado> CertificadoReadId(Guid id)
     {
-        IEnumerable<Certificado> certificados = _certificadoRepository.Read(id);
-        return Ok(certificados);
+        Certificado certificado = _certificadoRepository.Read(id);
+        return Ok(certificado);
     }
 
     [HttpPost]

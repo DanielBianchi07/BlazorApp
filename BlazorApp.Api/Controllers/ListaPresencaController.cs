@@ -24,10 +24,10 @@ public class ListaPresencaController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<ListaPresenca>> ListaPresencaReadId(Guid id)
+    public ActionResult<ListaPresenca> ListaPresencaReadId(Guid id)
     {
-        IEnumerable<ListaPresenca> listaPresencas = _listaPresencaRepository.Read(id);
-        return Ok(listaPresencas);
+        ListaPresenca listaPresenca = _listaPresencaRepository.Read(id);
+        return Ok(listaPresenca);
     }
 
     [HttpPost]

@@ -42,7 +42,7 @@ public class CursoConteudoSqlRepository : DatabaseConnection, ICursoConteudoSqlR
         return cursoConteudos;
     }
 
-    public IEnumerable<CursoConteudo> Read(Guid idCurso, Guid idConteudo)
+    public CursoConteudo Read(Guid idCurso, Guid idConteudo)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -53,19 +53,16 @@ public class CursoConteudoSqlRepository : DatabaseConnection, ICursoConteudoSqlR
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<CursoConteudo> cursoConteudos = new List<CursoConteudo>();
+        CursoConteudo cursoConteudo = new CursoConteudo();
 
         while(reader.Read())
         {
-            CursoConteudo cursoConteudo = new CursoConteudo();
             cursoConteudo.CursoId = reader.GetGuid(0);
             cursoConteudo.ConteudoProgramaticoId = reader.GetGuid(1);
             cursoConteudo.Status = reader.GetInt32(2);
-
-            cursoConteudos.Add(cursoConteudo);
         }
 
-        return cursoConteudos;
+        return cursoConteudo;
     }
 
     public void Update(CursoConteudo cursoConteudo, Guid idCurso, Guid idConteudo)

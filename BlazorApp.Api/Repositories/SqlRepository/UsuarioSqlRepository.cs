@@ -44,7 +44,7 @@ public class UsuarioSqlRepository : DatabaseConnection, IUsuarioSqlRepository
         return usuarios;
     }
 
-    public IEnumerable<Usuario> Read(Guid id)
+    public Usuario Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -54,20 +54,17 @@ public class UsuarioSqlRepository : DatabaseConnection, IUsuarioSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Usuario> usuarios = new List<Usuario>();
+        Usuario usuario = new Usuario();
 
         while(reader.Read())
         {
-            Usuario usuario = new Usuario();
             usuario.PessoaId = reader.GetGuid(0);
             usuario.Nome = reader.GetString(1);
             usuario.Senha = reader.GetString(2);
             usuario.Status = reader.GetInt32(3);
-
-            usuarios.Add(usuario);
         }
 
-        return usuarios;
+        return usuario;
     }
 
     public void Update(Usuario usuario, Guid idPessoa)

@@ -44,7 +44,7 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
         return conteudoProgramaticos;
     }
 
-    public IEnumerable<ConteudoProgramatico> Read(Guid id)
+    public ConteudoProgramatico Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -54,20 +54,17 @@ public class ConteudoProgramaticoSqlRepository : DatabaseConnection, IConteudoPr
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<ConteudoProgramatico> conteudoProgramaticos = new List<ConteudoProgramatico>();
+        ConteudoProgramatico conteudoProgramatico = new ConteudoProgramatico();
 
         while(reader.Read())
         {
-            ConteudoProgramatico conteudoProgramatico = new ConteudoProgramatico();
             conteudoProgramatico.Id = reader.GetGuid(0);
             conteudoProgramatico.Assunto = reader.GetString(1);
             conteudoProgramatico.CargaHoraria = reader.GetInt32(2);
             conteudoProgramatico.Status = reader.GetInt32(4);
-
-            conteudoProgramaticos.Add(conteudoProgramatico);
         }
 
-        return conteudoProgramaticos;
+        return conteudoProgramatico;
     }
 
     public void Update(ConteudoProgramatico conteudoProgramatico, Guid id)

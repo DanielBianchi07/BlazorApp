@@ -24,10 +24,10 @@ public class AlternativaController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Alternativa>> AlternativaReadId(Guid id)
+    public ActionResult<Alternativa> AlternativaReadId(Guid id)
     {
-        IEnumerable<Alternativa> alternativas = _alternativaRepository.Read(id);
-        return Ok(alternativas);
+        Alternativa alternativa = _alternativaRepository.Read(id);
+        return Ok(alternativa);
     }
 
     [HttpPost]

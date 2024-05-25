@@ -6,7 +6,7 @@ public interface ICertificadoSqlRepository
 {
     void Create(Certificado certificado);
     IEnumerable<Certificado> Read();
-    IEnumerable<Certificado> Read(Guid id);
+    Certificado Read(Guid id);
     void Update(Certificado certificado, Guid id);
     void Delete(Guid id);
 }

@@ -24,10 +24,10 @@ public class CursoQuestaoController : ControllerBase
     }
 
     [HttpGet("{idCurso}/{idQuestao}")]
-    public ActionResult<IEnumerable<CursoQuestao>> CursoQuestaoReadId(Guid idCurso, Guid idQuestao)
+    public ActionResult<CursoQuestao> CursoQuestaoReadId(Guid idCurso, Guid idQuestao)
     {
-        IEnumerable<CursoQuestao> cursoQuestoes = _cursoQuestaoRepository.Read(idCurso, idQuestao);
-        return Ok(cursoQuestoes);
+        CursoQuestao cursoQuestoe = _cursoQuestaoRepository.Read(idCurso, idQuestao);
+        return Ok(cursoQuestoe);
     }
 
     [HttpPost]

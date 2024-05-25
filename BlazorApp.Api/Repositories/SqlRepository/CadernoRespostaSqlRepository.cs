@@ -44,7 +44,7 @@ public class CadernoRespostaSqlRepository : DatabaseConnection, ICadernoResposta
         return cadernoRespostas;
     }
 
-    public IEnumerable<CadernoResposta> Read(Guid id)
+    public CadernoResposta Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -54,20 +54,17 @@ public class CadernoRespostaSqlRepository : DatabaseConnection, ICadernoResposta
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<CadernoResposta> cadernoRespostas = new List<CadernoResposta>();
+        CadernoResposta cadernoResposta = new CadernoResposta();
 
         while(reader.Read())
-        {
-            CadernoResposta cadernoResposta = new CadernoResposta();
+        {;
             cadernoResposta.Id = reader.GetGuid(0);
             cadernoResposta.NroPergunta = reader.GetInt32(1);
             cadernoResposta.AltSelecionada = reader.GetString(2);
             cadernoResposta.PessoaId = reader.GetGuid(3);
-
-            cadernoRespostas.Add(cadernoResposta);
         }
 
-        return cadernoRespostas;
+        return cadernoResposta;
     }
 
     public void Update(CadernoResposta cadernoResposta, Guid id)

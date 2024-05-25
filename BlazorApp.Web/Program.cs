@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+
 // Configurar o HttpClient
 builder.Services.AddSingleton<HttpClient>(sp =>
 {
@@ -21,6 +22,20 @@ builder.Services.AddScoped<TelefoneEmpresaService>();
 builder.Services.AddScoped<EnderecoEmpresaService>();
 
 var app = builder.Build();
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddAuthentication("MyCookieAuthenticationScheme")
+        .AddCookie("MyCookieAuthenticationScheme", options =>
+        {
+            options.Cookie.Name = "MyCookie";
+            options.LoginPath = "/login";
+        });
+
+    services.AddRazorPages();
+    services.AddServerSideBlazor();
+    services.AddSingleton<WeatherForecastService>();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -40,7 +40,7 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
         return instrutorTreinamentos;
     }
 
-     public IEnumerable<InstrutorTreinamento> Read(Guid idPessoa, Guid idTreinamento)
+     public InstrutorTreinamento Read(Guid idPessoa, Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -50,18 +50,15 @@ public class InstrutorTreinamentoSqlRepository : DatabaseConnection, IInstrutorT
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<InstrutorTreinamento> instrutorTreinamentos = new List<InstrutorTreinamento>();
+        InstrutorTreinamento instrutorTreinamento = new InstrutorTreinamento();
 
         while(reader.Read())
         {
-            InstrutorTreinamento instrutorTreinamento = new InstrutorTreinamento();
             instrutorTreinamento.PessoaId = reader.GetGuid(0);
             instrutorTreinamento.TreinamentoId = reader.GetGuid(1);
-
-            instrutorTreinamentos.Add(instrutorTreinamento);
         }
 
-        return instrutorTreinamentos;
+        return instrutorTreinamento;
     }
 
     public void Update(InstrutorTreinamento instrutorTreinamento, Guid idPessoa, Guid idTreinamento)

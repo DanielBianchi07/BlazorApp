@@ -42,7 +42,7 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
         return listaPresencas;
     }
 
-    public IEnumerable<ListaPresenca> Read(Guid idTreinamento)
+    public ListaPresenca Read(Guid idTreinamento)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -52,19 +52,17 @@ public class ListaPresencaSqlRepository : DatabaseConnection, IListaPresencaSqlR
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<ListaPresenca> listaPresencas = new List<ListaPresenca>();
+        ListaPresenca listaPresenca = new ListaPresenca();
 
         while(reader.Read())
         {
-            ListaPresenca listaPresenca = new ListaPresenca();
             listaPresenca.TreinamentoId = reader.GetGuid(0);
             listaPresenca.Codigo = reader.GetString(1);
             listaPresenca.DataEmissao = reader.GetDateTime(2);
 
-            listaPresencas.Add(listaPresenca);
         }
 
-        return listaPresencas;
+        return listaPresenca;
     }
 
     public void Update(ListaPresenca listaPresenca, Guid idTreinamento)

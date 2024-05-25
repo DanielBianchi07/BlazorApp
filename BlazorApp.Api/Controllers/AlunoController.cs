@@ -24,10 +24,10 @@ public class AlunoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Aluno>> AlunoReadId(Guid id)
+    public ActionResult<Aluno> AlunoReadId(Guid id)
     {
-        IEnumerable<Aluno> alunos = _alunoRepository.Read(id);
-        return Ok(alunos);
+        Aluno aluno = _alunoRepository.Read(id);
+        return Ok(aluno);
     }
 
     [HttpPost]

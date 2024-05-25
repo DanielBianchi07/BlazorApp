@@ -44,7 +44,7 @@ public class ProvaSqlRepository : DatabaseConnection, IProvaSqlRepository
         return provas;
     }
 
-    public IEnumerable<Prova> Read(Guid idProva, Guid idPessoa)
+    public Prova Read(Guid idProva, Guid idPessoa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -55,20 +55,17 @@ public class ProvaSqlRepository : DatabaseConnection, IProvaSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Prova> provas = new List<Prova>();
+        Prova prova = new Prova();
 
         while(reader.Read())
         {
-            Prova prova = new Prova();
             prova.Id = reader.GetGuid(0);
             prova.DataRealizacao = reader.GetDateTime(1);
             prova.Status = reader.GetInt32(2);
             prova.PessoaId = reader.GetGuid(3);
-
-            provas.Add(prova);
         }
 
-        return provas;
+        return prova;
     }
 
     public void Update(Prova prova, Guid idProva, Guid idPessoa)

@@ -24,10 +24,10 @@ public class CadernoRespostaController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<CadernoResposta>> CadernoRespostaReadId(Guid id)
+    public ActionResult<CadernoResposta> CadernoRespostaReadId(Guid id)
     {
-        IEnumerable<CadernoResposta> cadernoRespostas = _cadernoRespostaRepository.Read(id);
-        return Ok(cadernoRespostas);
+        CadernoResposta cadernoResposta = _cadernoRespostaRepository.Read(id);
+        return Ok(cadernoResposta);
     }
 
     [HttpPost]

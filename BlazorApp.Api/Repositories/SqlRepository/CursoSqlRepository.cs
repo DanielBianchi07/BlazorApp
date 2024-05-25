@@ -50,7 +50,7 @@ public class CursoSqlRepository : DatabaseConnection, ICursoSqlRepository
         return cursos;
     }
 
-    public IEnumerable<Curso> Read(Guid id)
+    public Curso Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -60,11 +60,10 @@ public class CursoSqlRepository : DatabaseConnection, ICursoSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Curso> cursos = new List<Curso>();
+        Curso curso = new Curso();
 
         while(reader.Read())
         {
-            Curso curso = new Curso();
             curso.Id = reader.GetGuid(0);
             curso.Nome = reader.GetString(1);
             curso.Logo = reader.GetString(2);
@@ -72,11 +71,9 @@ public class CursoSqlRepository : DatabaseConnection, ICursoSqlRepository
             curso.CargaHorariaInicial = reader.GetInt32(4);
             curso.Validade = reader.GetInt32(5);
             curso.Status = reader.GetInt32(6);
-
-            cursos.Add(curso);
         }
 
-        return cursos;
+        return curso;
     }
 
     public void Update(Curso curso, Guid id)

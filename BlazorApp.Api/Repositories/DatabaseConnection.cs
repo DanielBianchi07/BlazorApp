@@ -12,7 +12,7 @@ public abstract class DatabaseConnection : IDisposable
         Integrated Security=False;
         TrustServerCertificate=True;
         User=aluno;
-        Password=dba;";
+        Password=dba";
         connection = new SqlConnection(strConn);
         connection.Open();
     }

@@ -6,7 +6,7 @@ public interface IListaPresencaSqlRepository
 {
     void Create(ListaPresenca listaPresenca);
     IEnumerable<ListaPresenca> Read();
-    IEnumerable<ListaPresenca> Read(Guid id);
+    ListaPresenca Read(Guid id);
     void Update(ListaPresenca listaPresenca, Guid id);
     void Delete(Guid id);
 }

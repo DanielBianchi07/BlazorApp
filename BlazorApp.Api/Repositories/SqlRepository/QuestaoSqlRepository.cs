@@ -42,7 +42,7 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
         return questoes;
     }
 
-    public IEnumerable<Questao> Read(Guid id)
+    public Questao Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -52,19 +52,16 @@ public class QuestaoSqlRepository : DatabaseConnection, IQuestaoSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Questao> questoes = new List<Questao>();
+        Questao questao = new Questao();
 
         while(reader.Read())
         {
-            Questao questao = new Questao();
             questao.Id = reader.GetGuid(0);
             questao.Conteudo = reader.GetString(1);
             questao.Status = reader.GetInt32(2);
-
-            questoes.Add(questao);
         }
 
-        return questoes;
+        return questao;
     }
 
     public void Update(Questao questao, Guid id)

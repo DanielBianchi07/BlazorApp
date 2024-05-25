@@ -42,7 +42,7 @@ public class AlunoEmpresaSqlRepository : DatabaseConnection, IAlunoEmpresaSqlRep
         return alunosEmpresa;
     }
 
-    public IEnumerable<AlunoEmpresa> Read(Guid aluno_id, Guid empresa_id)
+    public AlunoEmpresa Read(Guid aluno_id, Guid empresa_id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -53,19 +53,16 @@ public class AlunoEmpresaSqlRepository : DatabaseConnection, IAlunoEmpresaSqlRep
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<AlunoEmpresa> alunosEmpresa = new List<AlunoEmpresa>();
+        AlunoEmpresa alunoEmpresa = new AlunoEmpresa();
 
         while(reader.Read())
         {
-            AlunoEmpresa alunoEmpresa = new AlunoEmpresa();
             alunoEmpresa.AlunoId = reader.GetGuid(0);
             alunoEmpresa.EmpresaId = reader.GetGuid(1);
             alunoEmpresa.Status = reader.GetInt32(2);
-
-            alunosEmpresa.Add(alunoEmpresa);
         }
 
-        return alunosEmpresa;
+        return alunoEmpresa;
     }
 
 

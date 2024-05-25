@@ -44,7 +44,7 @@ public class PessoaSqlRepository : DatabaseConnection, IPessoaSqlRepository
         return pessoas;
     }
 
-    public IEnumerable<Pessoa> Read(Guid id)
+    public Pessoa Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -54,19 +54,17 @@ public class PessoaSqlRepository : DatabaseConnection, IPessoaSqlRepository
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Pessoa> pessoas = new List<Pessoa>();
+        Pessoa pessoa = new Pessoa();
 
         while(reader.Read())
         {
-            Pessoa pessoa = new Pessoa();
             pessoa.Id = reader.GetGuid(0);
             pessoa.Nome = reader.GetString(1);
             pessoa.Email = reader.GetString(2);
             pessoa.Status = reader.GetInt32(3);
-            pessoas.Add(pessoa);
         }
 
-        return pessoas;
+        return pessoa;
     }
 
     public void Update(Pessoa pessoa, Guid id)

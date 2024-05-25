@@ -44,7 +44,7 @@ public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresa
         return telefonesEmpresas;
     }
 
-    public IEnumerable<TelefoneEmpresa> Read(Guid idEmpresa)
+    public TelefoneEmpresa Read(Guid idEmpresa)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -54,20 +54,17 @@ public class TelefoneEmpresaSqlRepository : DatabaseConnection, ITelefoneEmpresa
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<TelefoneEmpresa> telefonesEmpresas = new List<TelefoneEmpresa>();
+        TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
 
         while(reader.Read())
         {
-            TelefoneEmpresa telefoneEmpresa = new TelefoneEmpresa();
             telefoneEmpresa.Id = reader.GetGuid(0);
             telefoneEmpresa.EmpresaId = reader.GetGuid(1);
             telefoneEmpresa.NroTelefone = reader.GetString(2);
             telefoneEmpresa.Status = reader.GetInt32(3);
-
-            telefonesEmpresas.Add(telefoneEmpresa);
         }
 
-        return telefonesEmpresas;
+        return telefoneEmpresa;
     }
 
     public void Update(TelefoneEmpresa telefoneEmpresa, Guid idTelefone)

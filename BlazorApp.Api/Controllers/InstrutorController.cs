@@ -24,10 +24,10 @@ public class InstrutorController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Instrutor>> InstrutorReadId(Guid id)
+    public ActionResult<Instrutor> InstrutorReadId(Guid id)
     {
-        IEnumerable<Instrutor> instrutores = _instrutorRepository.Read(id);
-        return Ok(instrutores);
+        Instrutor instrutore = _instrutorRepository.Read(id);
+        return Ok(instrutore);
     }
 
     [HttpPost]

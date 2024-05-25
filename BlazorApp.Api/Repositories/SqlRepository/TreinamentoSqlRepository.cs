@@ -49,7 +49,7 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
         return treinamentos;
     }
 
-    public IEnumerable<Treinamento> Read(Guid id)
+    public Treinamento Read(Guid id)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = connection;
@@ -59,22 +59,19 @@ public class TreinamentoSqlRepository : DatabaseConnection, ITreinamentoSqlRepos
 
         SqlDataReader reader = cmd.ExecuteReader();
 
-        List<Treinamento> treinamentos = new List<Treinamento>();
+        Treinamento treinamento = new Treinamento();
 
         while(reader.Read())
         {
-            Treinamento treinamento = new Treinamento();
             treinamento.Id = reader.GetGuid(0);
             treinamento.Tipo = reader.GetInt32(1);
             treinamento.Situacao = reader.GetInt32(2);
             treinamento.CursoId = reader.GetGuid(3);
             treinamento.ProvaId = reader.GetGuid(4);
             treinamento.Status = reader.GetInt32(5);
-
-            treinamentos.Add(treinamento);
         }
 
-        return treinamentos;
+        return treinamento;
     }
 
     public void Update(Treinamento treinamento, Guid id)
