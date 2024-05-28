@@ -1,5 +1,6 @@
 using BlazorApp.Web.Components;
 using BlazorApp.Web.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,21 +22,16 @@ builder.Services.AddScoped<EmpresaService>();
 builder.Services.AddScoped<TelefoneEmpresaService>();
 builder.Services.AddScoped<EnderecoEmpresaService>();
 
-var app = builder.Build();
-
-public void ConfigureServices(IServiceCollection services)
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
-    services.AddAuthentication("MyCookieAuthenticationScheme")
-        .AddCookie("MyCookieAuthenticationScheme", options =>
-        {
-            options.Cookie.Name = "MyCookie";
-            options.LoginPath = "/login";
-        });
+    options.SignIn.RequireConfirmedAccount = true; // Requer confirmação de conta por email
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
-    services.AddRazorPages();
-    services.AddServerSideBlazor();
-    services.AddSingleton<WeatherForecastService>();
-}
+services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));// Use o contexto do banco de dados (opcional)
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

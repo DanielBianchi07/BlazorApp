@@ -29,7 +29,13 @@ public class UsuarioController : ControllerBase
         Usuario usuario = _usuarioRepository.Read(id);
         return Ok(usuario);
     }
-
+    
+    [HttpGet("{nome}/{senha}")]
+    public ActionResult<Usuario> UsuarioReadNomeSenha(string nome, string senha)
+    {
+        Usuario usuario = _usuarioRepository.ReadNomeSenha(nome, senha);
+        return Ok(usuario);
+    }
     [HttpPost]
     public ActionResult UsuarioCreate(Usuario usuarioModel)
     {
